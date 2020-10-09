@@ -3,21 +3,53 @@
 	{
 		"selected_items":
 		[
+			[
+				"pre",
+				"prevPosition"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"mar",
+				"margin\tproperty"
+			],
+			[
+				"bac",
+				"background-color\tproperty"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "<!DOCTYPE html>\n<html>\n<head>\n\t<title>Dorouki</title>\n</head>\n<body>\n\n</body>\n</html>",
 			"file": "index.html",
-			"file_size": 17,
-			"file_write_time": 132441517128953519,
 			"settings":
 			{
-				"buffer_size": 85,
+				"buffer_size": 1482,
 				"encoding": "UTF-8",
 				"line_ending": "Unix",
 				"name": "<h1>Dorouki</h1>"
+			}
+		},
+		{
+			"file": "css/style.css",
+			"settings":
+			{
+				"buffer_size": 3996,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "style.css"
+			}
+		},
+		{
+			"file": "js/main.js",
+			"settings":
+			{
+				"buffer_size": 9540,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -45,9 +77,14 @@
 	},
 	"console":
 	{
-		"height": 0.0,
+		"height": 136.0,
 		"history":
 		[
+			"-h",
+			"help",
+			"git",
+			"1",
+			"ls"
 		]
 	},
 	"distraction_free":
@@ -62,10 +99,14 @@
 	"expanded_folders":
 	[
 		"/Users/user/Documents/Munchies",
-		"/Users/user/Documents/Munchies/WhichPike"
+		"/Users/user/Documents/Munchies/WhichPike",
+		"/Users/user/Documents/Munchies/WhichPike/img",
+		"/Users/user/Documents/Munchies/WhichPike/js"
 	],
 	"file_history":
 	[
+		"/Users/user/Documents/Munchies/WhichPike/.gitignore",
+		"/Users/user/Documents/Munchies/WhichPike/WhichPike.sublime-project",
 		"/Users/user/Downloads/MoonRace-master/js/main.js",
 		"/Users/user/Downloads/MoonRace-master/css/style.css",
 		"/Users/user/Downloads/MoonRace-master/index.html",
@@ -74,7 +115,7 @@
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
@@ -88,8 +129,23 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"loopBrief",
+			"status",
+			"current",
+			"interfaceObjs",
+			"point",
+			"heigth",
+			"enemy",
+			"moveStr",
+			"\"",
+			"rotationStr",
+			"rotate(0deg)",
+			"rotate(360deg)",
+			"0% { -moz-transform: rotate(360deg); }\n\t\t    100% { -moz-transform: rotate(0deg); }",
+			"rotate {",
+			"rotate"
 		],
-		"highlight": true,
+		"highlight": false,
 		"in_selection": false,
 		"preserve_case": false,
 		"regex": false,
@@ -99,13 +155,13 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
-		"wrap": true
+		"whole_word": true,
+		"wrap": false
 	},
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -114,24 +170,83 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 85,
+						"buffer_size": 1482,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								101,
+								101
 							]
 						],
 						"settings":
 						{
 							"auto_name": "<h1>Dorouki</h1>",
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "css/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3996,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2409,
+								2409
+							]
+						],
+						"settings":
+						{
+							"auto_name": "style.css",
+							"syntax": "Packages/CSS/CSS.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1041.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9540,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4107,
+								4107
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2305.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -217,7 +332,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 187.0,
+	"side_bar_width": 241.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

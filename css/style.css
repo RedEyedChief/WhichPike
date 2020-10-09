@@ -1,0 +1,225 @@
+body {
+	margin: 0;
+	overflow-y: hidden;
+}
+
+h1 {
+	margin: 0;
+}
+
+
+section {
+	width: 100vw;
+	height: 100vh;
+}
+
+#map-container {
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/map.jpg);
+	background-position: center;
+    background-attachment: scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.car {
+	width: 10vw;
+    height: 10vw;
+    background-image: url(../img/test.gif);
+    background-position: center;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    position: absolute;
+    /*top: 26vh;
+    left: 3vw;*/
+    background-size: contain;
+    -webkit-transition: 4s linear;
+	-moz-transition: 4s linear;
+	-o-transition: 4s linear;
+	transition: transform 4s linear;
+	-webkit-transform: translate(10px, 10px),
+	-moz-transform: translate(10px, 10px),
+	-ms-transform: translate(10px, 10px),
+	-o-transform: translate(10px, 10px),
+	 transform: translate(10px, 10px)
+	/*-webkit-transform: translate(0vw, 0vw),
+	-moz-transform: translate(0vw, 0vw),
+	-ms-transform: translate(0vw, 0vw),
+	-o-transform: translate(0vw, 0vw),
+	 transform: translate(0vw, 0vw);*/
+}
+
+.translate-1 {
+	 transform: translate(500px, 500px) !important;
+}
+
+.translate-2 {
+	 transform: translate(1000px, 1000px) !important;
+}
+
+/*.car-template {
+	display: none;
+}*/
+
+#test2 {
+	width: 10vw;
+    height: 10vw;
+    background-image: url(../img/test.gif);
+    background-position: center;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 20vw;
+    left: 15vw;
+    background-size: contain;
+    -webkit-transition: 4s linear;
+	-moz-transition: 4s linear;
+	-o-transition: 4s linear;
+	transition: transform 4s linear;
+	-webkit-transform: translate(10px, 10px),
+	-moz-transform: translate(10px, 10px),
+	-ms-transform: translate(10px, 10px),
+	-o-transform: translate(10px, 10px),
+	 transform: translate(10px, 10px)
+	/*-webkit-transform: translate(0vw, 0vw),
+	-moz-transform: translate(0vw, 0vw),
+	-ms-transform: translate(0vw, 0vw),
+	-o-transform: translate(0vw, 0vw),
+	 transform: translate(0vw, 0vw);*/
+}
+
+.point {
+	width: 5vw;
+	height: 5vw;
+	position: absolute;
+	z-index: 111;
+
+	/*background-color: cadetblue;*/
+}
+
+#spawn {
+	top: 38vh;
+    left: 19vw;
+}
+
+#point-1 {
+	top: 55vh;
+    left: 34vw;
+}
+
+#point-2 {
+	top: 51vh;
+    left: 41vw;
+}
+
+#point-3 {
+    top: 80vh;
+    left: 58vw;
+}
+
+/*
+#arena{
+	background-color: #0ff;
+}
+
+#custle{
+	background-color: #0f0;
+}
+
+#letfap{
+	background-color: #f0f;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.screen-link-btn {
+	width: 50px;
+	height: 20px;
+	background-color: white;
+	display: block;
+	position: inherit;
+	text-align: center;
+}
+
+#wallpaper {
+	width: 100vw;
+	height: 60vh;
+	background-color: #00f;
+}
+
+#characters {
+	width: 100vw;
+}
+
+#custle-chr{
+	width: 10vw;
+	height: 10vw;
+	background-color: #d0d;
+	margin: -10vw auto 0;
+}
+
+#enemy-spawn {
+	width: 5vw;
+	height: 5vw;
+	margin: -5vw 0 0 0;
+}
+
+.enemy {
+	z-index: 1;
+	width: 5vw;
+	height: 5vw;
+	background-color: #df0;
+	margin: -5vw 0 0 0;
+	-webkit-transition: 7s linear;
+	-moz-transition: 7s linear;
+	-o-transition: 7s linear;
+	transition: transform 7s linear;
+	-webkit-transform: translateX(0px),
+	-moz-transform: translateX(0px),
+	-ms-transform: translateX(0px),
+	-o-transform: translateX(0px),
+	transform: translateX(0px);
+}
+
+.enemy-killed {
+	background-color: #f00;
+}
+
+.enemy-template, .arrow-template, .arrow-hidden {
+	display: none;
+}
+
+#arrow-spawn {
+    position: relative;
+    top: 60%;
+}
+
+.arrow {
+	z-index: 1;
+	width: 2vw;
+	height: 1vw;
+	background-color: #0f0;
+	position: absolute;
+	-webkit-transition: 4s linear;
+	-moz-transition: 4s linear;
+	-o-transition: 4s linear;
+	transition: transform 4s linear;
+	-webkit-transform: translateX(0px),
+	-moz-transform: translateX(0px),
+	-ms-transform: translateX(0px),
+	-o-transform: translateX(0px),
+	 transform: translateX(0px);
+}*/

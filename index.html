@@ -2,103 +2,27 @@
 <html>
 <head>
 	<title>Dorouki</title>
-	<style>
-		
 
-		body {
-			margin: 0;
-    		overflow-y: hidden;
-		}
-
-		h1 {
-			margin: 0;
-		}
-
-		#arena{
-			background-color: #0ff;
-		}
-
-		#custle{
-			background-color: #0f0;
-		}
-
-		#letfap{
-			background-color: #f0f;
-		}
-
-		.container {
-			width: 100vw;
-			height: 100vh;
-		}
-
-		.overlay {
-			position: absolute;
-    		top: 0;
-    		left: 0;
-		}
-
-		.screen-link-btn {
-			width: 50px;
-    		height: 20px;
-    		background-color: white;
-    		display: block;
-    		position: inherit;
-    		text-align: center;
-		}
-
-		#wallpaper {
-			width: 100vw;
-			height: 60vh;
-			background-color: #00f;
-		}
-
-		#characters {
-			width: 100vw;
-		}
-
-		#custle-chr{
-			width: 10vw;
-			height: 10vw;
-			background-color: #d0d;
-			margin: -10vw auto 0;
-		}
-
-		#enemy-spawn {
-			width: 5vw;
-			height: 5vw;
-			margin: -5vw 0 0 0;
-		}
-
-		.enemy {
-			z-index: 1;
-			width: 5vw;
-			height: 5vw;
-			background-color: #df0;
-			margin: -5vw 0 0 0;
-			-webkit-transition: 1s ease-in-out;
-    		-moz-transition: 1s ease-in-out;
-    		-o-transition: 1s ease-in-out;
-    		transition: transform 7s linear;
-    		-webkit-transform: translateX(0px),
-			-moz-transform: translateX(0px),
-			-ms-transform: translateX(0px),
-			-o-transfrom: translateX(0px),
-			transform: translateX(0px)
-		}
-
-		.enemy-killed {
-			background-color: #f00;
-		}
-
-		.enemy-template {
-			display: none;
-		}
-
-	</style>
+	<link href="css/style.css" rel="stylesheet">
 
 </head>
 <body>
-	<section id="arena" class="container" >
+	<section id="map">
+		<div id="map-container">
+			<div id="points-list">
+				<div id="spawn" class="point"></div>
+				<div id="point-1" class="point"></div>
+				<div id="point-2" class="point"></div>
+				<div id="point-3" class="point"></div>
+			</div>
+		</div>
+		<div id="characters">
+			<div class="car car-template"></div>
+			<!-- <div id="test2"></div> -->
+
+		</div>
+	</section>
+	<!-- <section id="arena" class="container" >
 		<div class="overlay">
 			<h1>sds</h1>
 			<div class="btn-wrapper">
@@ -112,7 +36,11 @@
 		</div>
 
 		<div id="characters">
-			<div id="custle-chr"></div>
+			<div id="custle-chr">
+				<div id="arrow-spawn">
+					<div class="arrow arrow-template"></div>
+				</div>
+			</div>
 			<div id="enemy-spawn">
 				<div class="enemy enemy-template"></div>
 			</div>
@@ -135,7 +63,7 @@
 		<span class="screen-link-btn">
 				<a href="#custle"><-</a>
 			</span>
-	</section>
+	</section> -->
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/main.js"></script>
