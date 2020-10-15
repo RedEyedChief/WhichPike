@@ -4,10 +4,11 @@ let custle;
 let interfaceObjs = {
 	cars: []
 };
+let isPaused = false;
 
 $(function() {
-	
-	
+
+
 	loopBrief.lastTick = performance.now();
 	loopBrief.tickLength = 50;
 
@@ -19,12 +20,25 @@ $(function() {
 	}
 
 	preInitialization();
-	
+
 
 	$(document).click(function(){
 		console.log('CLICK');
 
 		gameLoop(performance.now());
+	});
+
+	$('#build').click( function() {
+		updatePause();
+		$('#building-modal').show();
+	});
+
+	$('.block-info').click(function() {
+		alert($(this).data('info'));
+	})
+
+	$(document).keyup(function(e) {
+	  if (e.keyCode === 27) $('#building-modal').hide();   // esc
 	});
 
 	//const custle = $('#custle-chr');
@@ -34,7 +48,7 @@ $(function() {
 	BATTLE_DISTANCE = custleOffsetX;
 	// const distance = 500;
 	moveStr = 'translateX(' + (BATTLE_DISTANCE - enemy.width()) + 'px)';
-	
+
 
 	const spawn = $('#enemy-spawn');
 	const enemyTemplate = $('.enemy-template');
@@ -93,7 +107,7 @@ function addCar() {
 	console.log("interfaceObjs.spawn.y, newCar.height() ", interfaceObjs.spawn.y, newCar.height());
 
 	newCar.attr('id', 'test');
-	
+
 	// TODO: Y position: spawn.y - height
 	newCar.appendTo($('#characters'));
 	newCar.css({
@@ -145,7 +159,7 @@ function generatePoints() {
 			y: pointObj2.offset().top,
 			dur: 2,
 			status: "next"
-		}		
+		}
 	]*/
 }
 
@@ -194,7 +208,7 @@ function moveCheck() {
 
 				break;
 			}
-			
+
 			//console.log("~~~ ", pointIndex, Math.round(point.x), Math.round(carObjPosition.left +  car.obj.width()/2), Math.round(point.x) === Math.round(carObjPosition.left +  car.obj.width()/2) );
 
 			/*console.log("Math.round(carObjPosition.left) ", Math.round(carObjPosition.left));
@@ -230,12 +244,16 @@ function reverseList(pointList) {
 	for (const point of pointList) {
 		point.status = "next";
 
-		if (pointIndex === pointList.length) 
+		if (pointIndex === pointList.length)
 			point.status = "past"
 	}
 
 	pointList.reverse();
 	confirm('POPU MYL? ')
+}
+
+function updatePause() {
+	isPaused = !isPaused;
 }
 
 /*function driveCheck() {
@@ -246,7 +264,7 @@ function reverseList(pointList) {
 			// console.log(3);
 
 			// console.log('---- animation. ', animationIndex, animation.status );
-			
+
 			if (animation.status === 'past') continue;
 
 			// const carObjPosition = car.obj.position();
@@ -276,9 +294,9 @@ function reverseList(pointList) {
 			}
 
 			animationIndex++;
-			
+
 		}
-		
+
 	}
 }*/
 
@@ -288,7 +306,10 @@ function gameLoop() {
 	// console.log("@ ", document.getElementById('test').getBoundingClientRect());
 	// driveCheck();
 
-	moveCheck();
+	if (!isPaused) {
+		moveCheck();
+	}
+
 	loopBrief.frameId = window.requestAnimationFrame(gameLoop);
 }
 /*
