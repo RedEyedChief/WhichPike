@@ -16,7 +16,6 @@ section {
 #map-container {
 	width: 100%;
 	height: 100%;
-	/*background-image: url(../img/map.jpg);*/
 	background-image: url(../img/test.jpg);
 	background-position: center;
     background-attachment: scroll;
@@ -35,8 +34,6 @@ section {
     background-attachment: scroll;
     background-repeat: no-repeat;
     position: absolute;
-    /*top: 26vh;
-    left: 3vw;*/
     background-size: contain;
     -webkit-transition: 4s linear;
 	-moz-transition: 4s linear;
