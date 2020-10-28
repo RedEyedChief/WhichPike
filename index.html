@@ -12,8 +12,8 @@
 			<div id="points-list">
 				<div id="spawn" class="point"></div>
 				<div id="point-1" class="point"></div>
-				<div id="point-2" class="point"></div>
-				<div id="point-3" class="point"></div>
+				<!-- <div id="point-2" class="point"></div>
+				<div id="point-3" class="point"></div> -->
 			</div>
 		
 			<div id="characters">
@@ -26,7 +26,12 @@
 				<div id="build" class="building"></div>
 				<div id="shadow" class="building"></div>
 				<div id="shadow2" class="building"></div>
-			</div>	
+			</div>
+
+			<div id="missions">
+				<div id="m1" class="mission mission-default"></div>
+
+			</div>
 		</div>
 	</section>
 	<section id="modals">
@@ -36,6 +41,145 @@
 				<div class="block-info" data-info="2"></div>
 				<div class="block-info" data-info="3"></div>
 				<div class="block-info" data-info="4"></div>
+			</div>
+		</div>
+		<div id="inform-modal" class="modal">
+			<div class="modal-info-wrap">
+				<div class="block-info" data-info="1"></div>
+			</div>
+		</div>
+		<div id="quest-modal-start" class="modal">
+			<div class="modal-info-wrap">
+				<div class="qms-description-block">
+					<div class="qms-dscr-bl-image">
+
+					</div>
+					<div class="qms-dscr-bl-text-area">
+						<div class="qmsdbta-content">
+							zaprevshye eggs and some dicks need terebonk
+						</div>
+					</div>
+				</div>
+				<div class="qms-squad-block">
+					<div class="qmssb-common-team-container">
+						<ul class="qmssb-common-team-list">
+							<li class="qmssb-common-team-list-item"></li>
+							<li class="qmssb-common-team-list-item"></li>
+							<li class="qmssb-common-team-list-item"></li>
+							<li class="qmssb-common-team-list-item"></li>
+							<li class="qmssb-common-team-list-item"></li>
+							<li class="qmssb-common-team-list-item"></li>
+						</ul>
+					</div>
+					<div class="qmssb-bdsm-team-container">
+						<ul class="qmssb-bdsm-team-list">
+							<li class="qmssb-bdsm-team-list-item"></li>
+							<li class="qmssb-bdsm-team-list-item"></li>
+						</ul>
+					</div>
+				</div>
+				<button class="qms-empty-list-close-btn">close</button>
+				<div class="qms-buttons hide">
+					<button class="qms-accept-btn">accept</button>
+					<button class="qms-close-btn">close</button>
+				</div>
+			</div>
+		</div>
+		<div id="quest-modal-story" class="modal">
+			<div class="modal-info-wrap">
+				<div class="choose-story">
+					<h1 class="choose-story-title"> Choose story line </h1>
+					<div class="choose-story-intro">
+						<div id="fake-call" data-modal="fake-call-modal" class="story-line one-click-action">Fake call</div>
+						<div id="self-based" data-modal="self-based-modal" class="story-line one-click-action">Self based on skills</div>
+						<div id="cops-arest" data-modal="cops-arest-modal" class="story-line one-click-action">Cops arest</div>
+						<div id="start-choosing" class="story-line">Requires intervention</div>
+					</div>
+					<div class="choose-story-block csb-0">
+						<div class="story-line" data-csb="csb-1">aaa</div>
+						<div class="story-line" data-csb="csb-2">bbb</div>
+						<div class="story-line" data-csb="csb-3">ccc</div>
+					</div>
+					<div class="choose-story-block csb-1">
+						<div class="story-line story-line-end" data-csm="story-success-end-modal">success</div>
+						<div class="story-line story-line-end" data-csm="story-fail-end-modal">fail</div>
+						<div class="story-line story-line-end" data-csm="story-neutral-end-modal">neutral</div>
+					</div>
+					<div class="choose-story-block csb-2">
+						<div class="story-line story-line-end" data-csm="story-success-end-modal">success</div>
+						<div class="story-line story-line-end" data-csm="story-success-end-modal">success</div>
+						<div class="story-line story-line-end" data-csm="story-neutral-end-modal">neutral</div>
+					</div>
+					<div class="choose-story-block csb-3">
+						<div class="story-line story-line-end" data-csm="story-fail-end-modal">fail</div>
+						<div class="story-line story-line-end" data-csm="story-fail-end-modal">fail</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="story-success-end-modal" class="modal">
+			<div class="modal-info-wrap">
+				<h1>Success</h1>
+				<div>chetko chisto vnature po bazaru</div>
+				<button class="ssem-close-btn close-btn">close</button>
+			</div>
+		</div>
+		<div id="story-fail-end-modal" class="modal">
+			<div class="modal-info-wrap">
+				<h1>Fail</h1>
+				<div>eat some shit</div>
+				<button class="sfem-close-btn close-btn">close</button>
+			</div>
+		</div>
+		<div id="story-neutral-end-modal" class="modal">
+			<div class="modal-info-wrap">
+				<h1>Neutral</h1>
+				<div>ne rastrayuysya</div>
+				<button class="snem-close-btn close-btn">close</button>
+			</div>
+		</div>
+		<div id="fake-call-modal" class="modal">
+			<div class="modal-info-wrap">
+				<h1>Fake call</h1>
+				<div>go some fap</div>
+				<button class="fcm-close-btn close-btn">close</button>
+			</div>
+		</div>
+		<div id="self-based-modal" class="modal">
+			<div class="modal-info-wrap">
+				<h1>Success based on team skill</h1>
+				<ul>
+					<li>great</li>
+					<li>bad</li>
+					<li>PT ?</li>
+				</ul>
+				<button class="sbm-close-btn close-btn">close</button>
+			</div>
+		</div>
+		<div id="cops-arest-modal" class="modal">
+			<div class="modal-info-wrap">
+				<h1>Cops arrest</h1>
+				<div>Bye bye to your anus bitch</div>
+				<button class="cpm-close-btn close-btn">close</button>
+			</div>
+		</div>
+		<div id="quest-modal" class="modal">
+			<div class="modal-info-wrap template">
+				<div class="block-info template" data-info="1"></div>
+			</div>
+		</div>
+	</section>
+	<section id="widgets">
+		<div id="calls">
+			<div id="calls-title">
+				<h1>calls</h1>
+			</div>
+			<div id="calls-container">
+				<div class="call">
+					<div class="call-text-block">
+						barebuh jerking
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>

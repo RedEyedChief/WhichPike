@@ -162,6 +162,7 @@ section {
     -o-background-size: contain;
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 #wall {
@@ -222,6 +223,84 @@ section {
 	height:70vh;
 }
 
+#inform-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#quest-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#quest-modal-start {
+	top:15vh;
+	left: 5vw;
+    width: 90vw;
+	height:60vh;
+}
+
+#quest-modal-story {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#fake-call-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#self-based-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#cops-arest-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#story-success-end-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#story-fail-end-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+#story-neutral-end-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+}
+
+.block-info-template {
+	display: none;
+}
+
+.template {
+	display: none !important;
+}
+
 .block-info {
 	width:35%;
 	height: 35%;
@@ -237,111 +316,237 @@ section {
     cursor: pointer;
 }
 
+.story-line {
+	width:35%;
+	height: 35%;
+	margin-left:10%;
+    margin-top: 10%;
+	background-color: blue;
+    position: inherit;
+    display: inline-block;
+}
+
+.story-line:hover {
+	opacity: 0.8;
+    cursor: pointer;
+}
+
 .modal-info-wrap {
 	width: 100%;
     height: 100%;
     position: relative;
     background-color: white;
 }
-/*
-#arena{
-	background-color: #0ff;
-}
 
-#custle{
-	background-color: #0f0;
-}
-
-#letfap{
-	background-color: #f0f;
-}
-
-.container {
-	width: 100vw;
-	height: 100vh;
-}
-
-.overlay {
+.mission {
 	position: absolute;
-	top: 0;
+    z-index: 11;
+    width:10vw;
+	height:10vh;
+	cursor: pointer;
+}
+
+.mission-default {
+	background-color: yellow;
+}
+
+.mission-accepted {
+	background-color: #ff6a00;
+}
+
+#m1 {
+	top:10vh;
+	left: 20vw;
+}
+
+#calls {
+    width:15vw;
+	top: 10vh;
 	left: 0;
+	position: absolute;
+    z-index: 12;
 }
 
-.screen-link-btn {
-	width: 50px;
-	height: 20px;
-	background-color: white;
-	display: block;
-	position: inherit;
+#calls-title {
+	height: 5vh;
+	text-align: right;
+	background-color: orange;
+}
+
+#calls-title>h1 {
+	display: inline-block;
+    text-transform: uppercase;
+}
+
+.call {
+	width: 90%;
+    height: 4vh;
+    margin-top: 1vh;
+    margin-left: 10%;
+    background-color: #92652e;
+}
+
+.qms-description-block {
+	width: 100%;
+	height: 60%;
+	background-color: red;
+	display: flex;
+}
+
+.qms-dscr-bl-image {
+	width: 60%;
+	height: 100%;
+	background-color: red;
+	background-image: url(../img/dick.png);
+	background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.qms-dscr-bl-text-area {
+	width: 40%;
+	height: 100%;
+}
+
+.qmsdbta-content {
+	width: 80%;
+	margin: 20% auto;
+	color: white;
+}
+
+.qms-squad-block {
+	width: 100%;
+	height: 30%;
+	display: flex;
+}
+
+.qmssb-common-team-container {
+	width: 75%;
+	height: 100%;
+}
+
+.qmssb-bdsm-team-container {
+	width: 25%;
+	height: 100%;
+}
+
+.qmssb-common-team-list {
+	width: 90%;
+	height: 100%;
+	list-style: none;
+	display: flex;
+	margin: auto;
+	padding: 0;
+}
+
+.qmssb-common-team-list-item {
+	width: 15%;
+	height: 90%;
+	margin: auto;
+	background-color: black;
+	cursor: pointer;
+	opacity: 0.2;
+}
+
+.qmssb-bdsm-team-list {
+	width: 90%;
+	height: 100%;
+	list-style: none;
+	display: flex;
+	margin: auto;
+	padding: 0;
+}
+
+.qmssb-bdsm-team-list-item {
+	width: 45%;
+	height: 90%;
+	margin: auto;
+	background-color: black;
+	cursor: pointer;
+	opacity: 0.4;
+}
+
+.qms-empty-list-close-btn {
+	height: 10%;
+	width: 100%;
+	background-color: blue;
 	text-align: center;
+	color: white;
+	cursor: pointer;
 }
 
-#wallpaper {
-	width: 100vw;
-	height: 60vh;
-	background-color: #00f;
+.qms-buttons {
+	height: 10%;
+	width: 100%;
+	display: none;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+	display: flex;
 }
 
-#characters {
-	width: 100vw;
+.qms-accept-btn {
+	height: 100%;
+	width: 50%;
+	background-color: blue;
 }
 
-#custle-chr{
-	width: 10vw;
-	height: 10vw;
-	background-color: #d0d;
-	margin: -10vw auto 0;
+.qms-close-btn {
+	height: 100%;
+	width: 50%;
+	background-color: red;
 }
 
-#enemy-spawn {
-	width: 5vw;
-	height: 5vw;
-	margin: -5vw 0 0 0;
+.qmssbctli-active {
+	background-color: darkblue;
+	opacity: 1;
 }
 
-.enemy {
-	z-index: 1;
-	width: 5vw;
-	height: 5vw;
-	background-color: #df0;
-	margin: -5vw 0 0 0;
-	-webkit-transition: 7s linear;
-	-moz-transition: 7s linear;
-	-o-transition: 7s linear;
-	transition: transform 7s linear;
-	-webkit-transform: translateX(0px),
-	-moz-transform: translateX(0px),
-	-ms-transform: translateX(0px),
-	-o-transform: translateX(0px),
-	transform: translateX(0px);
+.qmssbbtli-active {
+	background-color: purple;
+	opacity: 1;
 }
 
-.enemy-killed {
-	background-color: #f00;
-}
-
-.enemy-template, .arrow-template, .arrow-hidden {
+.hide {
 	display: none;
 }
 
-#arrow-spawn {
-    position: relative;
-    top: 60%;
+.choose-story-title {
+	text-align: center;
+    padding-top: 5%;
 }
 
-.arrow {
-	z-index: 1;
-	width: 2vw;
-	height: 1vw;
-	background-color: #0f0;
-	position: absolute;
-	-webkit-transition: 4s linear;
-	-moz-transition: 4s linear;
-	-o-transition: 4s linear;
-	transition: transform 4s linear;
-	-webkit-transform: translateX(0px),
-	-moz-transform: translateX(0px),
-	-ms-transform: translateX(0px),
-	-o-transform: translateX(0px),
-	 transform: translateX(0px);
-}*/
+.choose-story {
+	height: 100%;
+    width: 100%;
+}
+
+.choose-story-intro {
+	height: 80%;
+    width: 100%;
+}
+
+.choose-story-block {
+	height: 80%;
+    width: 100%;
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

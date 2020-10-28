@@ -5,10 +5,107 @@ let interfaceObjs = {
 	cars: []
 };
 let isPaused = false;
+let oneTimeClick = false;
+const storyLine = {
+	index : "000",
+	lines : [
+		{
+			text : "vzyauu",
+			index : "100",
+			lines : [
+				{
+					text : "aaaa124",
+					index : "110",
+					lines : [
+						{
+							text : "a1",
+							end : "best"
+						},
+						{
+
+							text : "a2",
+							end : "good"
+						},
+						{
+
+							text : "a4",
+							end : "died"
+						}
+					]
+				},
+				{
+
+					text : "vz3",
+					end : "fail"
+				},
+				{
+
+					text : "vzya3",
+					end : "fail"
+				}
+			]
+		},
+		{
+			text : "pryhavav",
+			index : "200",
+			lines : [
+				{
+
+					text : "pr2",
+					end : "good"
+				},
+				{
+
+					text : "pr3",
+					end : "fail"
+				},
+				{
+					text : "pryha14",
+					index : "230",
+					lines : [
+						{
+							text : "pryhavav1",
+							end : "best"
+						},
+						{
+
+							text : "pryhavav4",
+							end : "died"
+						}
+					]
+				}
+			]
+		},
+		{
+			text : "solodenko",
+			index : "300",
+			lines : [
+				{
+
+					text : "s4",
+					end : "died"
+				},
+				{
+					text : "solo34",
+					index : "320",
+					lines : [
+						{
+							text : "solodenko3",
+							end : "fail"
+						},
+						{
+
+							text : "solodenko4",
+							end : "died"
+						}
+					]
+				}
+			]
+		}
+	]
+}
 
 $(function() {
-
-
 	loopBrief.lastTick = performance.now();
 	loopBrief.tickLength = 50;
 
@@ -25,20 +122,80 @@ $(function() {
 	$(document).click(function(){
 		console.log('CLICK');
 
-		gameLoop(performance.now());
+		if (!oneTimeClick) {
+			// #start
+			//gameLoop(performance.now());
+			oneTimeClick = true;
+		}
+		
 	});
 
 	$('#build').click( function() {
+		console.log('ZDR');
+
 		updatePause();
 		$('#building-modal').show();
 	});
 
 	$('.block-info').click(function() {
 		alert($(this).data('info'));
-	})
+	});
+
+	$('.mission').click(function() {
+		console.log(' condition ')
+		if ($(this).hasClass('mission-accepted')) 	{
+			showQuestStoryModal();
+		}
+		else 										showQuestModal();
+
+	});
+
+	$('.qmssb-common-team-list-item').click(function() {
+		$(this).toggleClass('qmssbctli-active');
+		checkQuestStartButtons();
+	});
+
+	$('.qmssb-bdsm-team-list-item').click(function() {
+		$(this).toggleClass('qmssbbtli-active');
+	});
+
+	$('.qms-empty-list-close-btn, .qms-close-btn').click(function() {
+		$(this).closest('#quest-modal-start').hide();
+	});
+
+	$('.qms-accept-btn').click(function() {
+		$(this).closest('#quest-modal-start').hide();
+		$('#m1').addClass('mission-accepted');
+	});
+
+	$('.one-click-action').click(function() {
+		$(this).closest('.modal').hide();
+		$("#" + $(this).data('modal')).show();
+	});
+
+	$('.close-btn').click(function() {
+		$(this).closest('.modal').hide();
+	});
+
+	$('#start-choosing').click(function() {
+		const storyParent = $(this).closest('.choose-story');
+		storyParent.find('.choose-story-intro').hide();
+		storyParent.find('.csb-0').show();
+	});
+
+	$('.csb-0>.story-line').click(function() {
+		const storyParent = $(this).closest('.choose-story');
+		storyParent.find('.csb-0').hide();
+		storyParent.find('.'+$(this).data('csb')).show();
+	});
+
+	$('.story-line-end').click(function() {
+		$(this).closest('.modal').hide();
+		$('#'+$(this).data('csm')).show();
+	});
 
 	$(document).keyup(function(e) {
-	  if (e.keyCode === 27) $('#building-modal').hide();   // esc
+	  if (e.keyCode === 27) $('.modal').hide();   // esc
 	});
 
 	//const custle = $('#custle-chr');
@@ -67,6 +224,16 @@ $(function() {
 
 	gameLoop(performance.now());*/
 });
+
+function checkQuestStartButtons() {
+	if($('.qmssbctli-active').length) {
+		$('.qms-empty-list-close-btn').addClass('hide');
+		$('.qms-buttons').removeClass('hide');
+	} else {
+		$('.qms-empty-list-close-btn').removeClass('hide');
+		$('.qms-buttons').addClass('hide');
+	}
+}
 
 function addCar() {
 	/*interfaceObjs.cars[0] = {
@@ -170,7 +337,7 @@ function preInitialization() {
 }
 
 function moveCheck() {
-	console.log('ENTER interfaceObjs.cars[0].pointList ', interfaceObjs.cars[0]);
+	// console.log('ENTER interfaceObjs.cars[0].pointList ', interfaceObjs.cars[0]);
 	for (const car of interfaceObjs.cars) {
 		let pointIndex = 0;
 
@@ -238,68 +405,65 @@ function moveCheck() {
 	}
 }
 
+function storyBlocksBuild(storyBlock) {
+	if (storyBlock.lines) {
+		const blockWrap = $('#quest-modal>.template').clone().removeClass('template');
+		blockWrap.attr('data-index', storyBlock.index);
+		const blockBlank = blockWrap.find('.template').clone().removeClass('template');
+		for (let line of storyBlock.lines) {
+			const newBlock = blockBlank.clone();
+			console.log(' line.index ', line.index);
+			if (line.index) {
+				newBlock.attr('data-next-block', line.index);
+			}
+			newBlock.text(line.text);
+			newBlock.appendTo(blockWrap);
+		}
+		blockWrap.appendTo($('#quest-modal'));
+
+
+	}
+}
+
+function showQuestStoryModal() {
+	$('#quest-modal-story').show();
+}
+
+function showQuestModal() {
+	console.log("22222");
+	// updatePause();  
+
+	// storyBlocksBuild(storyLine);
+	// $('#quest-modal').show();
+	$('#quest-modal-start').show();
+
+}
+
 function reverseList(pointList) {
 	let pointIndex = 0;
+	console.log(' -- pointList -- BEGIN == ', pointList);
 
-	for (const point of pointList) {
+	for (let point of pointList) {
+
 		point.status = "next";
+		console.log(' -- pointList -- for : ', pointList);
 
-		if (pointIndex === pointList.length)
+		if (pointIndex === pointList.length) {
+
 			point.status = "past"
+		}
 	}
 
+	console.log(' -- pointList -- END == ', pointList);
 	pointList.reverse();
 	confirm('POPU MYL? ')
+	/*console.log("1111");
+	showQuestModal();*/
 }
 
 function updatePause() {
 	isPaused = !isPaused;
 }
-
-/*function driveCheck() {
-	for (car of interfaceObjs.cars) {
-		// console.log(2, car, car.animationList);
-		let animationIndex = 0;
-		for (animation of car.animationList) {
-			// console.log(3);
-
-			// console.log('---- animation. ', animationIndex, animation.status );
-
-			if (animation.status === 'past') continue;
-
-			// const carObjPosition = car.obj.position();
-			const carObjPosition = document.getElementById('test').getBoundingClientRect();
-
-
-			console.log("~~~ ", animationIndex, car.prevPosition.x, carObjPosition.left, car.prevPosition.x === carObjPosition.left );
-
-			if (animation.status === 'current' && car.prevPosition.x !== carObjPosition.left && car.prevPosition.y !== carObjPosition.top) {
-				car.prevPosition.x = carObjPosition.left;
-				car.prevPosition.y = carObjPosition.top;
-				break;
-			} else if (animation.status === 'current' && car.prevPosition.x === carObjPosition.left && car.prevPosition.y === carObjPosition.top && animationIndex + 1 < car.animationList.length) {
-				animation.status = 'past';
-				const nextAnimationIndex = animationIndex + 1
-				console.log(' animationIndex ', animationIndex, nextAnimationIndex, car.animationList.length);
-				car.animationList[nextAnimationIndex].status = 'current';
-
-				const newStr = 'translate(' + car.animationList[nextAnimationIndex].x + 'vw, ' + car.animationList[nextAnimationIndex].y + 'vw)';
-				car.obj.css({
-					"-webkit-transform": newStr,
-					"-moz-transform": newStr,
-					"-ms-transform": newStr,
-					"-o-transform": newStr,
-					"transform": newStr
-				});
-			}
-
-			animationIndex++;
-
-		}
-
-	}
-}*/
-
 
 function gameLoop() {
 	// console.log("# ", interfaceObjs.cars[0].obj.position());
@@ -312,76 +476,3 @@ function gameLoop() {
 
 	loopBrief.frameId = window.requestAnimationFrame(gameLoop);
 }
-/*
-function checkArrows() {
-	const allArrows = $('.arrow:not(.arrow-template, .arrow-hidden)');
-	const allEnemies = $('.enemy:not(.enemy-template, .enemy-killed)');
-	console.log('all ARROWS ', allArrows.length);
-
-	for (arrow of allArrows) {
-		const arrowObj = $(arrow);
-		if(arrowObj.offset().left + arrowObj.width() < 0) {
-			arrowObj.addClass('arrow-hidden');
-		};
-
-		let index = 0;
-		for (enemy of allEnemies) {
-			const enemyObj = $(enemy);
-			console.log('+++++ ', index , arrowObj.offset().left, enemyObj.offset().left + enemyObj.width())
-			if(arrowObj.offset().left < enemyObj.offset().left + enemyObj.width()) {
-				arrowObj.addClass('arrow-hidden');
-				enemyObj.addClass('enemy-killed');
-				enemyObj.fadeOut('slow');
-				break;
-			};
-			index++
-		}
-	}
-}
-
-function battleCheck() {
-	checkArrows();
-}
-
-function gameLoop(currentTime) {
-	battleCheck();
-	loopBrief.frameId = window.requestAnimationFrame(gameLoop);
-}
-
-function attack() {
-
-	const arrowSpawn = $('#arrow-spawn');
-	const arrowTemplate = $('.arrow-template');
-	const newArrow = arrowTemplate.clone().removeClass('arrow-template');
-	console.log('new arrow', newArrow);
-	newArrow.appendTo(arrowSpawn);
-	const flyDistance = -BATTLE_DISTANCE - newArrow.width()*2;
-	const flyStr = 'translateX(' + flyDistance + 'px)';
-
-	setTimeout(() => {
-		newArrow.css({
-			"-webkit-transform": flyStr,
-			"-moz-transform": flyStr,
-			"-ms-transform": flyStr,
-			"-o-transform": flyStr,
-			"transform": flyStr
-		});
-	},100);
-
-}
-
-function createEnemy(spawn, enemyTemplate, moveStr) {
-	const newEnemy = enemyTemplate.clone().removeClass('enemy-template');
-	console.log('new enemy', newEnemy);
-	newEnemy.appendTo(spawn);
-	console.log('moveStr ', moveStr);
-	setTimeout(() => {
-		newEnemy.css({
-			"-webkit-transform": moveStr,
-			"-moz-transform": moveStr,
-			"-ms-transform": moveStr,
-			"-o-transform": moveStr,
-			"transform": moveStr
-		});
-	},500);
-}*/
