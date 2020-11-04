@@ -12,25 +12,73 @@
 			<div id="points-list">
 				<div id="spawn" class="point"></div>
 				<div id="point-1" class="point"></div>
-				<!-- <div id="point-2" class="point"></div>
-				<div id="point-3" class="point"></div> -->
+				<div id="point-2" class="point"></div>
+				<div id="point-3" class="point"></div>
+				<div id="point-4" class="point"></div>
 			</div>
 		
 			<div id="characters">
-				<div class="car car-template"></div>
+				<div id="cars">
+					<div class="mission-car template hide"></div>
+				</div>
 
 			</div>
 
-			<div id="buildings">
+			<!-- <div id="buildings">
 				<div id="oil" class="building"></div>
 				<div id="build" class="building"></div>
 				<div id="shadow" class="building"></div>
 				<div id="shadow2" class="building"></div>
+			</div>  -->
+
+			<div id="mission-flags">
+				<div class="mission-flag mission-default template hide">
+					<p class="mission-flag-countdown mission-countdown"></p>
+				</div>
+				<div id="m1" class="mission-flag mission-default">
+					<p class="mission-flag-countdown mission-countdown">30</p>
+				</div>
 			</div>
-
-			<div id="missions">
-				<div id="m1" class="mission mission-default"></div>
-
+		</div>
+	</section>
+	<section id="widgets">
+		<div id="calls">
+			<div id="calls-title">
+				<h1>calls</h1>
+			</div>
+			<ul id="calls-container">
+				<li class="call template hide">
+					<div class="call-wrap">
+						<span class="call-text-block">
+							some text should be here
+						</span>
+						<span class="call-mission-countdown mission-countdown" data-mission="">
+							00
+						</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="messages">
+			<div id="messages-title">
+				<h1>messages</h1>
+			</div>
+			<div id="messages-container">
+				<div class="message">
+					<div class="message-text-block">
+						barebuh jerking
+					</div>
+				</div>
+				<div class="message">
+					<div data-modal="fake-call-modal" class="one-click-action message-text-block">Fake call</div> 
+				</div>
+				<div class="message">
+					<div data-modal="self-based-modal" class="one-click-action message-text-block">Self based on skills</div> 
+				</div>
+				<div class="message">
+					<div data-modal="cops-arest-modal" class="one-click-action message-text-block">Cops arest </div> 
+				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -48,54 +96,86 @@
 				<div class="block-info" data-info="1"></div>
 			</div>
 		</div>
-		<div id="quest-modal-start" class="modal">
-			<div class="modal-info-wrap">
-				<div class="qms-description-block">
-					<div class="qms-dscr-bl-image">
-
-					</div>
-					<div class="qms-dscr-bl-text-area">
-						<div class="qmsdbta-content">
-							zaprevshye eggs and some dicks need terebonk
+		<div id="mission-modals">
+			<div class="modal mission-modal-start template" data-mission="">
+				<div class="modal-info-wrap">
+					<div class="qms-description-block">
+						<div class="qms-dscr-bl-image">
+						</div>
+						<div class="qms-dscr-bl-text-area">
+							<div class="qmsdbta-content">
+								some text should be here
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="qms-squad-block">
-					<div class="qmssb-common-team-container">
-						<ul class="qmssb-common-team-list">
-							<li class="qmssb-common-team-list-item"></li>
-							<li class="qmssb-common-team-list-item"></li>
-							<li class="qmssb-common-team-list-item"></li>
-							<li class="qmssb-common-team-list-item"></li>
-							<li class="qmssb-common-team-list-item"></li>
-							<li class="qmssb-common-team-list-item"></li>
-						</ul>
+					<div class="qms-squad-block">
+						<div class="qmssb-common-team-container">
+							<ul class="qmssb-common-team-list">
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+							</ul>
+						</div>
+						<div class="qmssb-bdsm-team-container">
+							<ul class="qmssb-bdsm-team-list">
+								<li class="qmssb-bdsm-team-list-item"></li>
+								<li class="qmssb-bdsm-team-list-item"></li>
+							</ul>
+						</div>
 					</div>
-					<div class="qmssb-bdsm-team-container">
-						<ul class="qmssb-bdsm-team-list">
-							<li class="qmssb-bdsm-team-list-item"></li>
-							<li class="qmssb-bdsm-team-list-item"></li>
-						</ul>
+					<button class="qms-empty-list-close-btn">close</button>
+					<div class="qms-buttons notDisplay">
+						<button class="qms-accept-btn">accept</button>
+						<button class="qms-close-btn">close</button>
 					</div>
-				</div>
-				<button class="qms-empty-list-close-btn">close</button>
-				<div class="qms-buttons hide">
-					<button class="qms-accept-btn">accept</button>
-					<button class="qms-close-btn">close</button>
 				</div>
 			</div>
+			<!-- <div class="modal mission-modal-start" data-mission="m1">
+				<div class="modal-info-wrap">
+					<div class="qms-description-block">
+						<div class="qms-dscr-bl-image m1-image">
+
+						</div>
+						<div class="qms-dscr-bl-text-area">
+							<div class="qmsdbta-content">
+								zaprevshye eggs and some dicks need terebonk
+							</div>
+						</div>
+					</div>
+					<div class="qms-squad-block">
+						<div class="qmssb-common-team-container">
+							<ul class="qmssb-common-team-list">
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+								<li class="qmssb-common-team-list-item"></li>
+							</ul>
+						</div>
+						<div class="qmssb-bdsm-team-container">
+							<ul class="qmssb-bdsm-team-list">
+								<li class="qmssb-bdsm-team-list-item"></li>
+								<li class="qmssb-bdsm-team-list-item"></li>
+							</ul>
+						</div>
+					</div>
+					<button class="qms-empty-list-close-btn">close</button>
+					<div class="qms-buttons">
+						<button class="qms-accept-btn">accept</button>
+						<button class="qms-close-btn">close</button>
+					</div>
+				</div>
+			</div> -->
 		</div>
-		<div id="quest-modal-story" class="modal">
+		<div id="mission-modal-story" class="modal">
 			<div class="modal-info-wrap">
 				<div class="choose-story">
 					<h1 class="choose-story-title"> Choose story line </h1>
-					<div class="choose-story-intro">
-						<div id="fake-call" data-modal="fake-call-modal" class="story-line one-click-action">Fake call</div>
-						<div id="self-based" data-modal="self-based-modal" class="story-line one-click-action">Self based on skills</div>
-						<div id="cops-arest" data-modal="cops-arest-modal" class="story-line one-click-action">Cops arest</div>
-						<div id="start-choosing" class="story-line">Requires intervention</div>
-					</div>
-					<div class="choose-story-block csb-0">
+					<div class="choose-story-intro csb-0">
 						<div class="story-line" data-csb="csb-1">aaa</div>
 						<div class="story-line" data-csb="csb-2">bbb</div>
 						<div class="story-line" data-csb="csb-3">ccc</div>
@@ -163,27 +243,18 @@
 				<button class="cpm-close-btn close-btn">close</button>
 			</div>
 		</div>
-		<div id="quest-modal" class="modal">
+		<div id="mission-modal" class="modal">
 			<div class="modal-info-wrap template">
 				<div class="block-info template" data-info="1"></div>
 			</div>
 		</div>
 	</section>
-	<section id="widgets">
-		<div id="calls">
-			<div id="calls-title">
-				<h1>calls</h1>
-			</div>
-			<div id="calls-container">
-				<div class="call">
-					<div class="call-text-block">
-						barebuh jerking
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
 </body>
 <script src="js/jquery.min.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/interface.js"></script>
+<script src="js/movement.js"></script>
+<script src="js/triggers.js"></script>
+<script src="js/flow.js"></script>
 <script src="js/main.js"></script>
 </html>

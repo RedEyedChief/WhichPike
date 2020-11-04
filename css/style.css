@@ -16,7 +16,7 @@ section {
 #map-container {
 	width: 100%;
 	height: 100%;
-	background-image: url(../img/test.jpg);
+	background-image: url(../img/map.png);
 	background-position: center;
     background-attachment: scroll;
     -webkit-background-size: cover;
@@ -26,9 +26,9 @@ section {
     background-repeat: no-repeat;
 }
 
-.car {
-	width: 10vw;
-    height: 10vw;
+.mission-car {
+	width: 5vw;
+    height: 5vw;
     background-image: url(../img/test.gif);
     background-position: center;
     background-attachment: scroll;
@@ -57,10 +57,6 @@ section {
 
 .translate-2 {
 	 transform: translate(1000px, 1000px) !important;
-}
-
-.car-template {
-	display: none;
 }
 
 #test2 {
@@ -100,23 +96,29 @@ section {
 }
 
 #spawn {
-	top: 38vh;
-    left: 19vw;
+	top: 55vh;
+    left: 24vw;
 }
 
 #point-1 {
-	top: 55vh;
-    left: 34vw;
+    top: 59.5vh;
+    left: 35vw;
 }
 
 #point-2 {
-	top: 51vh;
-    left: 41vw;
+	top: 34.5vh;
+    left: 53.5vw;
 }
 
 #point-3 {
-    top: 80vh;
-    left: 58vw;
+    top: 44vh;
+    left: 94.5vw;
+}
+
+
+#point-4 {
+    top: 36vh;
+    left: 94vw;
 }
 
 .building {
@@ -230,21 +232,21 @@ section {
 	height:70vh;
 }
 
-#quest-modal {
+#mission-modal {
 	top:15vh;
 	left: 30vw;
 	width:40vw;
 	height:70vh;
 }
 
-#quest-modal-start {
+.mission-modal-start {
 	top:15vh;
 	left: 5vw;
     width: 90vw;
 	height:60vh;
 }
 
-#quest-modal-story {
+#mission-modal-story {
 	top:15vh;
 	left: 30vw;
 	width:40vw;
@@ -338,7 +340,7 @@ section {
     background-color: white;
 }
 
-.mission {
+.mission-flag {
 	position: absolute;
     z-index: 11;
     width:10vw;
@@ -347,8 +349,13 @@ section {
 }
 
 .mission-default {
-	background-color: yellow;
+	background-color: rgba(0,189,245,0.6);
 }
+
+.mission-default:hover {
+	background-color: rgb(1 164 212);
+}
+
 
 .mission-accepted {
 	background-color: #ff6a00;
@@ -359,12 +366,23 @@ section {
 	left: 20vw;
 }
 
+#m2 {
+	display: none;
+	top:15vh;
+	left: 40vw;
+}
+
 #calls {
-    width:15vw;
+    width:20vw;
 	top: 10vh;
 	left: 0;
 	position: absolute;
     z-index: 12;
+}
+
+#calls-container {
+	list-style: none;
+	padding: 0;
 }
 
 #calls-title {
@@ -379,11 +397,61 @@ section {
 }
 
 .call {
+    line-height: 4vh;
 	width: 90%;
     height: 4vh;
     margin-top: 1vh;
     margin-left: 10%;
     background-color: #92652e;
+}
+
+.call:hover {
+    background-color: #a5773f;
+    cursor: pointer;
+}
+
+.call-wrap {
+	justify-content: space-around;
+    display: flex;
+}
+
+.call-mission-countdown {
+	font-style: italic;
+    font-weight: 600;
+    color: #ffffffb5;
+    font-size: 2.5vh;
+}
+
+#messages {
+    width:20vw;
+	top: 10vh;
+	right: 0;
+	position: absolute;
+    z-index: 12;
+}
+
+#messages-title {
+	height: 5vh;
+	text-align: left;
+	background-color: brown;
+}
+
+#messages-title>h1 {
+	display: inline-block;
+    text-transform: uppercase;
+}
+
+.message {
+	width: 90%;
+    height: 4vh;
+    margin-top: 1vh;
+    margin-right: 10%;
+    background-color: aliceblue;
+}
+
+.message-text-block {
+	text-align: center;
+    line-height: 4vh;
 }
 
 .qms-description-block {
@@ -397,7 +465,6 @@ section {
 	width: 60%;
 	height: 100%;
 	background-color: red;
-	background-image: url(../img/dick.png);
 	background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -405,6 +472,14 @@ section {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+/*.m1-image {
+	background-image: url(../img/dick.png);
+}
+
+.m2-image {
+	background-image: url(../img/tits.gif);
+}*/
 
 .qms-dscr-bl-text-area {
 	width: 40%;
@@ -510,8 +585,12 @@ section {
 	opacity: 1;
 }
 
+.notDisplay {
+	display: none
+}
+
 .hide {
-	display: none;
+	visibility: hidden;
 }
 
 .choose-story-title {
@@ -535,17 +614,20 @@ section {
     display: none;
 }
 
+.mission-flag-countdown {
+	font-size: 10vh;
+    line-height: 10vh;
+    margin: 0;
+    text-align: center;
+    color: #82005a;
+    font-style: oblique;
 
+}
 
+.mission-flag-countdown:hover {
+	color: #b5157ef2;
 
-
-
-
-
-
-
-
-
+} 
 
 
 
