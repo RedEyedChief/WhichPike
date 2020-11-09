@@ -8,6 +8,7 @@ const MISSIONS = [
 		domObjs : {
 			flag : null,
 			call : null,
+			message : null,
 			modalStart : null
 		},
 		content : {
@@ -17,9 +18,9 @@ const MISSIONS = [
 		src : {
 			img : "./img/dick.png"
 		},
-		/*obj : null,*/
-		status : "demo",
+		status : "hidden",
 		countdown : {
+			dayWorkAppearTime : 1,
 			initTime : null,
 			startCounter : 30,
 			currentCounter : 30
@@ -28,10 +29,16 @@ const MISSIONS = [
 			id : null,
 			domObj : null
 		},
-		points : []
+		route : [ "spawn" , "point-1", "point-2", "point-5", "point-6" ],
+		points : [],
+		uponArrival : {
+			status : null,
+			storyLine : null,
+			displayWidget : null
+		}
 	},
 	{
-		id : "m3",
+		id : "m2",
 		position : {
 			top : 30,
 			left : 82
@@ -39,6 +46,7 @@ const MISSIONS = [
 		domObjs : {
 			flag : null,
 			call : null,
+			message : null,
 			modalStart : null
 		},
 		content : {
@@ -48,9 +56,9 @@ const MISSIONS = [
 		src : {
 			img : "./img/tits.gif"
 		},
-		/*obj : null,*/
 		status : "hidden",
 		countdown : {
+			dayWorkAppearTime : 3,
 			initTime : null,
 			startCounter : 25,
 			currentCounter : 25
@@ -59,7 +67,51 @@ const MISSIONS = [
 			id : null,
 			domObj : null
 		},
-		points : []
+		route : [ "spawn" , "point-1", "point-2", "point-3", "point-4" ],
+		points : [],
+		uponArrival : {
+			status : null,
+			storyLine : null,
+			displayWidget : null
+		}
+	},
+	{
+		id : "m3",
+		position : {
+			top : 35,
+			left : 4
+		},
+		domObjs : {
+			flag : null,
+			call : null,
+			message : null,
+			modalStart : null
+		},
+		content : {
+			title : "nudes",
+			description : "send nudes"
+		},
+		src : {
+			img : "./img/tits.gif"
+		},
+		status : "hidden",
+		countdown : {
+			dayWorkAppearTime : 1,
+			initTime : null,
+			startCounter : 15,
+			currentCounter : 15
+		},
+		car : {
+			id : null,
+			domObj : null
+		},
+		route : [ "spawn" , "point-7" ],
+		points : [],
+		uponArrival : {
+			status : null,
+			storyLine : null,
+			displayWidget : null
+		}
 	}
 ]
 
@@ -163,3 +215,54 @@ const STORY_LINE = {
 		}
 	]
 }
+
+const COMRADS = [
+	{
+		id : "c1",
+		content : {
+			name : "Kochi",
+			power : 42,
+			img : "./img/comrad-1.png"
+		},
+		domObjs : {
+			teammate : null,
+			modalBio : null
+		}
+	},
+	{
+		id : "c2",
+		content : {
+			name : "Yancey",
+			power : 34,
+			img : "./img/comrad-2.png"
+		},
+		domObjs : {
+			teammate : null,
+			modalBio : null
+		}
+	},
+	{
+		id : "c3",
+		content : {
+			name : "Purdy",
+			power : 28,
+			img : "./img/comrad-3.png"
+		},
+		domObjs : {
+			teammate : null,
+			modalBio : null
+		}
+	},
+	{
+		id : "c4",
+		content : {
+			name : "Yurdi",
+			power : 5,
+			img : "./img/comrad-4.png"
+		},
+		domObjs : {
+			teammate : null,
+			modalBio : null
+		}
+	}
+]
