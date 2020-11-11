@@ -35,7 +35,8 @@ const MISSIONS = [
 			status : null,
 			storyLine : null,
 			displayWidget : null
-		}
+		},
+		comrades : []
 	},
 	{
 		id : "m2",
@@ -73,7 +74,8 @@ const MISSIONS = [
 			status : null,
 			storyLine : null,
 			displayWidget : null
-		}
+		},
+		comrades : []
 	},
 	{
 		id : "m3",
@@ -111,7 +113,8 @@ const MISSIONS = [
 			status : null,
 			storyLine : null,
 			displayWidget : null
-		}
+		},
+		comrades : []
 	}
 ]
 
@@ -216,7 +219,7 @@ const STORY_LINE = {
 	]
 }
 
-const COMRADS = [
+const COMRADES = [
 	{
 		id : "c1",
 		content : {

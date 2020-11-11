@@ -2,10 +2,10 @@ $(document).click(function(){
 	console.log('CLICK');
 
 	if (!oneTimeClick) {
-		
+
 		oneTimeClick = true;
 	}
-	
+
 });
 
 $(document).keyup(function(e) {
@@ -36,7 +36,9 @@ $('#calls').delegate('.call', 'click', function() {
 });
 
 $('#mission-modals').delegate('.qmssb-common-team-list-item', 'click', function() {
-	$(this).toggleClass('qmssbctli-active');
+	if (!$(this).attr('data-comrad')) return;
+
+	removeActiveComrad(this);
 	checkQuestStartButtons(this);
 });
 
@@ -48,7 +50,12 @@ $('#mission-modals').delegate('.qms-empty-list-close-btn, .qms-close-btn', 'clic
 	const parent = $(this).closest('.mission-modal-start');
 	parent.hide();
 
-	parent.find('.qms-squad-block li').removeClass('qmssbctli-active qmssbbtli-active');
+	const comrades = parent.find('.qmssbctli-active');
+	comrades.each((index, comrad) => {
+		removeActiveComrad(comrad);
+		//findComradByComradData(comrad).find('.comrad-image').removeClass('comrad-image-used');
+	});
+	// parent.find('.qms-squad-block li').removeClass('qmssbctli-active qmssbbtli-active');
 	checkQuestStartButtons(this);
 	closeModal();
 });
@@ -101,28 +108,24 @@ $('#mission-modals-manual').delegate('.story-line-end', 'click', function() {
 
 $('#team-container').delegate('.comrad', 'click', function() {
 	const missionModal = $('.mission-modal-start:visible');
-	const imagePath = $(this).css('background-image');
-	console.log(' comrad click ', imagePath);
-	if (missionModal) {
+	console.log(' missionModal ', missionModal);
 
+	const comrad = $(this);
+	const comradImage = comrad.find('.comrad-image');
+	const samecomrades = missionModal.find(`.qmssb-common-team-list-item[data-comrad="${comrad.data('comrad')}"]`);
+	const freeSlot = missionModal.find('.qmssb-common-team-list-item:not(.qmssbctli-active)').first();
+	if (missionModal.length && !samecomrades.length && freeSlot && !comradImage.hasClass('comrad-image-used')) {
+		const imagePath = comradImage.css('background-image');
+		const newSquadSlot = freeSlot;
+		newSquadSlot.css({'background-image': imagePath});
+		newSquadSlot.addClass('qmssbctli-active');
+		newSquadSlot.attr('data-comrad', comrad.data('comrad'));
+		comradImage.addClass('comrad-image-used');
+		checkQuestStartButtons(freeSlot);
 	}
-	findModelByComradData(this).show();
+	else if (!missionModal.length) {
+		console.log(' SHOW MODEL ');
+		findModelBioByComradData(this).show();
+	}
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

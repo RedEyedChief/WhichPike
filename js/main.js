@@ -3,7 +3,7 @@ let interfaceObjs = {
 	cars: [],
 	missions: {},
 	points: {},
-	comrads : {}
+	comrades : {}
 };
 let isPaused = false;
 let oneTimeClick = false;
@@ -29,13 +29,13 @@ $(function() {
 	gameLoop(performance.now()); 	// #start
 
 
-	
+
 });
 
 function preInitialization() {
 	generatePoints();
 	generateMissions();
-	generateComrads();
+	generatecomrades();
 }
 
 // DELETE ? 			TODO
@@ -63,33 +63,10 @@ function storyBlocksBuild(storyBlock) {
 
 function gameLoop() {
 	if (!isPaused && !stop) {
-		dayWorkTimeUpdate();	
+		dayWorkTimeUpdate();
 		interfaceCheck();
 		movementCheck();
 	}
 
 	loopBrief.frameId = window.requestAnimationFrame(gameLoop);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -19,16 +19,25 @@ function acceptMission(btn) {
 
 	const modal = $(btn).closest('.mission-modal-start');
 	const missionId = modal.data('mission');
+	const mission = interfaceObjs.missions[missionId];
+
 	modal.hide();
-
 	$(`.mission-car[data-mission=${missionId}]`).css({ "visibility": "visible" });
-	interfaceObjs.missions[missionId].domObjs.flag.hide();
-	interfaceObjs.missions[missionId].domObjs.call.hide();
+	mission.domObjs.flag.hide();
+	mission.domObjs.call.hide();
+	mission.status = "accepted";
 
-	interfaceObjs.missions[missionId].status = "accepted";
+	const usedComrades = modal.find('.qmssbctli-active');
+	usedComrades.each((index, comrad) => {
+		mission.comrades.push($(comrad).attr('data-comrad'));
+	});
 
-	// $('#'+modal.data('mission')).addClass('mission-accepted');
-
+	const comradTemplates = findModelComradTemplateByMissionId(missionId);
+	for (const template of comradTemplates) {
+		for (const comradId of mission.comrades) {
+			cloneElement($(template), 'filling-list', 'comrad', interfaceObjs.comrades[comradId]);
+		}
+	}
 }
 
 function missionCounterUpdate(mission) {
@@ -41,13 +50,9 @@ function missionCounterUpdate(mission) {
 	console.log(' ++ newCounter ', newCounter);
 	console.log(' ++ mission.status ', mission.status);*/
 
-
 	if (mission.countdown.currentCounter > newCounter) {
 		mission.countdown.currentCounter = newCounter;
-		// console.log(' - decrease counter  ', newCounter);
 		$(`*[data-mission=${mission.id}] .mission-countdown`).text(newCounter);
-
-		// $(mission.domObjs.flag).find('.mission-flag-countdown').text(newCounter);
 	}
 
 	if (newCounter <= 0) {
@@ -61,7 +66,6 @@ function missionCounterUpdate(mission) {
 function interfaceCheck() {
 	for(let [key, mission] of Object.entries(interfaceObjs.missions)) {
 		const timeTest = Math.floor(dayWorkTime/1000);
-		// console.log(' interfaceCheck ', timeTest, mission.countdown.dayWorkAppearTime);
 		if (timeTest === mission.countdown.dayWorkAppearTime && mission.status === "hidden") {
 			startMission(mission);
 		}
@@ -74,13 +78,9 @@ function interfaceCheck() {
 }
 
 function movementCheck() {
-	// console.log('ENTER interfaceObjs.cars[0].points ', interfaceObjs.cars[0]);
-
 	for(let [key, mission] of Object.entries(interfaceObjs.missions)) {
 		if (!['accepted', 'return'].includes(mission.status)) continue;
 		let pointIndex = 0;
-		// console.log(' mission ', key, mission.status);
-
 
 		for (const point of mission.points) {
 			pointIndex++;
@@ -91,16 +91,11 @@ function movementCheck() {
 			else if (point.status === 'next') {
 				point.status = 'current';
 
-				/*console.log('+ X ', interfaceObjs.spawn.x , point.x, carObjPosition.left, car.obj.width());
-				console.log('+ Y ', point.y, carObjPosition.top, car.obj.height());
-				console.log('car.obj.width() ', car.obj.width()); */
-
 				const moveX = point.x - interfaceObjs.points.spawn.x;
 				const moveY = point.y - interfaceObjs.points.spawn.y;
 
 				const moveStr = 'translate(' + moveX + 'px, ' + moveY + 'px)';
 
-				// console.log(' car obj ', mission, mission.car.domObj)
 				mission.car.domObj.css({
 					"-webkit-transform": moveStr,
 					"-moz-transform": moveStr,
@@ -109,20 +104,14 @@ function movementCheck() {
 					"transform": moveStr
 				});
 
-				console.log('moveStr ', moveStr);
-
 				break;
 			}
+			if (point.status === 'current') {
+				console.log('ZAVISAEM?');
+				console.log('X ', Math.round(carObjPosition.left + mission.car.domObj.width()/2), ' - ', Math.round(point.x));
+				console.log('Y ', Math.round(carObjPosition.top + mission.car.domObj.height()), ' - ', Math.round(point.y));
+			}
 
-			//console.log("~~~ ", pointIndex, Math.round(point.x), Math.round(carObjPosition.left +  car.obj.width()/2), Math.round(point.x) === Math.round(carObjPosition.left +  car.obj.width()/2) );
-
-			/*console.log("Math.round(carObjPosition.left) ", Math.round(carObjPosition.left));
-			console.log("Math.round(point.x) ", Math.round(point.x));
-			console.log("Math.round(point.y) ", Math.round(point.y));
-			console.log("Math.round(carObjPosition.top) ", Math.round(carObjPosition.top));
-
-			console.log("if:  ", Math.round(carObjPosition.left + car.obj.width()/2), ' === ', Math.round(point.x), ' &&  ', Math.round(point.y) , ' === ',Math.round(carObjPosition.top + car.obj.height()));
-*/
 			if (point.status === 'current' &&
 				Math.round(point.x) === Math.round(carObjPosition.left + mission.car.domObj.width()/2) &&
 				Math.round(point.y) === Math.round(carObjPosition.top + mission.car.domObj.height())) {
@@ -134,23 +123,22 @@ function movementCheck() {
 					if (mission.status === "return") {
 						mission.status = "past";
 						mission.car.domObj.hide();
+						console.log(' mission.comrades ', mission.comrades);
+						for (const comrad of mission.comrades) {
+							console.log(' comrad ', comrad);
+							removeComradActivatedStatus(comrad);
+
+						}
 						break;
 					}
 
 					showQuestStoryModal(mission);
 					mission.status = "return";
-					// mission.car.domObj.hide();
-					// confirm('POPU MYL? ')
 					reverseList(mission);
 					console.log(' reversed points ', mission.points);
 				}
 
-
-				//alert('get finish');
-			} /*else if (point.status === 'current' && Math.round(point.x) !== Math.round(carObjPosition.left + car.obj.width()/2) && Math.round(point.y) !== Math.round(carObjPosition.top + car.obj.height())) {
-				// console.log("direction: ", point.status);
-				break;
-			}*/
+			}
 
 			if (point.status === 'current') {
 				break;
@@ -219,30 +207,3 @@ function unPauseLoop() {
 function updatePause() {
 	isPaused = !isPaused;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,12 +1,12 @@
 function reverseList(mission) {
-	let pointIndex = 0;
+	// let pointIndex = 0;
 	const newPoints = mission.points.filter(point => point.id !== "point-pause");
 
 	console.log(' newPoints ', newPoints);
 	for (let point of newPoints) {
 		point.status = "next";
-		console.log(' -- points -- for : ', newPoints);
-		pointIndex++;
+		console.log(' -- points -- for : ', point.status);
+		// pointIndex++;
 		/*if (pointIndex === points.length) {
 
 			point.status = "past"
@@ -20,4 +20,3 @@ function reverseList(mission) {
 	/*console.log("1111");
 	showQuestModal();*/
 }
-

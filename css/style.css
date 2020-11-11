@@ -130,7 +130,7 @@ section {
     top: 19vh;
     left: 40vw;
 }
- 
+
 #point-7 {
     top: 48vh;
     left: 6vw;
@@ -528,6 +528,13 @@ section {
 	background-color: black;
 	cursor: pointer;
 	opacity: 0.2;
+	background-position: center;
+  background-attachment: scroll;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .qmssb-bdsm-team-list {
@@ -580,7 +587,7 @@ section {
 }
 
 .qmssbctli-active {
-	background-color: darkblue;
+	/* background-color: darkblue; */
 	opacity: 1;
 }
 
@@ -635,7 +642,7 @@ section {
 .mission-flag-countdown:hover {
 	color: #b5157ef2;
 
-} 
+}
 
 #team {
 	position: absolute;
@@ -666,12 +673,26 @@ section {
     background-color: coral;
 }
 
+.involved-comrades-container {
+	list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  height: 15vh;
+  margin: 1vh;
+  background-color: coral;
+}
+
 .comrad {
     max-width: 10vw;
     width: 10%;
     background-color: #99dede;
     text-align: center;
     margin-right: 1vw;
+}
+
+.involved-comrad {
+	width: 30%;
 }
 
 .comrad-title {
@@ -688,10 +709,8 @@ section {
 
 .comrad-image {
 	cursor: pointer;
-    opacity: 0.8;
     height: 80%;
     width: 100%;
-	/*background-image: url(../img/comrad.png);*/
 	background-position: center;
     background-attachment: scroll;
     -webkit-background-size: contain;
@@ -701,8 +720,16 @@ section {
     background-repeat: no-repeat;
 }
 
-.comrad-image:hover {
+#team-container .comrad-image {
+	opacity: 0.8;
+}
+
+#team-container .comrad-image:hover {
 	opacity: 1;
+}
+
+#team-container .comrad-image-used {
+	opacity: 0.4;
 }
 
 .comrad-modal-bio {
@@ -734,8 +761,3 @@ section {
     background-size: contain;
     background-repeat: no-repeat;
 }
-
-
-
-
-

@@ -34,28 +34,25 @@ function generateMissions() {
 		cloneElement($('#cars>.template'), 'mission-car', 'mission', mission);
 		generateMissionPoints(mission);
 		uponArrivalFlow(mission);
-
 	}
 
 	console.log(' ~~~ MISSIONS GENERED ~~~ ');
 
 }
 
-function generateComrads() {
-	for (let comrad of COMRADS) {
-		interfaceObjs.comrads[comrad.id] = comrad;
+function generatecomrades() {
+	for (let comrad of COMRADES) {
+		interfaceObjs.comrades[comrad.id] = comrad;
 		cloneElement($('#team-container>.template'), 'comrad', 'comrad', comrad);
 		cloneElement($('#comrad-modals-bio>.template'), 'comrad-modal-bio', 'comrad', comrad);
-		// cloneElement($('#mission-modals-start>.template'), 'mission-modal-start', mission);
-
 	}
 
-	console.log(' ~~~ COMRADS GENERED ~~~ ');
+	console.log(' ~~~ COMRADES GENERED ~~~ ');
 }
 
 function uponArrivalFlow(mission) {
 	const missionStory = getRandomInt(4);
-	// const missionStory = 0;
+	// const missionStory = 1;
 	mission.uponArrival.storyLine = missionStory;
 
 	switch (missionStory) {
@@ -91,8 +88,8 @@ function uponArrivalFlow(mission) {
 			cloneElement($('#mission-modals-cops>.template'), 'mission-modal-one-action', 'mission', mission);
 			break;
 
-		default : 
-			console.error(' uponArrivalFlow -> missionStory is ABSENT');			
+		default :
+			console.error(' uponArrivalFlow -> missionStory is ABSENT');
 	}
 }
 
@@ -207,7 +204,7 @@ function cloneElement(template, type, entityType, eic) {
 
 		case 'comrad':
 			console.log('SWITCH: comrad');
-			newElement.find('.comrad-title').text(eic.content.title);
+			newElement.find('.comrad-title').text(eic.content.name);
 			newElement.find('.comrad-power-counter').text(eic.content.power);
 			newElement.find('.comrad-image').css({
 				"background-image" : `url(${eic.content.img})`
@@ -221,7 +218,16 @@ function cloneElement(template, type, entityType, eic) {
 			});
 			break;
 
-		default : 
+		case 'filling-list':
+			console.log('SWITCH: comrad-modal-bio');
+			newElement.find('.comrad-title').text(eic.content.name);
+			newElement.find('.comrad-power-counter').text(eic.content.power);
+			newElement.find('.comrad-image').css({
+				"background-image" : `url(${eic.content.img})`
+			});
+			break;
+
+		default :
 			console.error(' cloneElement -> type is ABSENT');
 
 	}
@@ -232,13 +238,3 @@ function cloneElement(template, type, entityType, eic) {
 
 	return newElement;
 }
-
-
-
-
-
-
-
-
-
-
