@@ -1,15 +1,17 @@
 let loopBrief = {};
 let interfaceObjs = {
-	cars: [],
 	missions: {},
 	points: {},
-	comrades : {}
+	comrades : {},
+	cops : {},
+	cars : {}
 };
 let isPaused = false;
 let oneTimeClick = false;
 let dayWorkTime = 0;
 let lastActiveGameTime;
 let stop = false;
+let oneTime = true;
 
 // MAIN
 $(function() {
@@ -35,7 +37,8 @@ $(function() {
 function preInitialization() {
 	generatePoints();
 	generateMissions();
-	generatecomrades();
+	generateCops();
+	generateComrades();
 }
 
 // DELETE ? 			TODO
@@ -65,7 +68,9 @@ function gameLoop() {
 	if (!isPaused && !stop) {
 		dayWorkTimeUpdate();
 		interfaceCheck();
-		movementCheck();
+		carMovementCheck();
+		// missionMovementCheck();
+		// copMovementCheck();
 	}
 
 	loopBrief.frameId = window.requestAnimationFrame(gameLoop);

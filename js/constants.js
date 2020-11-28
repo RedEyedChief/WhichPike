@@ -23,14 +23,13 @@ const MISSIONS = [
 			dayWorkAppearTime : 1,
 			initTime : null,
 			startCounter : 30,
-			currentCounter : 30
+			currentCounter : 30,
+			startWaiting : null
 		},
-		car : {
-			id : null,
-			domObj : null
+		routes : {
+			main : [ "spawn" , "point-1", "point-2", "point-5", "point-6" ]
 		},
-		route : [ "spawn" , "point-1", "point-2", "point-5", "point-6" ],
-		points : [],
+		generatedWays : {},
 		uponArrival : {
 			status : null,
 			storyLine : null,
@@ -62,14 +61,13 @@ const MISSIONS = [
 			dayWorkAppearTime : 3,
 			initTime : null,
 			startCounter : 25,
-			currentCounter : 25
+			currentCounter : 25,
+			startWaiting : null
 		},
-		car : {
-			id : null,
-			domObj : null
+		routes : {
+			main : [ "spawn" , "point-1", "point-2", "point-3", "point-4" ]
 		},
-		route : [ "spawn" , "point-1", "point-2", "point-3", "point-4" ],
-		points : [],
+		generatedWays : {},
 		uponArrival : {
 			status : null,
 			storyLine : null,
@@ -101,14 +99,13 @@ const MISSIONS = [
 			dayWorkAppearTime : 1,
 			initTime : null,
 			startCounter : 15,
-			currentCounter : 15
+			currentCounter : 15,
+			startWaiting : null
 		},
-		car : {
-			id : null,
-			domObj : null
+		routes : {
+			main : [ "spawn" , "point-7" ]
 		},
-		route : [ "spawn" , "point-7" ],
-		points : [],
+		generatedWays : {},
 		uponArrival : {
 			status : null,
 			storyLine : null,
@@ -225,47 +222,90 @@ const COMRADES = [
 		content : {
 			name : "Kochi",
 			power : 42,
-			img : "./img/comrad-1.png"
+			img : "./img/comrade-1.png"
 		},
 		domObjs : {
-			teammate : null,
+			comrade : null,
 			modalBio : null
-		}
+		},
+		energyLevel : 5
 	},
 	{
 		id : "c2",
 		content : {
 			name : "Yancey",
 			power : 34,
-			img : "./img/comrad-2.png"
+			img : "./img/comrade-2.png"
 		},
 		domObjs : {
-			teammate : null,
+			comrade : null,
 			modalBio : null
-		}
+		},
+		energyLevel : 4
 	},
 	{
 		id : "c3",
 		content : {
 			name : "Purdy",
 			power : 28,
-			img : "./img/comrad-3.png"
+			img : "./img/comrade-3.png"
 		},
 		domObjs : {
-			teammate : null,
+			comrade : null,
 			modalBio : null
-		}
+		},
+		energyLevel : 1
 	},
 	{
 		id : "c4",
 		content : {
 			name : "Yurdi",
 			power : 5,
-			img : "./img/comrad-4.png"
+			img : "./img/comrade-4.png"
 		},
 		domObjs : {
-			teammate : null,
+			comrade : null,
 			modalBio : null
+		},
+		energyLevel : 0
+	}
+]
+
+const COPS = [
+	{
+		id : "cop1",
+		status : "hidden",
+		routes : {
+			main : [ "copSpawn" , "cop-spawn-exit", "point-10", "point-5", "point-8", "point-9" ],
+			backward : [ "copSpawn" , "cop-spawn-exit", "point-10" ],
+			patrol : [ "point-10", "point-5", "point-8", "point-9" ]
+		},
+		generatedWays : {},
+		car : {
+			id : null,
+			domObj : null
+		},
+		countdown : {
+			dayWorkAppearTime : 1
+		}
+	},
+	{
+		id : "cop2",
+		status : "hidden",
+		routes : {
+			main : [ "copSpawn" , "cop-spawn-exit", "point-10", "point-5", "point-7", "point-1" ],
+			backward : [ "copSpawn" , "cop-spawn-exit", "point-10", "point-5", "point-7" ],
+			patrol : [ "point-7", "point-1" ]
+		},
+		generatedWays : {},
+		car : {
+			id : null,
+			domObj : null
+		},
+		countdown : {
+			dayWorkAppearTime : 2
 		}
 	}
 ]
+
+const MAX_COMRADE_energy = 5;

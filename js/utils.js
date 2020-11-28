@@ -26,32 +26,73 @@ function findModelBioByComradData(domObj) {
 	if (!domObj) console.error("findModelBioByComradData -> domObj  -  REQUIRED");
 
 	const jqObj = $(domObj);
-	return $(`.comrad-modal-bio[data-comrad=${jqObj.data('comrad')}]`);
+	return $(`.comrade-modal-bio[data-comrade=${jqObj.data('comrade')}]`);
 }
 
 function findModelByComradData(domObj) {
 	if (!domObj) console.error("findModelByComradData -> domObj  -  REQUIRED");
 
 	const jqObj = $(domObj);
-	return $(`.modal[data-comrad=${jqObj.data('comrad')}]`);
+	return $(`.modal[data-comrade=${jqObj.data('comrade')}]`);
 }
 
-function findComradByComradId(comradId) {
-	if (!comradId) console.error("findModelByComradId -> comradId  -  REQUIRED");
+function findComradByComradeId(comradeId) {
+	if (!comradeId) console.error("findModelByComradeId -> comradeId  -  REQUIRED");
 
-	return $(`.comrad[data-comrad=${comradId}]`);
+	return $(`.comrade[data-comrade=${comradeId}]`);
 }
 
 function removeActiveComrad(elem) {
-	const comrad = $(elem);
-	comrad.css({'background-image': 'none'});
-	removeComradActivatedStatus(comrad.data('comrad'));
-	comrad.removeClass('qmssbctli-active');
-	comrad.attr('data-comrad', '');
+	const comrade = $(elem);
+	comrade.css({'background-image': 'none'});
+	removeComradActivatedStatus(comrade.attr('data-comrade'));
+	comrade.removeClass('active-comrade');
+	comrade.attr('data-comrade', '');
 }
 
-function removeComradActivatedStatus(comradId) {
-	if (!comradId) console.error("removeComradActivatedStatus -> comradId  -  REQUIRED");
+function removeComradActivatedStatus(comradeId) {
+	if (!comradeId) console.error("removeComradActivatedStatus -> comradeId  -  REQUIRED");
+	console.log(' removeComradActivatedStatus ', comradeId);
 
-	findComradByComradId(comradId).find('.comrad-image').removeClass('comrad-image-used');
+	findComradByComradeId(comradeId).find('.comrade-image').removeClass('comrade-image-used');
+}
+
+function getComradImagesByComradeId(comradeId) {
+	if (!comradeId) console.error("removeComradActivatedStatus -> comradeId  -  REQUIRED");
+
+	return $(`.comrade[data-comrade=${comradeId}] .comrade-image`);
+}
+
+function 	addComradesToMission(modal, mission) {
+	if (!modal || !mission) console.error("addComradesToMission -> mission, modal  -  REQUIRED");
+
+	const usedComrades = modal.find('.modal-common-comrade-field.active-comrade');
+	let newComradesList = [];
+	usedComrades.each((index, comrade) => {
+		let comradeId = $(comrade).attr('data-comrade');
+		mission.comrades.push(comradeId);
+		newComradesList.push(comradeId);
+		decreaseComradeenergy(comradeId);
+	});
+
+
+	return newComradesList;
+}
+
+function addComradesToEndModals(newComrades, missionId) {
+	if (!newComrades || !missionId) console.error("addComradesToEndModals -> missionId, newComrades  -  REQUIRED");
+
+	const comradTemplates = findModelComradTemplateByMissionId(missionId);
+	for (const template of comradTemplates) {
+		for (const comradeId of newComrades) {
+			cloneElement($(template), 'filling-list', 'comrade', interfaceObjs.comrades[comradeId]);
+		}
+	}
+}
+
+function decreaseComradeenergy(comradeId) {
+	const comrade = findComradByComradeId(comradeId);
+	const topChargedenergyUnit = comrade.find('.comrade-energy-unit:not(.energy-unit-empty)').first();
+	topChargedenergyUnit.addClass('energy-unit-empty');
+	interfaceObjs.comrades[comradeId].energyLevel -= 1;
 }

@@ -10,8 +10,13 @@ $(document).click(function(){
 
 $(document).keyup(function(e) {
   if (e.keyCode === 27) {	// esc
+		console.log(' modals ', $('.modal'));
   	$('.modal').hide();
   	unPauseLoop();
+  }
+	if (e.keyCode === 68) {	// esc
+		console.log(' GLOBAL DEBUG ');
+  	console.log('interfaceObjs', interfaceObjs);
   }
 });
 
@@ -35,8 +40,8 @@ $('#calls').delegate('.call', 'click', function() {
 	showQuestModal(this);
 });
 
-$('#mission-modals').delegate('.qmssb-common-team-list-item', 'click', function() {
-	if (!$(this).attr('data-comrad')) return;
+$('#mission-modals').delegate('.modal-common-comrade-field', 'click', function() {
+	if (!$(this).attr('data-comrade')) return;
 
 	removeActiveComrad(this);
 	checkQuestStartButtons(this);
@@ -46,23 +51,26 @@ $('#mission-modals').delegate('.qmssb-bdsm-team-list-item', 'click', function() 
 	$(this).toggleClass('qmssbbtli-active');
 });
 
-$('#mission-modals').delegate('.qms-empty-list-close-btn, .qms-close-btn', 'click', function() {
-	const parent = $(this).closest('.mission-modal-start');
-	parent.hide();
+$('#mission-modals').delegate('.modal-empty-comrade-list-close-btn, .modal-comrade-list-close-btn', 'click', function() {
+	const parent = $(this).closest('.modal');
 
-	const comrades = parent.find('.qmssbctli-active');
-	comrades.each((index, comrad) => {
-		removeActiveComrad(comrad);
-		//findComradByComradData(comrad).find('.comrad-image').removeClass('comrad-image-used');
+	const comrades = parent.find('.modal-common-comrade-field.active-comrade');
+	comrades.each((index, comrade) => {
+		removeActiveComrad(comrade);
 	});
-	// parent.find('.qms-squad-block li').removeClass('qmssbctli-active qmssbbtli-active');
 	checkQuestStartButtons(this);
-	closeModal();
+	closeModal(parent);
+
+	if (parent.hasClass('mission-modal-reinforcement')) alert('unfinished flow!')
 });
 
-$('#mission-modals').delegate('.qms-accept-btn', 'click', function() {
-	closeModal();
-	acceptMission(this);
+$('#mission-modals').delegate('.modal-comrade-list-accept-btn', 'click', function() {
+	const parent = $(this).closest('.modal');
+	closeModal(parent);
+
+	if (parent.hasClass('mission-modal-reinforcement')) acceptReinforcement(parent);
+	else if (parent.hasClass('mission-modal-start')) 		acceptMission(parent);
+	else console.log(' SOMETHING SHOULD HAPPENN HERE ? ')
 });
 
 $('#messages-container').delegate('.message', 'click', function() {
@@ -73,17 +81,14 @@ $('#messages-container').delegate('.message', 'click', function() {
 $('#mission-modals').delegate('.close-btn', 'click', function() {
 	const parent = $(this).closest('.modal');
 	if (parent.hasClass('mission-modal-one-action')) {
-		console.log(' start to hide message ');
 		findMessageByMissionData(parent).hide();
 	}
-	parent.hide();
-	closeModal();
+	closeModal(parent);
 });
 
-$('#comrad-modals').delegate('.close-btn', 'click', function() {
+$('#comrade-modals,#widget-modals').delegate('.close-btn', 'click', function() {
 	const parent = $(this).closest('.modal');
-	parent.hide();
-	closeModal();
+	closeModal(parent);
 });
 
 /*$('#start-choosing').click(function() {
@@ -94,7 +99,6 @@ $('#comrad-modals').delegate('.close-btn', 'click', function() {
 
 $('#mission-modals-manual').delegate('.csb-0>.story-line', 'click', function() {
 	const storyParent = $(this).closest('.choose-story');
-	console.log('LETS CHOOSE', storyParent);
 
 	storyParent.find('.csb-0').hide();
 	storyParent.find('.'+$(this).data('csb')).show();
@@ -102,30 +106,48 @@ $('#mission-modals-manual').delegate('.csb-0>.story-line', 'click', function() {
 
 $('#mission-modals-manual').delegate('.story-line-end', 'click', function() {
 	$(this).closest('.modal').hide();
-	console.log(' modal-end ', $(this).data('modal-class'), $(this).data('mission'));
 	findModelByMissionData(this).show();
 });
 
-$('#team-container').delegate('.comrad', 'click', function() {
-	const missionModal = $('.mission-modal-start:visible');
-	console.log(' missionModal ', missionModal);
+$('#team-container').delegate('.comrade', 'click', function() {
+	const missionModal = $('.mission-modal-start:visible, .mission-modal-reinforcement:visible');
+	const isComradeUsed = $(this).find('.comrade-image').hasClass('comrade-image-used');
+	const energyAmount = $(this).find('.comrade-energy-unit:not(.energy-unit-empty)');
 
-	const comrad = $(this);
-	const comradImage = comrad.find('.comrad-image');
-	const samecomrades = missionModal.find(`.qmssb-common-team-list-item[data-comrad="${comrad.data('comrad')}"]`);
-	const freeSlot = missionModal.find('.qmssb-common-team-list-item:not(.qmssbctli-active)').first();
-	if (missionModal.length && !samecomrades.length && freeSlot && !comradImage.hasClass('comrad-image-used')) {
-		const imagePath = comradImage.css('background-image');
-		const newSquadSlot = freeSlot;
-		newSquadSlot.css({'background-image': imagePath});
-		newSquadSlot.addClass('qmssbctli-active');
-		newSquadSlot.attr('data-comrad', comrad.data('comrad'));
-		comradImage.addClass('comrad-image-used');
-		checkQuestStartButtons(freeSlot);
-	}
-	else if (!missionModal.length) {
-		console.log(' SHOW MODEL ');
+	if (missionModal.length && !isComradeUsed && energyAmount.length) {
+		engageComrad(missionModal, $(this));
+	} else if (!missionModal.length){
 		findModelBioByComradData(this).show();
 	}
 
+});
+
+$('#widgets').delegate('#hide-widget', 'click', function() {
+	$('.hiding-widget').toggleClass('hide');
+});
+
+$('#widgets').delegate('#menu-widget', 'click', function() {
+	$('#menu-modal').show();
+	showModal();
+});
+
+$('#menu-modal').delegate('.menu-btn', 'click', function() {
+	const parent = $(this).closest('.modal');
+	closeModal(parent);
+});
+
+$('#widgets').delegate('#achievements-widget', 'click', function() {
+	$('#achievements-modal').show();
+	showModal();
+});
+
+$('#widgets').delegate('#extra-widget', 'click', function() {
+	$(this).toggleClass('extra-widget-active');
+	$('.additional-widget').toggle();
+});
+
+$('#widgets').delegate('.additional-widget', 'click', function() {
+	const modal = $(this).data('modal');
+	$(`#${modal}-modal`).show();
+	showModal();
 });

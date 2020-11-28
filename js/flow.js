@@ -7,37 +7,24 @@ function startMission(mission) {
 }
 
 function showMission(missionId) {
-	console.log('INSIDE showMission() ', missionId);
-
 	if (!missionId) console.error("showMission -> missionId  -  EXPECTED")
 	$(`.mission-flag[data-mission=${missionId}],` +
 	  `.call[data-mission=${missionId}]`).show();
 }
 
-function acceptMission(btn) {
-	console.log('acceptMission() ');
+function acceptMission(modal) {
+	if (!modal) console.error("acceptMission -> modal  -  EXPECTED")
 
-	const modal = $(btn).closest('.mission-modal-start');
 	const missionId = modal.data('mission');
 	const mission = interfaceObjs.missions[missionId];
 
-	modal.hide();
 	$(`.mission-car[data-mission=${missionId}]`).css({ "visibility": "visible" });
 	mission.domObjs.flag.hide();
 	mission.domObjs.call.hide();
 	mission.status = "accepted";
-
-	const usedComrades = modal.find('.qmssbctli-active');
-	usedComrades.each((index, comrad) => {
-		mission.comrades.push($(comrad).attr('data-comrad'));
-	});
-
-	const comradTemplates = findModelComradTemplateByMissionId(missionId);
-	for (const template of comradTemplates) {
-		for (const comradId of mission.comrades) {
-			cloneElement($(template), 'filling-list', 'comrad', interfaceObjs.comrades[comradId]);
-		}
-	}
+	interfaceObjs.cars[mission.carId].status = 'driving';
+	const newComrades = addComradesToMission(modal, mission);
+	addComradesToEndModals(newComrades, missionId);
 }
 
 function missionCounterUpdate(mission) {
@@ -64,130 +51,35 @@ function missionCounterUpdate(mission) {
 }
 
 function interfaceCheck() {
+	const timeTest = Math.floor(dayWorkTime/1000);
 	for(let [key, mission] of Object.entries(interfaceObjs.missions)) {
-		const timeTest = Math.floor(dayWorkTime/1000);
-		if (timeTest === mission.countdown.dayWorkAppearTime && mission.status === "hidden") {
+		if (mission.status === "hidden" && timeTest === mission.countdown.dayWorkAppearTime) {
 			startMission(mission);
+		}
+
+		const timeWaitingDiff = Math.floor((Date.now() - mission.countdown.startWaiting)/1000);
+		if (mission.status === "wait" && timeWaitingDiff > 5 ) {
+			showQuestStoryModal(mission);
+			mission.status = "return";
+			interfaceObjs.cars[mission.carId].status = 'driving';
 		}
 
 		if (mission.status !== "active") continue;
 		missionCounterUpdate(mission);
-
 	}
 
-}
-
-function movementCheck() {
-	for(let [key, mission] of Object.entries(interfaceObjs.missions)) {
-		if (!['accepted', 'return'].includes(mission.status)) continue;
-		let pointIndex = 0;
-
-		for (const point of mission.points) {
-			pointIndex++;
-
-			const carObjPosition = document.getElementById(mission.car.id).getBoundingClientRect();
-
-			if (point.status === 'past') continue;
-			else if (point.status === 'next') {
-				point.status = 'current';
-
-				const moveX = point.x - interfaceObjs.points.spawn.x;
-				const moveY = point.y - interfaceObjs.points.spawn.y;
-
-				const moveStr = 'translate(' + moveX + 'px, ' + moveY + 'px)';
-
-				mission.car.domObj.css({
-					"-webkit-transform": moveStr,
-					"-moz-transform": moveStr,
-					"-ms-transform": moveStr,
-					"-o-transform": moveStr,
-					"transform": moveStr
-				});
-
-				break;
-			}
-			if (point.status === 'current') {
-				console.log('ZAVISAEM?');
-				console.log('X ', Math.round(carObjPosition.left + mission.car.domObj.width()/2), ' - ', Math.round(point.x));
-				console.log('Y ', Math.round(carObjPosition.top + mission.car.domObj.height()), ' - ', Math.round(point.y));
-			}
-
-			if (point.status === 'current' &&
-				Math.round(point.x) === Math.round(carObjPosition.left + mission.car.domObj.width()/2) &&
-				Math.round(point.y) === Math.round(carObjPosition.top + mission.car.domObj.height())) {
-
-				point.status = 'past';
-
-				// return path 		-- # move back animation TODO
-				if (pointIndex === mission.points.length) {
-					if (mission.status === "return") {
-						mission.status = "past";
-						mission.car.domObj.hide();
-						console.log(' mission.comrades ', mission.comrades);
-						for (const comrad of mission.comrades) {
-							console.log(' comrad ', comrad);
-							removeComradActivatedStatus(comrad);
-
-						}
-						break;
-					}
-
-					showQuestStoryModal(mission);
-					mission.status = "return";
-					reverseList(mission);
-					console.log(' reversed points ', mission.points);
-				}
-
-			}
-
-			if (point.status === 'current') {
-				break;
-			}
+	for(let [key, cop] of Object.entries(interfaceObjs.cops)) {
+		if (timeTest === cop.countdown.dayWorkAppearTime && cop.status === "hidden") {
+			startPatrol(cop);
 		}
 	}
+
 }
 
 function dayWorkTimeUpdate() {
 	newActiveGameTime = Date.now();
 	dayWorkTime += newActiveGameTime - lastActiveGameTime;
 	lastActiveGameTime = newActiveGameTime;
-}
-
-
-function addPausePoint() {
-	for(let [key, mission] of Object.entries(interfaceObjs.missions)) {
-		if (!['accepted', 'return'].includes(mission.status)) continue;
-
-		const carObjPosition = document.getElementById(mission.car.id).getBoundingClientRect();
-		const pausePoint = {
-				id: "point-pause",
-				x: carObjPosition.left + mission.car.domObj.width()/2,
-				y: carObjPosition.top + mission.car.domObj.height(),
-				status: "current"
-		}
-
-		const moveX = pausePoint.x - interfaceObjs.points.spawn.x;
-		const moveY = pausePoint.y - interfaceObjs.points.spawn.y;
-
-		const moveStr = 'translate(' + moveX + 'px, ' + moveY + 'px)';
-
-		mission.car.domObj.css({
-			"-webkit-transform": moveStr,
-			"-moz-transform": moveStr,
-			"-ms-transform": moveStr,
-			"-o-transform": moveStr,
-			"transform": moveStr
-		});
-
-		for (let [index, point] of mission.points.entries()) {
-			if (point.status === "past") continue;
-			else if (point.status === "current") {
-				point.status = "next";
-				mission.points.splice(index, 0 , pausePoint);
-				break;
-			}
-		}
-	}
 }
 
 function pauseLoop() {
@@ -206,4 +98,50 @@ function unPauseLoop() {
 
 function updatePause() {
 	isPaused = !isPaused;
+}
+
+function copMovementCheck(copCar) {
+		// console.log(' INTO copMovementCheck ', copCar);
+		let pointIndex = 0;
+		if (!['driving', 'patrolling'].includes(copCar.status)) return;
+
+		checkNextCopPoint(copCar, pointIndex);
+		findViolator(copCar);
+}
+
+function startPatrol(cop) {
+	if (!cop) console.error("startPatrol -> cop  -  EXPECTED")
+	cop.status = "patrolling";
+	const copCar = interfaceObjs.cars[cop.carId];
+	copCar.status = "driving";
+	copCar.domObj.css({ "visibility": "visible" });
+}
+
+function acceptReinforcement(modal) {
+	const missionId = modal.data('mission');
+	const mission = interfaceObjs.missions[missionId];
+	const newCar = generateReinforcementCar(mission);
+
+	const newComrades = addComradesToMission(modal, mission);
+	addComradesToEndModals(newComrades, missionId);
+}
+
+function carMovementCheck() {
+	for(let [key, car] of Object.entries(interfaceObjs.cars)) {
+		if (['hidden', 'wait'].includes(car.status)) continue;
+
+		switch (car.fraction) {
+			case 'own':
+				missionCarMovementCheck(car);
+				break;
+
+			case 'cop':
+				copMovementCheck(car);
+				break;
+
+	 		default :
+				console.error(' carMovementCheck -> car.fraction is ABSENT');
+		}
+
+	}
 }

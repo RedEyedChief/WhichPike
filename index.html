@@ -11,6 +11,8 @@
 		<div id="map-container">
 			<div id="points-list">
 				<div id="spawn" class="point"></div>
+				<div id="copSpawn" class="point"></div>
+				<div id="cop-spawn-exit" class="point"></div>
 				<div id="point-1" class="point"></div>
 				<div id="point-2" class="point"></div>
 				<div id="point-3" class="point"></div>
@@ -18,13 +20,19 @@
 				<div id="point-5" class="point"></div>
 				<div id="point-6" class="point"></div>
 				<div id="point-7" class="point"></div>
+				<div id="point-8" class="point"></div>
+				<div id="point-9" class="point"></div>
+				<div id="point-10" class="point"></div>
+				<div id="point-11" class="point"></div>
 			</div>
 
 			<div id="characters">
-				<div id="cars">
+				<div id="mission-cars">
 					<div class="mission-car template hide"></div>
 				</div>
-
+				<div id="cop-cars">
+					<div class="cop-car template hide"></div>
+				</div>
 			</div>
 
 			<!-- <div id="buildings">
@@ -38,14 +46,11 @@
 				<div class="mission-flag mission-default template">
 					<p class="mission-flag-countdown mission-countdown"></p>
 				</div>
-				<!-- <div id="m1" class="mission-flag mission-default">
-					<p class="mission-flag-countdown mission-countdown">30</p>
-				</div> -->
 			</div>
 		</div>
 	</section>
 	<section id="widgets">
-		<div id="calls">
+		<div id="calls" class="widget hiding-widget">
 			<div id="calls-title">
 				<h1>calls</h1>
 			</div>
@@ -62,7 +67,7 @@
 				</li>
 			</ul>
 		</div>
-		<div id="messages">
+		<div id="messages" class="widget hiding-widget">
 			<div id="messages-title">
 				<h1>messages</h1>
 			</div>
@@ -72,38 +77,58 @@
 						some text should be here
 					</div>
 				</li>
-				<!-- <li class="message">
-					<div class="message-text-block">
-						barebuh jerking
-					</div>
-				</li>
-				<li class="message">
-					<div data-modal-class="mission-modal-fake" class="message-text-block">Fake call</div>
-				</li>
-				<li class="message">
-					<div data-modal-class="mission-modal-self" class="message-text-block">Self based on skills</div>
-				</li>
-				<li class="message">
-					<div data-modal-class="mission-modal-cops" class="message-text-block">Cops arest </div>
-				</li> -->
-
 			</ul>
 		</div>
-		<div id="team">
+		<div id="team" class="widget hiding-widget">
 			<div id="team-title-block">
-				<h1 id="team-title-text">
-					Boob squad
-				</h1>
+				<span id="team-title-text-wrap">
+					<h1 id="team-title-text">
+						Boob squad
+					</h1>
+				</span>
 			</div>
 			<ul id="team-container">
-				<li class="comrad template" data-comrad="">
-					<div class="comrad-title"> Some name </div>
-					<div class="comrad-power-counter"> Power </div>
-					<div class="comrad-image"></div>
+				<li class="comrade template" data-comrade="">
+					<div class="comrade-title"> Some name </div>
+					<div class="comrade-power-counter"> Power </div>
+					<div class="comrade-image-block">
+						<div class="comrade-image">
+							<div class="comrade-image-extra-action"></div>
+						</div>
+						<ul class="comrade-energy-storage">
+							<li class="comrade-energy-unit"></li>
+							<li class="comrade-energy-unit"></li>
+							<li class="comrade-energy-unit"></li>
+							<li class="comrade-energy-unit"></li>
+							<li class="comrade-energy-unit"></li>
+						</ul>
+					</div>
 				</li>
 			</ul>
 		</div>
-	</section>
+		<div id="hide-widget" class="widget">
+			<p id="hide-widget-text" class="title">hide</p>
+		</div>
+		<div id="menu-widget" class="widget">
+			<p id="menu-widget-text" class="title">menu</p>
+		</div>
+		<div id="achievements-widget" class="widget">
+			<p id="achievements-widget-text" class="title">a</p>
+		</div>
+		<div id="extra-widget" class="widget">
+			<p id="extra-widget-text" class="title">+</p>
+		</div>
+		<div id="additional-widgets">
+			<div id="shop-widget" class="additional-widget widget" data-modal="shop">
+				<p class="additional-widget-text title">S</p>
+			</div>
+			<div id="gatcha-widget" class="additional-widget widget" data-modal="gatcha">
+				<p class="additional-widget-text title">G</p>
+			</div>
+			<div id="inventory-widget" class="additional-widget widget" data-modal="inventory">
+				<p class="additional-widget-text title">I</p>
+			</div>
+		</div>
 	<section id="modals">
 		<div id="building-modal" class="modal">
 			<div class="modal-info-wrap">
@@ -133,13 +158,13 @@
 						</div>
 						<div class="qms-squad-block">
 							<div class="qmssb-common-team-container">
-								<ul class="qmssb-common-team-list">
-									<li class="qmssb-common-team-list-item"></li>
-									<li class="qmssb-common-team-list-item"></li>
-									<li class="qmssb-common-team-list-item"></li>
-									<li class="qmssb-common-team-list-item"></li>
-									<li class="qmssb-common-team-list-item"></li>
-									<li class="qmssb-common-team-list-item"></li>
+								<ul class="modal-common-comrade-list">
+									<li class="modal-common-comrade-field start-mission-comrade-field"></li>
+									<li class="modal-common-comrade-field start-mission-comrade-field"></li>
+									<li class="modal-common-comrade-field start-mission-comrade-field"></li>
+									<li class="modal-common-comrade-field start-mission-comrade-field"></li>
+									<li class="modal-common-comrade-field start-mission-comrade-field"></li>
+									<li class="modal-common-comrade-field start-mission-comrade-field"></li>
 								</ul>
 							</div>
 							<div class="qmssb-bdsm-team-container">
@@ -149,10 +174,10 @@
 								</ul>
 							</div>
 						</div>
-						<button class="qms-empty-list-close-btn">close</button>
-						<div class="qms-buttons notDisplay">
-							<button class="qms-accept-btn">accept</button>
-							<button class="qms-close-btn">close</button>
+						<button class="modal-empty-comrade-list-close-btn">close</button>
+						<div class="modal-mission-btns notDisplay">
+							<button class="modal-comrade-list-accept-btn">accept</button>
+							<button class="modal-comrade-list-close-btn">close</button>
 						</div>
 					</div>
 				</div>
@@ -194,10 +219,10 @@
 							<h1>Fake call [template]</h1>
 							<div>go some fap [template]</div>
 							<ul class="involved-comrades-container">
-								<li class="comrad involved-comrad template" data-comrad="">
-									<div class="comrad-title"> Some name </div>
-									<div class="comrad-power-counter"> Power </div>
-									<div class="comrad-image"></div>
+								<li class="comrade involved-comrade template" data-comrade="">
+									<div class="comrade-title"> Some name </div>
+									<div class="comrade-power-counter"> Power </div>
+									<div class="comrade-image"></div>
 								</li>
 							</ul>
 							<button class="close-btn">close</button>
@@ -215,10 +240,10 @@
 								<li>PT ?</li>
 							</ul>
 							<ul class="involved-comrades-container">
-								<li class="comrad involved-comrad template" data-comrad="">
-									<div class="comrad-title"> Some name </div>
-									<div class="comrad-power-counter"> Power </div>
-									<div class="comrad-image"></div>
+								<li class="comrade involved-comrade template" data-comrade="">
+									<div class="comrade-title"> Some name </div>
+									<div class="comrade-power-counter"> Power </div>
+									<div class="comrade-image"></div>
 								</li>
 							</ul>
 							<button class="close-btn">close</button>
@@ -231,10 +256,12 @@
 							<h1>Cops arrest</h1>
 							<div>Bye bye to your anus bitch</div>
 							<ul class="involved-comrades-container">
-								<li class="comrad involved-comrad template" data-comrad="">
-									<div class="comrad-title"> Some name </div>
-									<div class="comrad-power-counter"> Power </div>
-									<div class="comrad-image"></div>
+								<li class="comrade involved-comrade template" data-comrade="">
+									<div class="comrade-title"> Some name </div>
+									<div class="comrade-power-counter"> Power </div>
+									<div class="comrade-image">
+										<div class="comrade-image-extra-action"></div>
+									</div>
 								</li>
 							</ul>
 							<button class="close-btn">close</button>
@@ -249,10 +276,10 @@
 						<h1>Success</h1>
 						<div>chetko chisto vnature po bazaru</div>
 						<ul class="involved-comrades-container">
-							<li class="comrad involved-comrad template" data-comrad="">
-								<div class="comrad-title"> Some name </div>
-								<div class="comrad-power-counter"> Power </div>
-								<div class="comrad-image"></div>
+							<li class="comrade involved-comrade template" data-comrade="">
+								<div class="comrade-title"> Some name </div>
+								<div class="comrade-power-counter"> Power </div>
+								<div class="comrade-image"></div>
 							</li>
 						</ul>
 						<button class="close-btn">close</button>
@@ -266,41 +293,80 @@
 						<h1>Fail</h1>
 						<div>eat some shit</div>
 						<ul class="involved-comrades-container">
-							<li class="comrad involved-comrad template" data-comrad="">
-								<div class="comrad-title"> Some name </div>
-								<div class="comrad-power-counter"> Power </div>
-								<div class="comrad-image"></div>
+							<li class="comrade involved-comrade template" data-comrade="">
+								<div class="comrade-title"> Some name </div>
+								<div class="comrade-power-counter"> Power </div>
+								<div class="comrade-image"></div>
 							</li>
 						</ul>
 						<button class="close-btn">close</button>
 					</div>
 				</div>
 			</div>
+
 			<div id="mission-modals-end-neutral">
 				<div class="modal mission-modal-end mission-modal-end-neutral template" data-mission="">
 					<div class="modal-info-wrap">
 						<h1>Neutral</h1>
 						<div>ne rastrayuysya</div>
 						<ul class="involved-comrades-container">
-							<li class="comrad involved-comrad template" data-comrad="">
-								<div class="comrad-title"> Some name </div>
-								<div class="comrad-power-counter"> Power </div>
-								<div class="comrad-image"></div>
+							<li class="comrade involved-comrade template" data-comrade="">
+								<div class="comrade-title"> Some name </div>
+								<div class="comrade-power-counter"> Power </div>
+								<div class="comrade-image"></div>
 							</li>
 						</ul>
 						<button class="close-btn">close</button>
 					</div>
 				</div>
 			</div>
+
+			<div id="mission-modals-reinforcement">
+				<div class="modal mission-modal-reinforcement template" data-mission="">
+					<div class="modal-info-wrap">
+						<div class="existed-comrads-container">
+								<h3>Existed bibkas</h3>
+								<ul class="existed-comrads-list">
+									<li class="existed-comrade"></li>
+									<li class="existed-comrade"></li>
+									<li class="existed-comrade"></li>
+									<li class="existed-comrade"></li>
+									<li class="existed-comrade"></li>
+									<li class="existed-comrade"></li>
+								</ul>
+						</div>
+						<div class="modals-reinforcement-text-block">
+							<h1>Cunt alarm!</h1>
+							<div>Needs for sluts</div>
+						</div>
+						<div class="new-comrads-container">
+								<h3>New bibkas</h3>
+								<ul class="new-comrads-list">
+									<li class="modal-common-comrade-field reinforcement-comrade-field"></li>
+									<li class="modal-common-comrade-field reinforcement-comrade-field"></li>
+									<li class="modal-common-comrade-field reinforcement-comrade-field"></li>
+									<li class="modal-common-comrade-field reinforcement-comrade-field"></li>
+									<li class="modal-common-comrade-field reinforcement-comrade-field"></li>
+									<li class="modal-common-comrade-field reinforcement-comrade-field"></li>
+								</ul>
+						</div>
+						<button class="modal-empty-comrade-list-close-btn">close</button>
+						<div class="modal-mission-btns notDisplay">
+							<button class="modal-comrade-list-accept-btn">accept</button>
+							<button class="modal-comrade-list-close-btn">close</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<div id="comrad-modals">
-			<div id="comrad-modals-bio">
-				<div class="modal comrad-modal-bio template" data-comrad="">
+		<div id="comrade-modals">
+			<div id="comrade-modals-bio">
+				<div class="modal comrade-modal-bio template" data-comrade="">
 					<div class="modal-info-wrap">
-						<div class="comrad-modal-container">
-							<div class="comrad-modal-content-block comrad-modal-image"></div>
-							<div class="comrad-modal-content-block comrad-modal-text">
+						<div class="comrade-modal-container">
+							<div class="comrade-modal-content-block comrade-modal-image"></div>
+							<div class="comrade-modal-content-block comrade-modal-text">
 								<p> some description </p>
 								<p> some skills </p>
 								<p> some hobbies </p>
@@ -310,6 +376,59 @@
 						</div>
 
 					</div>
+				</div>
+			</div>
+		</div>
+		<div id="widget-modals">
+			<div id="menu-modal" class="modal">
+				<div id="menu-modal-conrainer">
+					<div id="resume-btn" class="menu-btn">
+						<span class="menu-btn-text">resume</span>
+					</div>
+					<div id="save-btn" class="menu-btn">
+						<span class="menu-btn-text">save</span>
+					</div>
+					<div id="load-btn" class="menu-btn">
+						<span class="menu-btn-text">load</span>
+					</div>
+					<div id="options-btn" class="menu-btn">
+						<span class="menu-btn-text">options</span>
+					</div>
+					<div id="exit-btn" class="menu-btn">
+						<span class="menu-btn-text">exit</span>
+					</div>
+				</div>
+			</div>
+
+			<div id="achievements-modal" class="modal">
+				<div id="achievements-modal-conrainer">
+					<h1>some text</h1>
+					<span>some achievements</span>
+					<button class="close-btn">close</button>
+				</div>
+			</div>
+
+			<div id="shop-modal" class="modal">
+				<div id="shop-modal-conrainer">
+					<h1>some text</h1>
+					<span>some shop</span>
+					<button class="close-btn">close</button>
+				</div>
+			</div>
+
+			<div id="gatcha-modal" class="modal">
+				<div id="gatcha-modal-conrainer">
+					<h1>some text</h1>
+					<span>you spin right round</span>
+					<button class="close-btn">close</button>
+				</div>
+			</div>
+
+			<div id="inventory-modal" class="modal">
+				<div id="inventory-modal-conrainer">
+					<h1>some text</h1>
+					<span>You can store some dicks here</span>
+					<button class="close-btn">close</button>
 				</div>
 			</div>
 		</div>

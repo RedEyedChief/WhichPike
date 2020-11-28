@@ -3,7 +3,7 @@ body {
 	overflow-y: hidden;
 }
 
-h1 {
+h1, h3 {
 	margin: 0;
 }
 
@@ -36,6 +36,31 @@ section {
     position: absolute;
     background-size: contain;
     -webkit-transition: 4s linear;
+	-moz-transition: 4s linear;
+	-o-transition: 4s linear;
+	transition: transform 4s linear;
+	-webkit-transform: translate(10px, 10px),
+	-moz-transform: translate(10px, 10px),
+	-ms-transform: translate(10px, 10px),
+	-o-transform: translate(10px, 10px),
+	 transform: translate(10px, 10px)
+	/*-webkit-transform: translate(0vw, 0vw),
+	-moz-transform: translate(0vw, 0vw),
+	-ms-transform: translate(0vw, 0vw),
+	-o-transform: translate(0vw, 0vw),
+	 transform: translate(0vw, 0vw);*/
+}
+
+.cop-car {
+	width: 5vw;
+  height: 5vw;
+  background-image: url(../img/cop.gif);
+  background-position: center;
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-size: contain;
+  -webkit-transition: 4s linear;
 	-moz-transition: 4s linear;
 	-o-transition: 4s linear;
 	transition: transform 4s linear;
@@ -100,6 +125,16 @@ section {
     left: 24vw;
 }
 
+#copSpawn {
+    top: 17vh;
+    left: 11vw;
+}
+
+#cop-spawn-exit {
+	top: 20.5vh;
+	left: 7.5vw;
+}
+
 #point-1 {
     top: 59.5vh;
     left: 35vw;
@@ -134,6 +169,26 @@ section {
 #point-7 {
     top: 48vh;
     left: 6vw;
+}
+
+#point-8 {
+    top: 16vh;
+    left: 42.5vw;
+}
+
+#point-9 {
+    top: 13.5vh;
+    left: 26.5vw;
+}
+
+#point-10 {
+    top: 24vh;
+    left: 18.5vw;
+}
+
+#point-11 {
+    top: 46vh;
+    left: 1vw;
 }
 
 .building {
@@ -254,6 +309,42 @@ section {
 	height:70vh;
 }
 
+#menu-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+	background-color: grey;
+}
+
+#menu-modal-conrainer {
+	width:100%;
+	height:100%;
+}
+
+.menu-btn {
+	width: 80%;
+	height: 15%;
+	margin: 4% auto 0;
+	background-color: purple;
+	text-align: center;
+}
+
+.menu-btn-text {
+  color: white;
+  margin-top: 2vh;
+	display: inline-block;
+}
+
+.menu-btn:hover {
+	cursor: pointer;
+	background-color: #9e059e;
+}
+
+.title {
+	text-transform: uppercase;
+}
+
 .mission-modal-start {
 	top:15vh;
 	left: 5vw;
@@ -295,6 +386,47 @@ section {
 	left: 30vw;
 	width:40vw;
 	height:70vh;
+}
+
+.mission-modal-reinforcement {
+	top:15vh;
+	left: 20vw;
+	width:60vw;
+	height:70vh;
+}
+
+.existed-comrads-container, .new-comrads-container {
+    width: 100%;
+    height: 30%;
+}
+
+.existed-comrads-list, .new-comrads-list {
+	height: 80%;
+	list-style: none;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.existed-comrade {
+    width: 15%;
+    height: 90%;
+    margin: auto;
+    background-color: black;
+    cursor: pointer;
+    opacity: 0.2;
+    background-position: center;
+    background-attachment: scroll;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.modals-reinforcement-text-block {
+	width: 100%;
+	padding: 5% 0;
 }
 
 .block-info-template {
@@ -365,11 +497,9 @@ section {
 }
 
 #calls {
-    width:20vw;
-	top: 10vh;
+    width:15vw;
+	top: 0;
 	left: 0;
-	position: absolute;
-    z-index: 12;
 }
 
 #calls-container {
@@ -416,11 +546,9 @@ section {
 }
 
 #messages {
-    width:20vw;
-	top: 10vh;
+    width:15vw;
+	top: 0;
 	right: 0;
-	position: absolute;
-    z-index: 12;
 }
 
 #messages-container {
@@ -512,7 +640,7 @@ section {
 	height: 100%;
 }
 
-.qmssb-common-team-list {
+.modal-common-comrade-list {
 	width: 90%;
 	height: 100%;
 	list-style: none;
@@ -521,7 +649,7 @@ section {
 	padding: 0;
 }
 
-.qmssb-common-team-list-item {
+.modal-common-comrade-field {
 	width: 15%;
 	height: 90%;
 	margin: auto;
@@ -536,6 +664,7 @@ section {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 
 .qmssb-bdsm-team-list {
 	width: 90%;
@@ -555,7 +684,7 @@ section {
 	opacity: 0.4;
 }
 
-.qms-empty-list-close-btn {
+.modal-empty-comrade-list-close-btn {
 	height: 10%;
 	width: 100%;
 	background-color: blue;
@@ -564,7 +693,7 @@ section {
 	cursor: pointer;
 }
 
-.qms-buttons {
+.modal-mission-btns {
 	height: 10%;
 	width: 100%;
 	display: none;
@@ -574,19 +703,19 @@ section {
 	display: flex;
 }
 
-.qms-accept-btn {
+.modal-comrade-list-accept-btn {
 	height: 100%;
 	width: 50%;
 	background-color: blue;
 }
 
-.qms-close-btn {
+.modal-comrade-list-close-btn {
 	height: 100%;
 	width: 50%;
 	background-color: red;
 }
 
-.qmssbctli-active {
+.active-comrade {
 	/* background-color: darkblue; */
 	opacity: 1;
 }
@@ -645,17 +774,30 @@ section {
 }
 
 #team {
-	position: absolute;
 	bottom: 0;
 	height: 20vh;
-    width: 100vw;
+    width: 45vw;
     background-color: yellow;
+}
+
+.team-hidden {
+	bottom: -17vh;
 }
 
 #team-title-block {
 	height: 3vh;
-    width: 100vw;
+    width: 100%;
     background-color: chocolate;
+
+		display: flex;
+/* flex-flow: column wrap; */
+justify-content: space-between;
+flex-direction: column;
+flex-wrap: wrap;
+}
+
+#team-title-text-wrap {
+	height: 100%;
 }
 
 #team-title-text {
@@ -683,34 +825,34 @@ section {
   background-color: coral;
 }
 
-.comrad {
+.comrade {
     max-width: 10vw;
-    width: 10%;
+    width: 14%;
     background-color: #99dede;
     text-align: center;
     margin-right: 1vw;
 }
 
-.involved-comrad {
+.involved-comrade {
 	width: 30%;
 }
 
-.comrad-title {
+.comrade-title {
     height: 10%;
     line-height: 100%;
 	background-color: #f0ffffd6;
 }
 
-.comrad-power-counter {
+.comrade-power-counter {
     height: 10%;
     line-height: 100%;
 	background-color: #f0ffff94;
 }
 
-.comrad-image {
+.comrade-image {
 	cursor: pointer;
-    height: 80%;
-    width: 100%;
+    height: 100%;
+    width: 90%;
 	background-position: center;
     background-attachment: scroll;
     -webkit-background-size: contain;
@@ -720,39 +862,59 @@ section {
     background-repeat: no-repeat;
 }
 
-#team-container .comrad-image {
+#team-container .comrade-image {
 	opacity: 0.8;
 }
 
-#team-container .comrad-image:hover {
+#team-container .comrade-image:hover {
 	opacity: 1;
 }
 
-#team-container .comrad-image-used {
+#team-container .comrade-image-used {
 	opacity: 0.4;
 }
 
-.comrad-modal-bio {
+.comrade-image-extra-action {
+	width: 100%;
+  height: 100%;
+	background-position: center;
+  background-attachment: scroll;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.comrade-image-died {
+	background-image: url(../img/comrade-died.png);
+}
+
+.comrade-image-cops {
+	background-image: url(../img/handcuff.png);
+}
+
+.comrade-modal-bio {
 	top: 20vh;
     left: 20vw;
     width: 60vw;
     height: 40vh;
 }
 
-.comrad-modal-container {
+.comrade-modal-container {
 	height: 100%;
 	width: 100%;
 	display: flex;
 }
 
-.comrad-modal-content-block{
+.comrade-modal-content-block{
 	width: 50%;
 	height: 100%;
 }
 
-.comrad-modal-image {
+.comrade-modal-image {
 	height: 100%;
-	background-image: url(../img/comrad.png);
+	background-image: url(../img/comrade.png);
 	background-position: center;
     background-attachment: scroll;
     -webkit-background-size: contain;
@@ -760,4 +922,225 @@ section {
     -o-background-size: contain;
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+#team-hide-arrow {
+	line-height: 100%;
+  height: 100%;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.bottom {
+	transform: rotate(45deg);
+	  -webkit-transform: rotate(45deg);
+}
+
+.comrade-energy-storage {
+	padding: 0;
+	margin: 0 0 0 2%;
+	width: 8%;
+	height: 100%;
+	list-style: none;
+	background-color: grey;
+	display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.comrade-energy-unit {
+	width: 100%;
+	height: 18%;
+	margin: 0;
+	background-color: #005020;
+}
+
+.energy-unit-empty {
+	background-color: #a9a7a7;
+}
+
+.comrade-image-block {
+	width: 100%;
+	height: 80%;
+	display: flex;
+}
+
+#hide-widget {
+	width: 5vw;
+	height: 4.5vh;
+	border-radius: 4px;
+ 	top: 94vh;
+ 	right: 13vw;
+	background-color: #2a2b2e;
+	text-align: center;
+}
+
+#hide-widget-text {
+	display: inline-block;
+	color: white;
+	margin: 1vh 0 0;
+  padding: 0;
+}
+
+#hide-widget:hover {
+	cursor: pointer;
+	background-color: #71737b;
+}
+
+#menu-widget {
+	width: 6vw;
+	height: 6vw;
+	top: 88vh;
+	right: 1vw;
+	border-radius: 50%;
+	background-color: #2a2b2e;
+}
+
+#menu-widget:hover {
+	cursor: pointer;
+	background-color: #71737b;
+}
+
+#menu-widget-text {
+	color: white;
+	padding: 0;
+	text-align: center;
+	margin: 4vh 0;
+}
+
+.widget {
+	position: absolute;
+	z-index: 12;
+}
+
+#menu-widget-text {
+	color: white;
+	padding: 0;
+	text-align: center;
+	margin: 4vh 0;
+}
+
+
+#achievements-widget {
+	width: 3vw;
+	height: 3vw;
+	top: 93.5vh;
+  right: 8.5vw;
+	border-radius: 50%;
+	background-color: green;
+}
+
+#achievements-widget:hover {
+	cursor: pointer;
+	background-color: #297129;
+}
+
+#achievements-widget-text {
+	color: white;
+	padding: 0;
+	text-align: center;
+	margin: 1.5vh 0;
+}
+
+#achievements-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+	background-color: wheat;
+}
+
+#achievements-modal-container {
+	width: 100%;
+	height: 100%;
+}
+
+#extra-widget {
+	width: 3vw;
+	height: 3vw;
+	top: 79.8vh;
+	right: 1.1vw;
+	border-radius: 50%;
+	background-color: green;
+}
+
+#extra-widget:hover {
+	cursor: pointer;
+	background-color: #297129;
+}
+
+#extra-widget-text {
+	color: white;
+	padding: 0;
+	text-align: center;
+	margin: 1.5vh 0;
+}
+
+.extra-widget-active {
+	background-color: #297129!important;
+}
+
+
+.additional-widget {
+	display: none;
+	width: 3vw;
+	height: 3vw;
+	border-radius: 50%;
+	background-color: green;
+}
+
+.additional-widget:hover {
+	cursor: pointer;
+	background-color: #297129;
+}
+
+.additional-widget-text {
+	color: white;
+	padding: 0;
+	text-align: center;
+	margin: 1.5vh 0;
+}
+
+#shop-widget {
+	top: 72.5vh;
+	right: 1.1vw;
+}
+
+#gatcha-widget {
+	top: 74vh;
+  right: 6.5vw;
+}
+
+#inventory-widget {
+	top: 80vh;
+	right: 10.5vw;
+}
+
+#shop-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+	background-color: wheat;
+}
+
+#gatcha-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+	background-color: wheat;
+}
+
+#inventory-modal {
+	top:15vh;
+	left: 30vw;
+	width:40vw;
+	height:70vh;
+	background-color: wheat;
 }
