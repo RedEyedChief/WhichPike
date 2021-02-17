@@ -53,7 +53,7 @@ function checkNextCopPoint(copCar, pointIndex) {
 			point.status = 'past';
 
 			// return path 		-- # move back animation TODO
-			if (pointIndex === copCar.way.length && copCar.status === 'driving') {
+			if (pointIndex === copCar.way.length && copCar.status === 'drive') {
 				copCar.status = 'patrolling';
 				copCar.way = interfaceObjs.cops[copCar.copId].generatedWays.patrol;
 				break;
@@ -83,18 +83,18 @@ function findViolator(copCar) {
 
 		const copObjPosition = document.getElementById(copCar.id).getBoundingClientRect();
 		const carObjPosition = document.getElementById(car.id).getBoundingClientRect();
-		const extraAreaSize = 50;
+		const extraAreaSize = 0;
 		const carAreaSize = {
 			top: carObjPosition.top - extraAreaSize,
 			left: carObjPosition.left - extraAreaSize,
-			right: carObjPosition.left + car.domObj.width()/2 + extraAreaSize,
+			right: carObjPosition.left + car.domObj.width() + extraAreaSize,
 			bottom: carObjPosition.top + car.domObj.height() + extraAreaSize
 		}
 
 		const copAreaSize = {
 			top: copObjPosition.top,
 			left: copObjPosition.left,
-			right: copObjPosition.left + copCar.domObj.width()/2,
+			right: copObjPosition.left + copCar.domObj.width(),
 			bottom: copObjPosition.top + copCar.domObj.height()
 		}
 
@@ -107,6 +107,7 @@ function findViolator(copCar) {
 			  (copAreaSize.bottom > carAreaSize.top && copAreaSize.bottom < carAreaSize.bottom)))
 		) {
 			mission.status = 'pressed';
+			mission.copId = copCar.copId;
 			createModalReinforcement(mission);
 		}
 	}
@@ -214,4 +215,37 @@ function missionCarMovementCheck(car) {
 				break;
 			}
 		}
+}
+
+function driveToHome(way) {
+	const backwardWay = way.reverse();
+	let firstPausePoint = true;
+	let loopIndex = 0;
+	for (point of backwardWay) {
+		console.log(' point ', point);
+		if (point.id === "point-pause" && firstPausePoint) {
+			point.status = "current";
+			firstPausePoint = false;
+		} else if (point.id === "point-pause" && !firstPausePoint) {
+			way.splice(loopIndex, 0);
+		} else if (!firstPausePoint) {
+			point.status = "next";
+		} else {
+			point.status = "past";
+		}
+		loopIndex++;
+	}
+	// pointsList.filter((value, index) => {
+	// 	console.log(' key, point ', value, index);
+	//
+	// 	return value.id !== "point-pause";
+	// });
+	// console.log(' newPoints ', newPoints);
+	//
+	// for (let point of newPoints) {
+	// 	point.status = "next";
+	// }
+	//
+	// newPoints.reverse();
+	// return newPoints;
 }

@@ -29,6 +29,7 @@ section {
 .mission-car {
 	width: 5vw;
     height: 5vw;
+    background-color: yellow;
     background-image: url(../img/test.gif);
     background-position: center;
     background-attachment: scroll;
@@ -49,9 +50,11 @@ section {
 	-ms-transform: translate(0vw, 0vw),
 	-o-transform: translate(0vw, 0vw),
 	 transform: translate(0vw, 0vw);*/
+
 }
 
 .cop-car {
+	background-color: green;
 	width: 5vw;
   height: 5vw;
   background-image: url(../img/cop.gif);
@@ -74,6 +77,8 @@ section {
 	-ms-transform: translate(0vw, 0vw),
 	-o-transform: translate(0vw, 0vw),
 	 transform: translate(0vw, 0vw);*/
+
+	 
 }
 
 .translate-1 {

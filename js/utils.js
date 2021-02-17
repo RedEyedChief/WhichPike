@@ -96,3 +96,23 @@ function decreaseComradeenergy(comradeId) {
 	topChargedenergyUnit.addClass('energy-unit-empty');
 	interfaceObjs.comrades[comradeId].energyLevel -= 1;
 }
+
+function winnerDetermining(mission, cop) {
+	//const winnerSide = getRandomInt(2);
+	const winnerSide = "1";
+	switch (winnerSide) {
+		case '0':
+			return "mission";
+			break;
+		case '1':
+			return "cop";
+			break;
+		default:
+			console.error(' winnerDetermining -> winnerSide is ABSENT');
+	}
+}
+
+function individualEscapeCheck(mission) {
+	console.log('TODO: individualEscapeCheck(mission)')
+	return 0;
+}

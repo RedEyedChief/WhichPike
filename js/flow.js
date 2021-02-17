@@ -22,7 +22,7 @@ function acceptMission(modal) {
 	mission.domObjs.flag.hide();
 	mission.domObjs.call.hide();
 	mission.status = "accepted";
-	interfaceObjs.cars[mission.carId].status = 'driving';
+	interfaceObjs.cars[mission.carId].status = 'drive';
 	const newComrades = addComradesToMission(modal, mission);
 	addComradesToEndModals(newComrades, missionId);
 }
@@ -61,7 +61,7 @@ function interfaceCheck() {
 		if (mission.status === "wait" && timeWaitingDiff > 5 ) {
 			showQuestStoryModal(mission);
 			mission.status = "return";
-			interfaceObjs.cars[mission.carId].status = 'driving';
+			interfaceObjs.cars[mission.carId].status = 'drive';
 		}
 
 		if (mission.status !== "active") continue;
@@ -103,7 +103,7 @@ function updatePause() {
 function copMovementCheck(copCar) {
 		// console.log(' INTO copMovementCheck ', copCar);
 		let pointIndex = 0;
-		if (!['driving', 'patrolling'].includes(copCar.status)) return;
+		if (!['drive', 'patrolling'].includes(copCar.status)) return;
 
 		checkNextCopPoint(copCar, pointIndex);
 		findViolator(copCar);
@@ -113,7 +113,7 @@ function startPatrol(cop) {
 	if (!cop) console.error("startPatrol -> cop  -  EXPECTED")
 	cop.status = "patrolling";
 	const copCar = interfaceObjs.cars[cop.carId];
-	copCar.status = "driving";
+	copCar.status = "drive";
 	copCar.domObj.css({ "visibility": "visible" });
 }
 
@@ -144,4 +144,31 @@ function carMovementCheck() {
 		}
 
 	}
+}
+
+function policeDecision(missionId, copId) {
+	const mission = interfaceObjs.missions[missionId];
+	const cop = interfaceObjs.cops[copId];
+	const winner = winnerDetermining(mission, cop);
+
+	if (winner === "mission") {
+		returnToHQ(mission);
+	} else if (winner === "cop") {
+		console.log("FUCK THE POLICE")
+		const escapedAmount = individualEscapeCheck(mission);
+		if (escapedAmount) returnToHQ(mission);
+		else interfaceObjs.cars[mission.carId].domObj.hide();
+		returnToDepartment(cop);
+	}
+	console.log('policeDecision(missionId, copId)', missionId, copId);
+}
+
+function returnToDepartment(cop) {
+	const copCar = interfaceObjs.cars[cop.carId];
+	driveToHome(copCar.way);
+}
+
+function returnToHQ(mission) {
+	mission.status = "return";
+	interfaceObjs.cars[mission.carId].status = "drive";
 }

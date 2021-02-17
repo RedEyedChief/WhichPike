@@ -61,7 +61,11 @@ $('#mission-modals').delegate('.modal-empty-comrade-list-close-btn, .modal-comra
 	checkQuestStartButtons(this);
 	closeModal(parent);
 
-	if (parent.hasClass('mission-modal-reinforcement')) alert('unfinished flow!')
+	if (parent.hasClass('mission-modal-reinforcement')) {
+		const missionId = parent.attr('data-mission');
+		const copId = parent.attr('data-cop');
+		policeDecision(missionId, copId);
+	}
 });
 
 $('#mission-modals').delegate('.modal-comrade-list-accept-btn', 'click', function() {

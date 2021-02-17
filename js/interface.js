@@ -59,7 +59,7 @@ function generateComrades() {
 
 function generateUponArrivalFlow(mission) {
 	const missionStory = getRandomInt(3);
-	// const missionStory = 3;
+	//const missionStory = 0;
 	mission.uponArrival.storyLine = missionStory;
 	const messageTemplate = $('#messages-container>.template');
 
@@ -110,7 +110,9 @@ function checkQuestStartButtons(elem) {
 	}
 }
 
-function showModal() {
+function showModal(modal) {
+	if(modal) modal.show();
+
 	pauseLoop();
 }
 
@@ -122,9 +124,12 @@ function closeModal(modal) {
 
 function showQuestStoryModal(mission) {
 	console.log('INTO showQuestStoryModal ');
-	mission.uponArrival.displayWidget.show();
+	showModal(mission.uponArrival.displayWidget);
 
-	if (mission.uponArrival.status === "manual") pauseLoop();
+	if (mission.uponArrival.status === "manual") {
+		console.log(' @@@@ GET RECT?')
+		//pauseLoop();
+	}
 	else if (mission.uponArrival.status === "cops") {
 		for (const comradId of mission.comrades) {
 			const comradImages = getComradImagesByComradId(comradId);
@@ -237,7 +242,7 @@ function cloneElement(template, type, entityType, eic) {
 				domObj 		: newElement,
 				missionId : eic.id,
 				way				: interfaceObjs.cars[eic.carId].way,
-				status		: 'driving',
+				status		: 'drive',
 				fraction	: 'own',
 				position  : 'reinforcement'
 			}
@@ -305,6 +310,7 @@ function cloneElement(template, type, entityType, eic) {
 			break;
 
 		case 'reinforcement-modal':
+			newElement.attr('data-cop', eic.copId);
 			break;
 
 		default :
