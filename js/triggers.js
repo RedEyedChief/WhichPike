@@ -14,10 +14,27 @@ $(document).keyup(function(e) {
   	$('.modal').hide();
   	unPauseLoop();
   }
-	if (e.keyCode === 68) {	// esc
+  else if (e.keyCode === 68) {
 		console.log(' GLOBAL DEBUG ');
   	console.log('interfaceObjs', interfaceObjs);
   }
+  else if (e.keyCode === 37) {
+		console.log(' LEFT ARROW ');
+		checkHeroMovement('left');
+  }
+  else if (e.keyCode === 38) {
+		console.log(' UP ARROW ');
+		checkHeroMovement('up');
+  }
+  else if (e.keyCode === 39) {
+		console.log(' RIGHT ARROW ');
+		checkHeroMovement('right');
+  }
+  else if (e.keyCode === 40) {
+		console.log(' DOWN ARROW ');
+		checkHeroMovement('down');
+  }
+
 });
 
 $('#build').click( function() {

@@ -1,0 +1,33 @@
+#level1 {
+    display: none;
+}
+
+#lv2-map-container {
+    width: 100%;
+    height: 100%;
+    background-color: purple;
+}
+
+.lv2-point {
+    background-color: gold;
+}
+
+.lv2-hero-car {
+    background-color: #27a7a0;
+    transition: transform 1s linear;
+	-webkit-transform: translate(0, 0),
+	-moz-transform: translate(0, 0),
+	-ms-transform: translate(0, 0),
+	-o-transform: translate(0, 0),
+	 transform: translate(0, 0)
+
+
+}
+
+.wrong-way {
+    background-color: red;
+}
+
+.warning-way {
+    background-color: #6f6012;
+}

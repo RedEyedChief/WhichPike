@@ -39,6 +39,10 @@ function preInitialization() {
 	generateMissions();
 	generateCops();
 	generateComrades();
+
+	// --- lvl 2 draft
+	generateRacePoints();
+	generateHeroCar();
 }
 
 // DELETE ? 			TODO
