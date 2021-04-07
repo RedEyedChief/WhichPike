@@ -14,9 +14,17 @@ $(document).keyup(function(e) {
   	$('.modal').hide();
   	unPauseLoop();
   }
-  else if (e.keyCode === 68) {
+  else if (e.keyCode === 68) { // d
 		console.log(' GLOBAL DEBUG ');
   	console.log('interfaceObjs', interfaceObjs);
+  }
+  else if (e.keyCode === 80) { // p
+		console.log(' pauseLoop ');
+		pauseLoop();
+  }
+  else if (e.keyCode === 85) { // u
+		console.log(' pauseLoop ');
+		unPauseLoop();
   }
   else if (e.keyCode === 37) {
 		console.log(' LEFT ARROW ');
@@ -81,7 +89,11 @@ $('#mission-modals').delegate('.modal-empty-comrade-list-close-btn, .modal-comra
 	if (parent.hasClass('mission-modal-reinforcement')) {
 		const missionId = parent.attr('data-mission');
 		const copId = parent.attr('data-cop');
-		policeDecision(missionId, copId);
+		const mission = interfaceObjs.missions[missionId];
+		//CONTINUE
+		mission.countdown.startWaiting = Date.now();
+		mission.status = MISSION_STATUSES.fight;
+		// policeDecision(missionId, copId);
 	}
 });
 

@@ -65,7 +65,7 @@ function generateUponArrivalFlow(mission) {
 
 	switch (missionStory) {
 		case 0:
-			mission.uponArrival.status = "manual";
+			mission.uponArrival.status = MISSION_STATUSES.uponArrival.manual;
 			cloneElement($('#mission-modals-end-success>.template'), 'mission-modal-end-success', 'mission', mission);
 			cloneElement($('#mission-modals-end-neutral>.template'), 'mission-modal-end-neutral', 'mission', mission);
 			cloneElement($('#mission-modals-end-fail>.template'), 'mission-modal-end-fail', 'mission', mission);
@@ -75,19 +75,19 @@ function generateUponArrivalFlow(mission) {
 			break;
 
 		case 1:
-			mission.uponArrival.status = "fake";
+			mission.uponArrival.status = MISSION_STATUSES.uponArrival.fake;
 			mission.uponArrival.displayWidget = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
 			cloneElement($('#mission-modals-fake>.template'), 'mission-modal-one-action', 'mission', mission);
 			break;
 
 		case 2:
-			mission.uponArrival.status = "self";
+			mission.uponArrival.status = MISSION_STATUSES.uponArrival.self;
 			mission.uponArrival.displayWidget = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
 			cloneElement($('#mission-modals-self>.template'), 'mission-modal-one-action', 'mission', mission);
 			break;
 
 		/*case 3:
-			mission.uponArrival.status = "cops";
+			mission.uponArrival.status = MISSION_STATUSES.uponArrival.cops;
 			mission.uponArrival.displayWidget = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
 			cloneElement($('#mission-modals-cops>.template'), 'mission-modal-one-action', 'mission', mission);
 			break; */
@@ -117,6 +117,7 @@ function showModal(modal) {
 }
 
 function closeModal(modal) {
+	console.log('WHAT HAPPENED? ', modal);
 	modal.hide();
 	unPauseLoop();
 }
@@ -126,11 +127,11 @@ function showQuestStoryModal(mission) {
 	console.log('INTO showQuestStoryModal ');
 	showModal(mission.uponArrival.displayWidget);
 
-	if (mission.uponArrival.status === "manual") {
+	if (mission.uponArrival.status === MISSION_STATUSES.uponArrival.manual) {
 		console.log(' @@@@ GET RECT?')
 		//pauseLoop();
 	}
-	else if (mission.uponArrival.status === "cops") {
+	else if (mission.uponArrival.status === MISSION_STATUSES.uponArrival.cops) {
 		for (const comradId of mission.comrades) {
 			const comradImages = getComradImagesByComradId(comradId);
 			console.log(' comradImages ', comradImages);
@@ -151,7 +152,7 @@ function showQuestModal(mission) {
 
 }
 
-// eic - element info collection | < mission, call ... >
+// eic - element info collection | < mission, call, car ... >
 function cloneElement(template, type, entityType, eic) {
 	if (!template || !type || !entityType || !eic) console.error("template, type, entityType, eic  -  EXPECTED");
 
@@ -200,8 +201,8 @@ function cloneElement(template, type, entityType, eic) {
 				missionId : eic.id,
 				way				: eic.generatedWays.main,
 				status		: 'hidden',
-				fraction	: 'own',
-				position : 'default'
+				fraction	: 'family',
+				type : 'default'
 			}
 			break;
 
@@ -222,7 +223,7 @@ function cloneElement(template, type, entityType, eic) {
 						way : eic.generatedWays.main,
 				 status : 'hidden',
 				 fraction	: 'cop',
-				 position : 'default'
+				 type : 'default'
 			}
 			break;
 
@@ -241,10 +242,10 @@ function cloneElement(template, type, entityType, eic) {
 						id 		: newRfCarId,
 				domObj 		: newElement,
 				missionId : eic.id,
-				way				: interfaceObjs.cars[eic.carId].way,
+				way				: eic.generatedWays.main,
 				status		: 'drive',
-				fraction	: 'own',
-				position  : 'reinforcement'
+				fraction	: 'family',
+				type  : 'reinforcement'
 			}
 			break;
 
@@ -359,6 +360,6 @@ function generateReinforcementCar(mission) {
 	return newCar;
 }
 
-function generateUponArrivalReinforcementFlow() {
-
+function generateUponArrivalReinforcementFlow(mission) {
+	// interfaceObjs.cars[mission.rfCarId].domObj.hide();
 }

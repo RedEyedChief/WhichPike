@@ -8,7 +8,7 @@ function reverseList(pointsList) {
 	console.log(' newPoints ', newPoints);
 
 	for (let point of newPoints) {
-		point.status = "next";
+		point.status = POINT_STATUSES.next;
 	}
 
 	newPoints.reverse();
@@ -17,7 +17,7 @@ function reverseList(pointsList) {
 
 function refreshCopPoints(copCar) {
 	for (let point of copCar.way) {
-		point.status = "next";
+		point.status = POINT_STATUSES.next;
 	}
 }
 
@@ -26,9 +26,9 @@ function checkNextCopPoint(copCar, pointIndex) {
 		pointIndex++;
 		const copObjPosition = document.getElementById(copCar.id).getBoundingClientRect();
 
-		if (point.status === 'past') continue;
-		else if (point.status === 'next') {
-			point.status = 'current';
+		if (point.status === POINT_STATUSES.past) continue;
+		else if (point.status === POINT_STATUSES.next) {
+			point.status = POINT_STATUSES.current;
 
 			const moveX = point.x - interfaceObjs.points.copSpawn.x;
 			const moveY = point.y - interfaceObjs.points.copSpawn.y;
@@ -46,25 +46,25 @@ function checkNextCopPoint(copCar, pointIndex) {
 			break;
 		}
 
-		if (point.status === 'current' &&
+		if (point.status === POINT_STATUSES.current &&
 			Math.round(point.x) === Math.round(copObjPosition.left + copCar.domObj.width()/2) &&
 			Math.round(point.y) === Math.round(copObjPosition.top + copCar.domObj.height())) {
 
-			point.status = 'past';
+			point.status = POINT_STATUSES.past;
 
 			// return path 		-- # move back animation TODO
-			if (pointIndex === copCar.way.length && copCar.status === 'drive') {
-				copCar.status = 'patrolling';
+			if (pointIndex === copCar.way.length && copCar.status === CAR_STATUSES.drive) {
+				copCar.status = CAR_STATUSES.patrolling;
 				copCar.way = interfaceObjs.cops[copCar.copId].generatedWays.patrol;
 				break;
 			}
-			else if (pointIndex === copCar.way.length && copCar.status === 'patrolling') {
+			else if (pointIndex === copCar.way.length && copCar.status === CAR_STATUSES.patrolling) {
 				refreshCopPoints(copCar);
 			}
 
 		}
 
-		if (point.status === 'current') {
+		if (point.status === POINT_STATUSES.current) {
 			break;
 		}
 	}
@@ -73,13 +73,15 @@ function checkNextCopPoint(copCar, pointIndex) {
 function findViolator(copCar) {
 	for(let [key, car] of Object.entries(interfaceObjs.cars)) {
 		const isDefaultCarAndWaiting =
-			car.position === "default" &&
-			car.fraction === "own" &&
-			car.status === "wait";
+			car.type === "default" &&
+			car.fraction === "family" &&
+			car.status === CAR_STATUSES.wait;
+
+		// cops can arrest only	my default cars on mission
 		if (!isDefaultCarAndWaiting) continue;
 
 		const mission = interfaceObjs.missions[car.missionId];
-		if (mission.status === 'pressed') continue;
+		if (mission.status === MISSION_STATUSES.pressed) continue;
 
 		const copObjPosition = document.getElementById(copCar.id).getBoundingClientRect();
 		const carObjPosition = document.getElementById(car.id).getBoundingClientRect();
@@ -106,7 +108,7 @@ function findViolator(copCar) {
 			 ((copAreaSize.top > carAreaSize.top && copAreaSize.top < carAreaSize.bottom) ||
 			  (copAreaSize.bottom > carAreaSize.top && copAreaSize.bottom < carAreaSize.bottom)))
 		) {
-			mission.status = 'pressed';
+			mission.status = MISSION_STATUSES.pressed;
 			mission.copId = copCar.copId;
 			createModalReinforcement(mission);
 		}
@@ -115,7 +117,7 @@ function findViolator(copCar) {
 
 function addPausePoint() {
 	for(let [key, car] of Object.entries(interfaceObjs.cars)) {
-		if (['hidden', 'wait'].includes(car.status)) continue;
+		if ([CAR_STATUSES.hidden, CAR_STATUSES.wait].includes(car.status)) continue;
 
 		const carObjPosition = document.getElementById(car.id).getBoundingClientRect();
 		const pausePoint = {
@@ -125,7 +127,7 @@ function addPausePoint() {
 				status: "current"
 		}
 
-		const spawnPoint = car.fraction === 'own' ? 'spawn' : 'copSpawn';
+		const spawnPoint = car.fraction === 'family' ? 'spawn' : 'copSpawn';
 
 		const moveX = pausePoint.x - interfaceObjs.points[spawnPoint].x;
 		const moveY = pausePoint.y - interfaceObjs.points[spawnPoint].y;
@@ -141,9 +143,9 @@ function addPausePoint() {
 		});
 
 		for (let [index, point] of car.way.entries()) {
-			if (point.status === "past") continue;
-			else if (point.status === "current") {
-				point.status = "next";
+			if (point.status === POINT_STATUSES.past) continue;
+			else if (point.status === POINT_STATUSES.current) {
+				point.status = POINT_STATUSES.next;
 				car.way.splice(index, 0 , pausePoint);
 				break;
 			}
@@ -154,7 +156,7 @@ function addPausePoint() {
 function missionCarMovementCheck(car) {
 		console.log(' INTO missionCarMovementCheck ');
 
-		if (['hidden', 'wait'].includes(car.status)) return;
+		if ([CAR_STATUSES.hidden, CAR_STATUSES.wait].includes(car.status)) return;
 		let pointIndex = 0;
 
 		for (const point of car.way) {
@@ -162,9 +164,9 @@ function missionCarMovementCheck(car) {
 
 			const carObjPosition = document.getElementById(car.id).getBoundingClientRect();
 
-			if (point.status === 'past') continue;
-			else if (point.status === 'next') {
-				point.status = 'current';
+			if (point.status === POINT_STATUSES.past) continue;
+			else if (point.status === POINT_STATUSES.next) {
+				point.status = POINT_STATUSES.current;
 
 				const moveX = point.x - interfaceObjs.points.spawn.x;
 				const moveY = point.y - interfaceObjs.points.spawn.y;
@@ -182,56 +184,58 @@ function missionCarMovementCheck(car) {
 				break;
 			}
 
-			if (point.status === 'current' &&
+			if (point.status === POINT_STATUSES.current &&
 				Math.round(point.x) === Math.round(carObjPosition.left + car.domObj.width()/2) &&
 				Math.round(point.y) === Math.round(carObjPosition.top + car.domObj.height())) {
 
-				point.status = 'past';
+				point.status = POINT_STATUSES.past;
 
 				// return path 		-- # move back animation TODO
 				if (pointIndex === car.way.length) {
 					const mission = interfaceObjs.missions[car.missionId];
-					if (mission.status === "return") {
-						mission.status = "past";
+					if (mission.status === MISSION_STATUSES.return) {
+						mission.status = MISSION_STATUSES.past;
 						car.domObj.hide();
-						car.status = 'hidden';
+						car.status = CAR_STATUSES.hidden;
 						for (const comrade of mission.comrades) {
 							removeComradActivatedStatus(comrade);
 						}
 						break;
-					} else if (mission.status === "pressed") {
-						alert('unfinished flow!');
+					} else if (mission.status === MISSION_STATUSES.pressed) {
+						// CONTINUE
+						mission.status = MISSION_STATUSES.fight;
 					}
 
-					mission.status = "wait";
-					car.status = 'wait';
+					mission.status = MISSION_STATUSES.wait;
+					car.status = CAR_STATUSES.wait;
 					mission.countdown.startWaiting = Date.now();
-					car.way = reverseList(car.way);
+					car.way = reverseList(car.way, mission);
 				}
 
 			}
 
-			if (point.status === 'current') {
+			if (point.status === POINT_STATUSES.current) {
 				break;
 			}
 		}
 }
 
 function driveToHome(way) {
+	console.log(' ^^^ INTO driveToHome->way ', way);
 	const backwardWay = way.reverse();
 	let firstPausePoint = true;
 	let loopIndex = 0;
 	for (point of backwardWay) {
 		console.log(' point ', point);
 		if (point.id === "point-pause" && firstPausePoint) {
-			point.status = "current";
+			point.status = POINT_STATUSES.current;
 			firstPausePoint = false;
 		} else if (point.id === "point-pause" && !firstPausePoint) {
 			way.splice(loopIndex, 0);
 		} else if (!firstPausePoint) {
-			point.status = "next";
+			point.status = POINT_STATUSES.next;
 		} else {
-			point.status = "past";
+			point.status = POINT_STATUSES.past;
 		}
 		loopIndex++;
 	}
@@ -243,7 +247,7 @@ function driveToHome(way) {
 	// console.log(' newPoints ', newPoints);
 	//
 	// for (let point of newPoints) {
-	// 	point.status = "next";
+	// 	point.status = POINT_STATUSES.next;
 	// }
 	//
 	// newPoints.reverse();

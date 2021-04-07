@@ -309,3 +309,42 @@ const COPS = [
 ]
 
 const MAX_COMRADE_energy = 5;
+
+const MISSION_STATUSES = {
+	hidden: "hidden",
+	active : "active",
+	accepted : "accepted",
+	wait : "wait",
+	fight : "fight",
+	pressed : "pressed",
+	failed : "failed",
+	done : "done",
+	return : "return",
+	past : "past",
+	uponArrival : {
+		manual: "manual",
+		fake: "fake",
+		self: "self",
+		cops: "cops"
+	}
+}
+
+const CAR_STATUSES = {
+	hidden: "hidden",
+	drive : "drive",
+	wait : "wait",
+	patrolling : "patrolling"
+}
+
+const COP_STATUSES = {
+	hidden: "hidden",
+	drive : "drive",
+	wait : "wait",
+	patrolling : "patrolling"
+}
+
+const POINT_STATUSES = {
+	next: "next",
+	current: "current",
+	past: "past"
+}

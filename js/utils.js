@@ -99,16 +99,20 @@ function decreaseComradeenergy(comradeId) {
 
 function winnerDetermining(mission, cop) {
 	//const winnerSide = getRandomInt(2);
-	const winnerSide = "1";
+	const winnerSide = 0;
+
+	console.log(' winnerSide ', winnerSide);
 	switch (winnerSide) {
-		case '0':
+		case 0:
+			mission.status = MISSION_STATUSES.return;
 			return "mission";
 			break;
-		case '1':
+		case 1:
+			mission.status = MISSION_STATUSES.failed;
 			return "cop";
 			break;
 		default:
-			console.error(' winnerDetermining -> winnerSide is ABSENT');
+			alert(' winnerDetermining -> winnerSide is ABSENT');
 	}
 }
 
