@@ -59,7 +59,7 @@ function generateComrades() {
 
 function generateUponArrivalFlow(mission) {
 	const missionStory = getRandomInt(3);
-	//const missionStory = 0;
+	//const missionStory = 1;
 	mission.uponArrival.storyLine = missionStory;
 	const messageTemplate = $('#messages-container>.template');
 
@@ -77,13 +77,15 @@ function generateUponArrivalFlow(mission) {
 		case 1:
 			mission.uponArrival.status = MISSION_STATUSES.uponArrival.fake;
 			mission.uponArrival.displayWidget = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
-			cloneElement($('#mission-modals-fake>.template'), 'mission-modal-one-action', 'mission', mission);
+			cloneElement($('#mission-modals-result>.template'), 'mission-modal-result', 'mission', mission);
+			//cloneElement($('#mission-modals-fake>.template'), 'mission-modal-one-action', 'mission', mission);
 			break;
 
 		case 2:
 			mission.uponArrival.status = MISSION_STATUSES.uponArrival.self;
 			mission.uponArrival.displayWidget = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
-			cloneElement($('#mission-modals-self>.template'), 'mission-modal-one-action', 'mission', mission);
+			cloneElement($('#mission-modals-result>.template'), 'mission-modal-result', 'mission', mission);
+			//cloneElement($('#mission-modals-self>.template'), 'mission-modal-one-action', 'mission', mission);
 			break;
 
 		/*case 3:
@@ -122,25 +124,35 @@ function closeModal(modal) {
 	unPauseLoop();
 }
 
-
+// TODO WANT TO BE REFACTORED!!!
 function showQuestStoryModal(mission) {
 	console.log('INTO showQuestStoryModal ');
-	showModal(mission.uponArrival.displayWidget);
+	// showModal(mission.uponArrival.displayWidget);
+	//
+	// if (mission.uponArrival.status === MISSION_STATUSES.uponArrival.manual) {
+	// 	console.log(' @@@@ GET RECT?')
+	// 	//pauseLoop();
+	// }
+	// else if (mission.uponArrival.status === MISSION_STATUSES.uponArrival.cops) {
+	// 	for (const comradId of mission.comrades) {
+	// 		const comradImages = getComradImagesByComradeId(comradId);
+	// 		console.log(' comradImages ', comradImages);
+	//
+	// 		for (const comradImage of comradImages) {
+	// 			$(comradImage).find('.comrade-image-extra-action').addClass('comrade-image-cops')
+	// 		}
+	// 	}
+	// }
 
-	if (mission.uponArrival.status === MISSION_STATUSES.uponArrival.manual) {
-		console.log(' @@@@ GET RECT?')
-		//pauseLoop();
-	}
-	else if (mission.uponArrival.status === MISSION_STATUSES.uponArrival.cops) {
-		for (const comradId of mission.comrades) {
-			const comradImages = getComradImagesByComradId(comradId);
-			console.log(' comradImages ', comradImages);
+	switch (mission.uponArrival.status) {
+		case MISSION_STATUSES.uponArrival.self:
+			mission.uponArrival.displayWidget.show();
+			break;
 
-			for (const comradImage of comradImages) {
-				$(comradImage).find('.comrade-image-extra-action').addClass('comrade-image-cops')
-			}
-		}
+		default :
+			console.error(' showQuestStoryModal -> mission.uponArrival.status is ABSENT');
 	}
+
 }
 
 function showQuestModal(mission) {
@@ -148,7 +160,7 @@ function showQuestModal(mission) {
 	console.log("INTO showQuestModal");
 
 	$(mission).attr('data-modal-class', 'mission-modal-start');
-	findModelByMissionData(mission).show();
+	findModalByMissionData(mission).show();
 
 }
 
@@ -255,7 +267,7 @@ function cloneElement(template, type, entityType, eic) {
 
 		case 'mission-message':
 			newElement.find('.message-text-block').text(eic.content.title);
-			newElement.attr('data-modal-class', `mission-modal-${eic.uponArrival.status}`);
+			newElement.attr('data-modal-class', `mission-modal-result`);
 			break;
 
 		case 'mission-modal-one-action':
@@ -264,6 +276,10 @@ function cloneElement(template, type, entityType, eic) {
 
 		case 'mission-modal-end-success':
 			console.log('SWITCH: mission-modal-end-success');
+			break;
+
+		case 'mission-modal-result':
+			console.log('SWITCH: mission-modal-result');
 			break;
 
 		case 'mission-modal-end-neutral':
@@ -281,7 +297,7 @@ function cloneElement(template, type, entityType, eic) {
 				"background-image" : `url(${eic.content.img})`
 			});
 
-			const fatigueLevel = MAX_COMRADE_energy - eic.energyLevel;
+			const fatigueLevel = MAX_COMRADE_ENERGY - eic.energyLevel;
 			if (fatigueLevel) {
 				const energyUnits = newElement.find('.comrade-energy-unit');
 				let loopIndex = 1;
@@ -362,4 +378,15 @@ function generateReinforcementCar(mission) {
 
 function generateUponArrivalReinforcementFlow(mission) {
 	// interfaceObjs.cars[mission.rfCarId].domObj.hide();
+}
+
+function prepareResultModal(mission, Result) {
+	if (!mission || !Result) console.error('prepareResultModal -> mission or Result is ABSENT');
+
+	console.log(' -- prepareResultModal --  ', mission.id, mission.status, mission.uponArrival, Result);
+	const resultModalObj = findModalResultByMissionId(mission.id);
+	resultModalObj.find('.modal-result-mission-type').text(mission.uponArrival.status);
+	resultModalObj.find('.modal-result-client-info').text(Result.client);
+	resultModalObj.find('.modal-result-comrades-info').text(Result.comrades);
+	// showModal(resultModalObj);
 }

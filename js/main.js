@@ -37,7 +37,7 @@ $(function() {
 function preInitialization() {
 	generatePoints();
 	generateMissions();
-	generateCops();
+	//generateCops();
 	generateComrades();
 
 	// --- lvl 2 draft

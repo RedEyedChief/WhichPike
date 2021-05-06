@@ -68,7 +68,7 @@ $('#calls').delegate('.call', 'click', function() {
 $('#mission-modals').delegate('.modal-common-comrade-field', 'click', function() {
 	if (!$(this).attr('data-comrade')) return;
 
-	removeActiveComrad(this);
+	removeActiveComrade(this);
 	checkQuestStartButtons(this);
 });
 
@@ -81,7 +81,7 @@ $('#mission-modals').delegate('.modal-empty-comrade-list-close-btn, .modal-comra
 
 	const comrades = parent.find('.modal-common-comrade-field.active-comrade');
 	comrades.each((index, comrade) => {
-		removeActiveComrad(comrade);
+		removeActiveComrade(comrade);
 	});
 	checkQuestStartButtons(this);
 	closeModal(parent);
@@ -108,12 +108,12 @@ $('#mission-modals').delegate('.modal-comrade-list-accept-btn', 'click', functio
 
 $('#messages-container').delegate('.message', 'click', function() {
 	showModal();
-	findModelByMissionData(this).show();
+	findModalByMissionData(this).show();
 });
 
 $('#mission-modals').delegate('.close-btn', 'click', function() {
 	const parent = $(this).closest('.modal');
-	if (parent.hasClass('mission-modal-one-action')) {
+	if (parent.hasClass('mission-modal-result')) {
 		findMessageByMissionData(parent).hide();
 	}
 	closeModal(parent);
@@ -139,7 +139,13 @@ $('#mission-modals-manual').delegate('.csb-0>.story-line', 'click', function() {
 
 $('#mission-modals-manual').delegate('.story-line-end', 'click', function() {
 	$(this).closest('.modal').hide();
-	findModelByMissionData(this).show();
+	findModalByMissionData(this).show();
+});
+
+$('#mission-modals-result').delegate('.close-btn', 'click', function() {
+	const parent = $(this).closest('.modal');
+	parent.hide();
+	missionDone(parent.attr('data-mission'));
 });
 
 $('#team-container').delegate('.comrade', 'click', function() {
@@ -150,7 +156,7 @@ $('#team-container').delegate('.comrade', 'click', function() {
 	if (missionModal.length && !isComradeUsed && energyAmount.length) {
 		engageComrad(missionModal, $(this));
 	} else if (!missionModal.length){
-		findModelBioByComradData(this).show();
+		findModalBioByComradData(this).show();
 	}
 
 });

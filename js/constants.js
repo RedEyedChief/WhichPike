@@ -12,8 +12,8 @@ const MISSIONS = [
 			modalStart : null
 		},
 		content : {
-			title : "barebuh jerking",
-			description : "zaprevshye eggs and some dicks need terebonk"
+			title : "barebuh jerking/ (suc: 100)",
+			description : "Пппппрривет.. Мы тут с друзьями вечеринку устраиваем. Будет выпивка и музыка. Нам есть 21, если что. Даже документы есть, честно. И вот мы тут подумали, нам бы девочек. Вы можете нам помочь?"
 		},
 		src : {
 			img : "./img/dick.png"
@@ -35,6 +35,9 @@ const MISSIONS = [
 			storyLine : null,
 			displayWidget : null
 		},
+		required: {
+				starsSum: 100
+		},
 		comrades : []
 	},
 	{
@@ -50,7 +53,7 @@ const MISSIONS = [
 			modalStart : null
 		},
 		content : {
-			title : "nudes",
+			title : "nudes/ (suc: 70)",
 			description : "send nudes"
 		},
 		src : {
@@ -73,6 +76,9 @@ const MISSIONS = [
 			storyLine : null,
 			displayWidget : null
 		},
+		required: {
+			starsSum: 70
+		},
 		comrades : []
 	},
 	{
@@ -88,7 +94,7 @@ const MISSIONS = [
 			modalStart : null
 		},
 		content : {
-			title : "nudes",
+			title : "nudes/ (sucss: 50)",
 			description : "send nudes"
 		},
 		src : {
@@ -110,6 +116,9 @@ const MISSIONS = [
 			status : null,
 			storyLine : null,
 			displayWidget : null
+		},
+		required: {
+			starsSum: 50
 		},
 		comrades : []
 	}
@@ -216,6 +225,25 @@ const STORY_LINE = {
 	]
 }
 
+const MISSION_RESULTS = {
+	success: {
+		comrades: "unscathed",
+		client: "payed"
+	},
+	terrible: {
+		comrades: "scathed",
+		client: "disappeared without paying"
+	},
+	neutral: {
+		comrades: "unscathed",
+		client: "disappeared without paying"
+	},
+	bad: {
+		comrades: "scathed",
+		client: "payed"
+	}
+}
+
 const COMRADES = [
 	{
 		id : "c1",
@@ -260,14 +288,14 @@ const COMRADES = [
 		id : "c4",
 		content : {
 			name : "Yurdi",
-			power : 5,
+			power : 15,
 			img : "./img/comrade-4.png"
 		},
 		domObjs : {
 			comrade : null,
 			modalBio : null
 		},
-		energyLevel : 0
+		energyLevel : 2
 	}
 ]
 
@@ -308,7 +336,7 @@ const COPS = [
 	}
 ]
 
-const MAX_COMRADE_energy = 5;
+const MAX_COMRADE_ENERGY = 5;
 
 const MISSION_STATUSES = {
 	hidden: "hidden",

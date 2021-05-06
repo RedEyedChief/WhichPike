@@ -371,6 +371,13 @@ section {
 	height:70vh;
 }
 
+.mission-modal-result {
+	top: 15vh;
+    left: 30vw;
+    width: 40vw;
+    height: 70vh;
+}
+
 /*#self-based-modal {
 	top:15vh;
 	left: 30vw;

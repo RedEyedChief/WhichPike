@@ -2,17 +2,29 @@ function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
 }
 
-function findModelByMissionData(domObj) {
-	if (!domObj) console.error("findModelByMissionData -> domObj  -  REQUIRED");
+function findModalByMissionData(domObj) {
+	if (!domObj) console.error("findModalByMissionData -> domObj  -  REQUIRED");
 
 	const jqObj = $(domObj);
 	return $(`.${jqObj.data('modal-class')}[data-mission=${jqObj.data('mission')}]`);
 }
 
-function findModelComradTemplateByMissionId(missionId) {
-	if (!missionId) console.error("findModelComradTemplateByMissionId -> missionId  -  REQUIRED");
+function findModalComradTemplateByMissionId(missionId) {
+	if (!missionId) console.error("findModalComradTemplateByMissionId -> missionId  -  REQUIRED");
 
 	return $(`.modal[data-mission=${missionId}] .involved-comrades-container>.template`);
+}
+
+function findModalResultComradTemplate(missionId) {
+	if (!missionId) console.error("findModalResultComradTemplate -> missionId  -  REQUIRED");
+
+	return $(`.mission-modal-result[data-mission=${missionId}] .involved-comrades-container>.template`);
+}
+
+function findModalResultByMissionId(missionId) {
+	if (!missionId) console.error("findModalResultByMissionId -> missionId  -  REQUIRED");
+
+	return $(`.mission-modal-result[data-mission=${missionId}]`);
 }
 
 function findMessageByMissionData(domObj) {
@@ -22,27 +34,27 @@ function findMessageByMissionData(domObj) {
 	return $(`.message[data-mission=${jqObj.data('mission')}]`);
 }
 
-function findModelBioByComradData(domObj) {
-	if (!domObj) console.error("findModelBioByComradData -> domObj  -  REQUIRED");
+function findModalBioByComradData(domObj) {
+	if (!domObj) console.error("findModalBioByComradData -> domObj  -  REQUIRED");
 
 	const jqObj = $(domObj);
 	return $(`.comrade-modal-bio[data-comrade=${jqObj.data('comrade')}]`);
 }
 
-function findModelByComradData(domObj) {
-	if (!domObj) console.error("findModelByComradData -> domObj  -  REQUIRED");
+function findModalByComradData(domObj) {
+	if (!domObj) console.error("findModalByComradData -> domObj  -  REQUIRED");
 
 	const jqObj = $(domObj);
 	return $(`.modal[data-comrade=${jqObj.data('comrade')}]`);
 }
 
 function findComradByComradeId(comradeId) {
-	if (!comradeId) console.error("findModelByComradeId -> comradeId  -  REQUIRED");
+	if (!comradeId) console.error("findModalByComradeId -> comradeId  -  REQUIRED");
 
 	return $(`.comrade[data-comrade=${comradeId}]`);
 }
 
-function removeActiveComrad(elem) {
+function removeActiveComrade(elem) {
 	const comrade = $(elem);
 	comrade.css({'background-image': 'none'});
 	removeComradActivatedStatus(comrade.attr('data-comrade'));
@@ -63,7 +75,7 @@ function getComradImagesByComradeId(comradeId) {
 	return $(`.comrade[data-comrade=${comradeId}] .comrade-image`);
 }
 
-function 	addComradesToMission(modal, mission) {
+function addComradesToMission(modal, mission) {
 	if (!modal || !mission) console.error("addComradesToMission -> mission, modal  -  REQUIRED");
 
 	const usedComrades = modal.find('.modal-common-comrade-field.active-comrade');
@@ -72,25 +84,23 @@ function 	addComradesToMission(modal, mission) {
 		let comradeId = $(comrade).attr('data-comrade');
 		mission.comrades.push(comradeId);
 		newComradesList.push(comradeId);
-		decreaseComradeenergy(comradeId);
+		decreaseComradeEnergy(comradeId);
 	});
 
 
 	return newComradesList;
 }
 
-function addComradesToEndModals(newComrades, missionId) {
-	if (!newComrades || !missionId) console.error("addComradesToEndModals -> missionId, newComrades  -  REQUIRED");
+function addComradesToResultModal(newComrades, missionId) {
+	if (!newComrades || !missionId) console.error("addComradesToResultModal -> missionId, newComrades  -  REQUIRED");
 
-	const comradTemplates = findModelComradTemplateByMissionId(missionId);
-	for (const template of comradTemplates) {
-		for (const comradeId of newComrades) {
-			cloneElement($(template), 'filling-list', 'comrade', interfaceObjs.comrades[comradeId]);
-		}
+	const comradTemplate = findModalResultComradTemplate(missionId);
+	for (const comradeId of newComrades) {
+		cloneElement($(comradTemplate), 'filling-list', 'comrade', interfaceObjs.comrades[comradeId]);
 	}
 }
 
-function decreaseComradeenergy(comradeId) {
+function decreaseComradeEnergy(comradeId) {
 	const comrade = findComradByComradeId(comradeId);
 	const topChargedenergyUnit = comrade.find('.comrade-energy-unit:not(.energy-unit-empty)').first();
 	topChargedenergyUnit.addClass('energy-unit-empty');

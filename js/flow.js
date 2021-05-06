@@ -24,7 +24,7 @@ function acceptMission(modal) {
 	mission.status = MISSION_STATUSES.accepted;
 	interfaceObjs.cars[mission.carId].status = CAR_STATUSES.drive;
 	const newComrades = addComradesToMission(modal, mission);
-	addComradesToEndModals(newComrades, missionId);
+	addComradesToResultModal(newComrades, missionId);
 }
 
 function missionCounterUpdate(mission) {
@@ -50,17 +50,15 @@ function missionCounterUpdate(mission) {
 }
 
 function interfaceCheck() {
-	const timeTest = Math.floor(dayWorkTime/1000);
+	const missionTime = Math.floor(dayWorkTime/1000);
 	for(let [key, mission] of Object.entries(interfaceObjs.missions)) {
-		if (mission.status === MISSION_STATUSES.hidden && timeTest === mission.countdown.dayWorkAppearTime) {
+		if (mission.status === MISSION_STATUSES.hidden && missionTime === mission.countdown.dayWorkAppearTime) {
 			startMission(mission);
 		}
 
 		const timeWaitingDiff = Math.floor((Date.now() - mission.countdown.startWaiting)/1000);
 		if (mission.status === MISSION_STATUSES.wait && timeWaitingDiff > 5 ) {
-			showQuestStoryModal(mission);
-			mission.status = MISSION_STATUSES.return;
-			interfaceObjs.cars[mission.carId].status = CAR_STATUSES.drive;
+			missionRunning(mission);
 		}
 		else if (mission.status === MISSION_STATUSES.fight && timeWaitingDiff > 3 ) {
 			policeDecision(mission.id, mission.copId);
@@ -71,7 +69,7 @@ function interfaceCheck() {
 	}
 
 	for(let [key, cop] of Object.entries(interfaceObjs.cops)) {
-		if (timeTest === cop.countdown.dayWorkAppearTime && cop.status === COP_STATUSES.hidden) {
+		if (missionTime === cop.countdown.dayWorkAppearTime && cop.status === COP_STATUSES.hidden) {
 			startPatrol(cop);
 		}
 	}
@@ -127,7 +125,7 @@ function acceptReinforcement(modal) {
 	const newCar = generateReinforcementCar(mission);
 
 	const newComrades = addComradesToMission(modal, mission);
-	addComradesToEndModals(newComrades, missionId);
+	addComradesToResultModal(newComrades, missionId);
 }
 
 function carMovementCheck() {
@@ -187,4 +185,56 @@ function returnToHQ(mission) {
 	if (mission.rfCarId) {
 		interfaceObjs.cars[mission.rfCarId].domObj.hide();
 	}
+}
+
+function missionRunning(mission) {
+	switch (mission.uponArrival.status) {
+		case MISSION_STATUSES.uponArrival.manual:
+			console.log(' @@@@ GET RECT with manual mission?')
+			break;
+
+		case MISSION_STATUSES.uponArrival.self:
+			console.log(' === SELF CONTROL ');
+			missionCalculation(mission);
+			mission.uponArrival.displayWidget.show();
+			missionDone(mission.id);
+			break;
+
+		case MISSION_STATUSES.uponArrival.fake:
+			console.log(' === FAKE ERECT ');
+			prepareResultModal(mission, MISSION_RESULTS.neutral);
+			mission.uponArrival.displayWidget.show();
+			missionDone(mission.id);
+			break;
+
+		default :
+			console.error(' missionRunning -> mission.uponArrival.status is ABSENT');
+	}
+
+}
+
+function missionCalculation(mission) {
+	const teamPoints = calculateTeamPoints(mission);
+	console.log('INTO missionCalculation| teamPoints ', teamPoints);
+	if (teamPoints >= mission.required.starsSum) {
+		prepareResultModal(mission, MISSION_RESULTS.success);
+	} else {
+		prepareResultModal(mission, MISSION_RESULTS.terrible);
+	}
+}
+
+function calculateTeamPoints(mission) {
+	let totalPoints = 0;
+	for (const comradeId of mission.comrades) {
+		totalPoints += interfaceObjs.comrades[comradeId].content.power;
+	}
+
+	return totalPoints;
+}
+
+function missionDone(missionId) {
+	const mission = interfaceObjs.missions[missionId];
+	// showQuestStoryModal(mission);
+	mission.status = MISSION_STATUSES.return;
+	interfaceObjs.cars[mission.carId].status = CAR_STATUSES.drive;
 }
