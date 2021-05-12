@@ -25,6 +25,10 @@ function acceptMission(modal) {
 	interfaceObjs.cars[mission.carId].status = CAR_STATUSES.drive;
 	const newComrades = addComradesToMission(modal, mission);
 	addComradesToResultModal(newComrades, missionId);
+
+	if (mission.type === MISSION_TYPES.regular.reinforcement) {
+		createModalReinforcement(mission);
+	}
 }
 
 function missionCounterUpdate(mission) {
@@ -57,7 +61,8 @@ function interfaceCheck() {
 		}
 
 		const timeWaitingDiff = Math.floor((Date.now() - mission.countdown.startWaiting)/1000);
-		if (mission.status === MISSION_STATUSES.wait && timeWaitingDiff > 5 ) {
+		if (mission.status === MISSION_STATUSES.wait && timeWaitingDiff > 3 &&
+			!(mission.processInfo.stage && mission.processInfo.stage === RF_STAGE.waiting)) {
 			missionRunning(mission);
 		}
 		else if (mission.status === MISSION_STATUSES.fight && timeWaitingDiff > 3 ) {
@@ -121,7 +126,9 @@ function acceptReinforcement(modal) {
 	// copCar.status = 'wait';
 	const missionId = modal.data('mission');
 	const mission = interfaceObjs.missions[missionId];
-	interfaceObjs.cars['car-' + mission.copId].status = CAR_STATUSES.wait;
+	// mission.countdown.startWaiting = Date.now();
+	mission.processInfo.stage = RF_STAGE.waiting;
+	// interfaceObjs.cars['car-' + mission.copId].status = CAR_STATUSES.wait;
 	const newCar = generateReinforcementCar(mission);
 
 	const newComrades = addComradesToMission(modal, mission);
@@ -188,38 +195,91 @@ function returnToHQ(mission) {
 }
 
 function missionRunning(mission) {
-	switch (mission.uponArrival.status) {
-		case MISSION_STATUSES.uponArrival.manual:
-			console.log(' @@@@ GET RECT with manual mission?')
+	switch (mission.type) {
+		case MISSION_TYPES.regular.manual:
+			checkDisabledStories(mission);
+			showModal(mission.widgets.manualModal);
 			break;
 
-		case MISSION_STATUSES.uponArrival.self:
-			console.log(' === SELF CONTROL ');
-			missionCalculation(mission);
-			mission.uponArrival.displayWidget.show();
+		case MISSION_TYPES.regular.self:
+			missionCalculation(mission.id);
+			mission.widgets.message.show();
 			missionDone(mission.id);
 			break;
 
-		case MISSION_STATUSES.uponArrival.fake:
-			console.log(' === FAKE ERECT ');
+		case MISSION_TYPES.regular.fake:
 			prepareResultModal(mission, MISSION_RESULTS.neutral);
-			mission.uponArrival.displayWidget.show();
+			mission.widgets.message.show();
 			missionDone(mission.id);
+			break;
+
+		case MISSION_TYPES.regular.reinforcement:
+			// createModalReinforcement(mission);
+			if (mission.processInfo.stage === RF_STAGE.start) {
+				showModal(mission.widgets.reinforcementModal);
+			} else if (mission.processInfo.stage === RF_STAGE.end) {
+				missionCalculation(mission.id);
+				mission.widgets.message.show();
+				missionDone(mission.id);
+			}
 			break;
 
 		default :
-			console.error(' missionRunning -> mission.uponArrival.status is ABSENT');
+			console.error(' missionRunning -> mission.type is ABSENT');
 	}
 
 }
 
-function missionCalculation(mission) {
-	const teamPoints = calculateTeamPoints(mission);
-	console.log('INTO missionCalculation| teamPoints ', teamPoints);
-	if (teamPoints >= mission.required.starsSum) {
-		prepareResultModal(mission, MISSION_RESULTS.success);
-	} else {
-		prepareResultModal(mission, MISSION_RESULTS.terrible);
+function missionCalculation(missionId, storyEnd = false, display = false) {
+	const mission = interfaceObjs.missions[missionId];
+
+	const requirements = mission.requirements || mission.content.storyTree[storyEnd].requirements;
+	const key = Object.keys(requirements)[0];
+
+	switch (key) {
+		case "starsSum":
+			const teamPoints = calculateTeamPoints(mission);
+			console.log('INTO missionCalculation| teamPoints ', teamPoints);
+
+			if (teamPoints >= requirements[key]) {
+				prepareResultModal(mission, MISSION_RESULTS.success, display);
+			} else {
+				prepareResultModal(mission, MISSION_RESULTS.terrible, display);
+			}
+			break;
+
+		case "skills":
+			const success = checkComradesSpecialRequirements(mission, key, requirements[key]);
+			const skillResult = success ? MISSION_RESULTS.success : MISSION_RESULTS.terrible;
+			prepareResultModal(mission, skillResult, display);
+			break;
+
+		case "skin":
+			let shouldBe;
+
+			//TODO check unnecessary actions
+			for(let [key, story] of Object.entries(mission.content.storyTree)) {
+				if (!story.special || story.special !== "skin") continue;
+				shouldBe = story.requirements[story.special];
+			}
+			const isSatisfied = checkComradesSpecialRequirements(mission, key, shouldBe);
+			const result = isSatisfied ? MISSION_RESULTS.success : MISSION_RESULTS.terrible;
+			prepareResultModal(mission, result, display);
+
+			break;
+
+		case "cuntCount":
+			const cuntsAmount = mission.comrades.length;
+			console.log('cuntCount cuntsAmount ', cuntsAmount);
+			console.log('cuntCount mission.requirements[key] ', mission.requirements[key]);
+			const otvet = cuntsAmount >= mission.requirements[key] ? MISSION_RESULTS.success : MISSION_RESULTS.terrible;
+			prepareResultModal(mission, otvet, display);
+
+			break;
+
+		default:
+			console.error(' missionCalculation -> key is ABSENT');
+
 	}
 }
 

@@ -88,11 +88,13 @@ $('#mission-modals').delegate('.modal-empty-comrade-list-close-btn, .modal-comra
 
 	if (parent.hasClass('mission-modal-reinforcement')) {
 		const missionId = parent.attr('data-mission');
-		const copId = parent.attr('data-cop');
 		const mission = interfaceObjs.missions[missionId];
-		//CONTINUE
+		// mission.processInfo.waitReinforcement = false;
 		mission.countdown.startWaiting = Date.now();
-		mission.status = MISSION_STATUSES.fight;
+		mission.processInfo.stage = RF_STAGE.end;
+		// //CONTINUE
+		// mission.status = MISSION_STATUSES.fight;
+
 		// policeDecision(missionId, copId);
 	}
 });
@@ -124,22 +126,19 @@ $('#comrade-modals,#widget-modals').delegate('.close-btn', 'click', function() {
 	closeModal(parent);
 });
 
-/*$('#start-choosing').click(function() {
-	const storyParent = $(this).closest('.choose-story');
-	storyParent.find('.choose-story-intro').hide();
-	storyParent.find('.csb-0').show();
-});*/
-
-$('#mission-modals-manual').delegate('.csb-0>.story-line', 'click', function() {
-	const storyParent = $(this).closest('.choose-story');
+$('#mission-modals-manual').delegate('.csb-0>.choose-story-item', 'click', function() {
+	const storyParent = $(this).closest('.choose-story-block');
 
 	storyParent.find('.csb-0').hide();
 	storyParent.find('.'+$(this).data('csb')).show();
 });
 
-$('#mission-modals-manual').delegate('.story-line-end', 'click', function() {
-	$(this).closest('.modal').hide();
-	findModalByMissionData(this).show();
+$('#mission-modals-manual').delegate('.choose-story-end', 'click', function() {
+	if ($(this).hasClass('disabled')) return;
+	const parent = $(this).closest('.modal');
+	parent.hide();
+	missionCalculation(parent.attr('data-mission'), $(this).attr('data-story-end'), true);
+	// findModalByMissionData(this).show();
 });
 
 $('#mission-modals-result').delegate('.close-btn', 'click', function() {
@@ -189,4 +188,45 @@ $('#widgets').delegate('.additional-widget', 'click', function() {
 	const modal = $(this).data('modal');
 	$(`#${modal}-modal`).show();
 	showModal();
+});
+
+$('.level').delegate('.stage-next', 'click', function() {
+	const nextStage = $(this).data('next');
+	$(`.${nextStage}`).show();
+	$(this).closest('.stage').hide();
+
+	if (nextStage === 'mission-stage') {
+		missionTechStart();
+	}
+});
+
+$('.all-team-list').delegate('.shift-item', 'click', function() {
+	if ($(this).hasClass('comrade-busy')) return;
+	const comradeId = $(this).attr('data-comrade');
+	const clonedComrade = $(this).find('.comrade-exist').clone();
+	const freeSlot = $('.choosed-team-list>.choosed-comrade-field.comrade-absent').first();
+	clonedComrade.appendTo(freeSlot);
+	freeSlot.removeClass('comrade-absent');
+	$(this).addClass('comrade-busy');
+	freeSlot.attr('data-comrade', comradeId);
+	interfaceObjs.choosedComrades[comradeId] = comradeId;
+});
+
+$('.choosed-team-list').delegate('.choosed-comrade-field', 'click', function() {
+	const comradeId = $(this).attr('data-comrade');
+	$(`.shift-item[data-comrade=${comradeId}]`).removeClass('comrade-busy');
+	$(this).empty();
+	$(this).addClass('comrade-absent');
+	$(this).attr('data-comrade', ' ');
+	delete interfaceObjs.choosedComrades[comradeId];
+});
+
+$('.shift-stage .stage-next').click((event) => {
+	const isChoosed = $('.choosed-comrade-field:not(.comrade-absent)').length;
+	if (!isChoosed) {
+		alert('CHOOSE SOME SLUTS');
+		event.stopPropagation();
+		return;
+	}
+	console.log(' interfaceObjs ', interfaceObjs);
 });

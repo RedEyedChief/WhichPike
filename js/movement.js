@@ -110,7 +110,8 @@ function findViolator(copCar) {
 		) {
 			mission.status = MISSION_STATUSES.pressed;
 			mission.copId = copCar.copId;
-			createModalReinforcement(mission);
+			alert('reinforcement was here')
+			// createModalReinforcement(mission);
 		}
 	}
 }
@@ -210,6 +211,11 @@ function missionCarMovementCheck(car) {
 					car.status = CAR_STATUSES.wait;
 					mission.countdown.startWaiting = Date.now();
 					car.way = reverseList(car.way, mission);
+
+					if (mission.processInfo.stage && mission.processInfo.stage === RF_STAGE.waiting) {
+						mission.processInfo.stage = RF_STAGE.end;
+						car.domObj.hide();
+					}
 				}
 
 			}

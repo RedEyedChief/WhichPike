@@ -130,3 +130,15 @@ function individualEscapeCheck(mission) {
 	console.log('TODO: individualEscapeCheck(mission)')
 	return 0;
 }
+
+function checkComradesSpecialRequirements(mission, requirement, shouldBe) {
+	console.log('INTO checkComradesSpecialRequirements: requirement, shouldBe ', requirement, shouldBe)
+	for (let comradeId of mission.comrades) {
+		if(interfaceObjs.comrades[comradeId][requirement] === shouldBe ||
+		   interfaceObjs.comrades[comradeId][requirement][shouldBe]) {
+			return true;
+		}
+	}
+
+	return false
+}

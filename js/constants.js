@@ -1,3 +1,48 @@
+const MISSION_TEMPLATE = {
+	id : "mTemplate",
+	position : {
+		top : 35,
+		left : 4
+	},
+	domObjs : {
+		flag : null,
+		call : null,
+		message : null,
+		startModal : null,
+		resultModal : null
+	},
+	content : {
+		title : "Some title",
+		description : "Some nudes"
+	},
+	requirements: {
+		cuntCount: 1
+	},
+	reward: {
+		currency: 999,
+		item: "pike"
+	},
+	src : {
+		img : "./img/tits.gif"
+	},
+	status : "hidden",
+	countdown : {
+		dayWorkAppearTime : 1,
+		initTime : null,
+		startCounter : 15,
+		currentCounter : 15,
+		startWaiting : null
+	},
+	routes : {
+		main : [ "spawn" , "point-7" ]
+	},
+	generatedWays : {},
+	type: null,
+	widgets: {},
+	comrades : [],
+	processInfo : {}
+}
+
 const MISSIONS = [
 	{
 		id : "m1",
@@ -9,10 +54,11 @@ const MISSIONS = [
 			flag : null,
 			call : null,
 			message : null,
-			modalStart : null
+			startModal : null,
+			resultModal : null
 		},
 		content : {
-			title : "barebuh jerking/ (suc: 100)",
+			title : "Приятный вечер",
 			description : "Пппппрривет.. Мы тут с друзьями вечеринку устраиваем. Будет выпивка и музыка. Нам есть 21, если что. Даже документы есть, честно. И вот мы тут подумали, нам бы девочек. Вы можете нам помочь?"
 		},
 		src : {
@@ -30,18 +76,21 @@ const MISSIONS = [
 			main : [ "spawn" , "point-1", "point-2", "point-5", "point-6" ]
 		},
 		generatedWays : {},
-		uponArrival : {
-			status : null,
-			storyLine : null,
-			displayWidget : null
+		type: "self",
+		widgets: {},
+		requirements: {
+				starsSum: 250
 		},
-		required: {
-				starsSum: 100
+		reward: {
+			currency: 420,
+			item: "pike"
 		},
-		comrades : []
+		comrades : [],
+		processInfo : {}
 	},
 	{
 		id : "m2",
+		type: "manual",
 		position : {
 			top : 30,
 			left : 82
@@ -50,18 +99,56 @@ const MISSIONS = [
 			flag : null,
 			call : null,
 			message : null,
-			modalStart : null
+			startModal : null,
+			resultModal : null
 		},
 		content : {
-			title : "nudes/ (suc: 70)",
-			description : "send nudes"
+			title : "Черный шоколад",
+			description : "Алло! Я хочу сегодня чего-нибудь экзотического. Пришлите мне чёрную девушку, она станет рабыней моего полёта фантазий. Я хорошо заплачу.",
+			arrivalDescription: '- Я заказывал черную девушку, а вы нахера приперлись, бляди?! \n - Поверь нам дорогуша, мы сможем удовлетворить тебя не хуже любого цвета девушки. Мммм.. \n - Вы блять меня за идиота держите?! Я сказал я же уточнял кто мне нужен! Ну сейчас вы у меня получите!',
+			storyTree: {
+				a11: {
+					type: "final",
+					text: "Отдаться клиенту",
+					requirements: {
+						starsSum: 500
+					}
+				},
+				b11: {
+					type: "final",
+					text: "Показать кто здесь главный",
+					requirements: {
+						skills: "dominant"
+					}
+				},
+				c11: {
+					type: "final",
+					text: "Врезать клиенту",
+					requirements: {
+						skills: "strong"
+					}
+				},
+				d11: {
+					type: "final",
+					special: "skin",
+					text: "Глазки открой",
+					requirements: {
+						skin: "black"
+					}
+				}
+			}
+		},
+		requirements: null,
+		reward: {
+			currency: 666,
+			item: "pike"
 		},
 		src : {
 			img : "./img/tits.gif"
 		},
 		status : "hidden",
 		countdown : {
-			dayWorkAppearTime : 3,
+			dayWorkAppearTime : 13,
 			initTime : null,
 			startCounter : 25,
 			currentCounter : 25,
@@ -71,18 +158,13 @@ const MISSIONS = [
 			main : [ "spawn" , "point-1", "point-2", "point-3", "point-4" ]
 		},
 		generatedWays : {},
-		uponArrival : {
-			status : null,
-			storyLine : null,
-			displayWidget : null
-		},
-		required: {
-			starsSum: 70
-		},
-		comrades : []
+		widgets: {},
+		comrades : [],
+		processInfo : {}
 	},
 	{
 		id : "m3",
+		type: "reinforcement",
 		position : {
 			top : 35,
 			left : 4
@@ -91,18 +173,27 @@ const MISSIONS = [
 			flag : null,
 			call : null,
 			message : null,
-			modalStart : null
+			startModal : null,
+			resultModal : null
 		},
 		content : {
-			title : "nudes/ (sucss: 50)",
-			description : "send nudes"
+			title : "Сырная вечеринка",
+			description : "Алло! Мне нужно 2 острые пепперони, 2 с двойным сыром и одну с грибами. Адрес: Оушен Драйв, 13. Если приедите быстро, плачу двойную ставку. У меня тут целый дом голодных ротиков.",
+			arrivalDescription: "Босс, у них тут сладострастная оргия в каждой комнате, нам не помешало бы подкрепление."
+		},
+		requirements: {
+			cuntCount: 5
+		},
+		reward: {
+			currency: 999,
+			item: "pike"
 		},
 		src : {
 			img : "./img/tits.gif"
 		},
 		status : "hidden",
 		countdown : {
-			dayWorkAppearTime : 1,
+			dayWorkAppearTime : 21,
 			initTime : null,
 			startCounter : 15,
 			currentCounter : 15,
@@ -112,15 +203,9 @@ const MISSIONS = [
 			main : [ "spawn" , "point-7" ]
 		},
 		generatedWays : {},
-		uponArrival : {
-			status : null,
-			storyLine : null,
-			displayWidget : null
-		},
-		required: {
-			starsSum: 50
-		},
-		comrades : []
+		widgets: {},
+		comrades : [],
+		processInfo : {}
 	}
 ]
 
@@ -227,18 +312,22 @@ const STORY_LINE = {
 
 const MISSION_RESULTS = {
 	success: {
+		verdict: "success",
 		comrades: "unscathed",
 		client: "payed"
 	},
 	terrible: {
+		verdict: "fail",
 		comrades: "scathed",
 		client: "disappeared without paying"
 	},
 	neutral: {
+		verdict: "fail",
 		comrades: "unscathed",
 		client: "disappeared without paying"
 	},
 	bad: {
+		verdict: "fail",
 		comrades: "scathed",
 		client: "payed"
 	}
@@ -247,9 +336,15 @@ const MISSION_RESULTS = {
 const COMRADES = [
 	{
 		id : "c1",
+		skin : "white",
+		skills : {
+			anal: "anal",
+			deepthroat: "deepthroat",
+			bigTits: "bigTits"
+		},
 		content : {
 			name : "Kochi",
-			power : 42,
+			power : 420,
 			img : "./img/comrade-1.png"
 		},
 		domObjs : {
@@ -260,9 +355,14 @@ const COMRADES = [
 	},
 	{
 		id : "c2",
+		skin : "white",
+		skills : {
+			bigTits: "bigTits",
+			strong: "strong"
+		},
 		content : {
 			name : "Yancey",
-			power : 34,
+			power : 140,
 			img : "./img/comrade-2.png"
 		},
 		domObjs : {
@@ -273,9 +373,14 @@ const COMRADES = [
 	},
 	{
 		id : "c3",
+		skin : "white",
+		skills : {
+			strip: "amateur",
+			deepthroat: "deepthroat"
+		},
 		content : {
 			name : "Purdy",
-			power : 28,
+			power : 280,
 			img : "./img/comrade-3.png"
 		},
 		domObjs : {
@@ -286,9 +391,13 @@ const COMRADES = [
 	},
 	{
 		id : "c4",
+		skin : "black",
+		skills : {
+			anal: "anal"
+		},
 		content : {
 			name : "Yurdi",
-			power : 15,
+			power : 150,
 			img : "./img/comrade-4.png"
 		},
 		domObjs : {
@@ -296,6 +405,82 @@ const COMRADES = [
 			modalBio : null
 		},
 		energyLevel : 2
+	},
+	{
+		id : "c5",
+		skin : "white",
+		skills : {
+			strip: "pro"
+		},
+		content : {
+			name : "Yurec",
+			power : 320,
+			img : "./img/comrade-5.png"
+		},
+		domObjs : {
+			comrade : null,
+			modalBio : null
+		},
+		energyLevel : 4
+	},
+	{
+		id : "c6",
+		skin : "white",
+		skills : {
+			bigTits: "bigTits",
+			costume: "maid",
+			slave: "slave"
+		},
+		content : {
+			name : "Turec",
+			power : 270,
+			img : "./img/comrade-6.png"
+		},
+		domObjs : {
+			comrade : null,
+			modalBio : null
+		},
+		energyLevel : 5
+	},
+	{
+		id : "c7",
+		skin : "white",
+		skills : {
+			bigTits: "bigTits",
+			costume: "police",
+			toys: "toys"
+		},
+		content : {
+			name : "Anec",
+			power : 350,
+			img : "./img/comrade-7.png"
+		},
+		domObjs : {
+			comrade : null,
+			modalBio : null
+		},
+		energyLevel : 5
+	},
+	{
+		id : "c8",
+		skin : "white",
+		skills : {
+			bigTits: "bigTits",
+			costume: "latex",
+			toys: "toys",
+			strong: "strong",
+			dominant: "dominant"
+		},
+		content : {
+			name : "Ivan",
+			power : 550,
+			img : "./img/comrade-8.png"
+		},
+		domObjs : {
+			comrade : null,
+			modalBio : null
+		},
+		energyLevel : 4
 	}
 ]
 
@@ -348,12 +533,15 @@ const MISSION_STATUSES = {
 	failed : "failed",
 	done : "done",
 	return : "return",
-	past : "past",
-	uponArrival : {
+	past : "past"
+}
+
+const MISSION_TYPES = {
+	regular: {
 		manual: "manual",
 		fake: "fake",
 		self: "self",
-		cops: "cops"
+		reinforcement: "reinforcement"
 	}
 }
 
@@ -376,3 +564,11 @@ const POINT_STATUSES = {
 	current: "current",
 	past: "past"
 }
+
+const RF_STAGE = {
+	start: "start",
+	end: "end",
+	waiting: "waiting"
+}
+
+const MISSION_TYPE_ARRAY = [ 'manual', 'fake', 'self', 'reinforcement' ]
