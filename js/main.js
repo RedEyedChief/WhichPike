@@ -13,8 +13,8 @@ let dayWorkTime = 0;
 let lastActiveGameTime;
 let stop = false;
 let oneTime = true;
-const START_STAGE = "gameLoop";
-//const START_STAGE = "intro";
+//const START_STAGE = "gameLoop";
+const START_STAGE = "intro";
 
 // MAIN
 $(function() {
