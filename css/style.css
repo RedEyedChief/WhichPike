@@ -196,6 +196,51 @@ section {
     left: 1vw;
 }
 
+#point-12 {
+	top: 44.5vh;
+    left: 45vw;
+}
+
+#point-13 {
+	top: 47vh;
+    left: 56vw;
+}
+
+#point-14 {
+	top: 20vh;
+	left: 60vw;
+}
+
+#point-15 {
+	top: 54vh;
+    left: 80vw;
+}
+
+#point-16 {
+	top: 39vh;
+    left: 29vw;
+}
+
+#point-17 {
+	top: 41vh;
+    left: 84vw;
+}
+
+#point-18 {
+	top: 23vh;
+	left: 85vw;
+}
+
+#point-19 {
+    top: 74vh;
+    left: 78vw;
+}
+
+#point-20 {
+    top: 88vh;
+    left: 77vw;
+}
+
 .building {
 	position: absolute;
     z-index: 10;
@@ -290,7 +335,7 @@ section {
 .modal {
 	display: none;
 	position: absolute;
-	z-index: 100;
+	z-index: 112;
 }
 
 #building-modal {
@@ -412,7 +457,7 @@ section {
     height: 30%;
 }
 
-.existed-comrads-list, .new-comrads-list {
+.existed-comrads-list, .reinforcement-comrades-list {
 	height: 80%;
 	list-style: none;
   display: flex;
@@ -424,9 +469,8 @@ section {
     width: 15%;
     height: 90%;
     margin: auto;
-    background-color: black;
+    background-color: #cccccc;
     cursor: pointer;
-    opacity: 0.2;
     background-position: center;
     background-attachment: scroll;
     -webkit-background-size: contain;
@@ -495,14 +539,30 @@ section {
 	display: none;
 }
 
-.mission-default {
+.flag-default {
 	background-color: rgba(0,189,245,0.6);
 }
 
-.mission-default:hover {
+.flag-default:hover {
 	background-color: rgb(1 164 212);
 }
 
+.flag-citizen {
+	background-color: #27a7a099;
+}
+
+.flag-citizen:hover {
+	background-color: #27a7a0;
+}
+
+
+.flag-don {
+	background-color: rgba(0,0,0,0.6);
+}
+
+.flag-don:hover {
+	background-color: rgb(0,0,0);
+}
 
 .mission-accepted {
 	background-color: #ff6a00;
@@ -665,9 +725,8 @@ section {
 	width: 15%;
 	height: 90%;
 	margin: auto;
-	background-color: black;
+	background-color: #cccccc;
 	cursor: pointer;
-	opacity: 0.2;
 	background-position: center;
   background-attachment: scroll;
   -webkit-background-size: contain;
@@ -691,9 +750,8 @@ section {
 	width: 45%;
 	height: 90%;
 	margin: auto;
-	background-color: black;
+	background-color: #999999;
 	cursor: pointer;
-	opacity: 0.4;
 }
 
 .modal-empty-comrade-list-close-btn {
@@ -713,6 +771,10 @@ section {
 	color: white;
 	cursor: pointer;
 	display: flex;
+}
+
+.modal-mission-btns>button {
+	cursor: pointer;
 }
 
 .modal-comrade-list-accept-btn {
@@ -1275,8 +1337,7 @@ flex-wrap: wrap;
 }
 
 .comrade-absent {
-	background-color: black;
-    opacity: 0.2;
+	background-color: #cccccc;
     background-position: center;
     background-attachment: scroll;
     -webkit-background-size: contain;
@@ -1306,4 +1367,21 @@ flex-wrap: wrap;
 .disabled:hover {
 	cursor: not-allowed;
     opacity: 0.6;
+}
+
+.mission-slot-disabled {
+	background-image: url(../img/lock.png);
+	cursor: not-allowed;
+}
+
+.mission-slot-required {
+	border: 5px solid red;
+}
+
+.comrade-extra-effect {
+    height: 100%;
+    width: 90%;
+	background-color: #00000075;
+	margin-top: -100%;
+	color: red;
 }

@@ -136,7 +136,10 @@ function acceptReinforcement(modal) {
 }
 
 function carMovementCheck() {
+	// console.log(' carMovementCheck CAR_STATUSES ', CAR_STATUSES)
+
 	for(let [key, car] of Object.entries(interfaceObjs.cars)) {
+		// console.log(' carMovementCheck car.status ', car.status)
 		if ([CAR_STATUSES.hidden, CAR_STATUSES.wait].includes(car.status)) continue;
 
 		switch (car.fraction) {
@@ -224,6 +227,19 @@ function missionRunning(mission) {
 			}
 			break;
 
+		case MISSION_TYPES.citizen:
+			missionCalculation(mission.id);
+			mission.widgets.message.show();
+			missionDone(mission.id);
+			break;
+
+		//TODO only copied from citizen !!
+		case MISSION_TYPES.don:
+			missionCalculation(mission.id);
+			mission.widgets.message.show();
+			missionDone(mission.id);
+			break;
+
 		default :
 			console.error(' missionRunning -> mission.type is ABSENT');
 	}
@@ -270,9 +286,17 @@ function missionCalculation(missionId, storyEnd = false, display = false) {
 
 		case "cuntCount":
 			const cuntsAmount = mission.comrades.length;
-			console.log('cuntCount cuntsAmount ', cuntsAmount);
-			console.log('cuntCount mission.requirements[key] ', mission.requirements[key]);
 			const otvet = cuntsAmount >= mission.requirements[key] ? MISSION_RESULTS.success : MISSION_RESULTS.terrible;
+			const isRegular = ![MISSION_TYPES.citizen, MISSION_TYPES.cops, MISSION_TYPES.don].includes(mission.type);
+			if (!isRegular && mission.extraEffect && mission.extraEffect.leave) {
+				const leaveDecision = getRandomInt(2);
+				if (leaveDecision === 1) {
+					mission.reward.currency += 1000;
+					otvet.extraText = "Извините, Босс, но у мэра я могу добиться большего и быстрее. Я буду сладко вспоминать наше былое время вместе, прощайте."
+					const leavingComradeIndex = getRandomInt(mission.comrades.length);
+					removeComrade(mission, mission.comrades[leavingComradeIndex]);
+				}
+			}
 			prepareResultModal(mission, otvet, display);
 
 			break;
@@ -295,6 +319,13 @@ function calculateTeamPoints(mission) {
 function missionDone(missionId) {
 	const mission = interfaceObjs.missions[missionId];
 	// showQuestStoryModal(mission);
-	mission.status = MISSION_STATUSES.return;
-	interfaceObjs.cars[mission.carId].status = CAR_STATUSES.drive;
+	if (interfaceObjs.cars[mission.carId].domObj.is(":visible")) {
+		mission.status = MISSION_STATUSES.return;
+		interfaceObjs.cars[mission.carId].status = CAR_STATUSES.drive;
+	}
+}
+
+function removeComrade(mission, comradeId) {
+	$('#team-container').find(`.comrade[data-comrade=${comradeId}]`).remove();
+	interfaceObjs.missions[mission.id].comrades = arrayRemove(interfaceObjs.missions[mission.id].comrades, comradeId);
 }

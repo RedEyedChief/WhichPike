@@ -153,7 +153,7 @@ $('#team-container').delegate('.comrade', 'click', function() {
 	const energyAmount = $(this).find('.comrade-energy-unit:not(.energy-unit-empty)');
 
 	if (missionModal.length && !isComradeUsed && energyAmount.length) {
-		engageComrad(missionModal, $(this));
+		engageComrade(missionModal, $(this));
 	} else if (!missionModal.length){
 		findModalBioByComradData(this).show();
 	}

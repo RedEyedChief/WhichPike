@@ -105,6 +105,15 @@ function generateMissionFlow(mission) {
 			// mission.widgets.reinforcementModal = reinforcementModal;
 			break;
 
+		case 'citizen':
+			mission.widgets.message = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
+			mission.domObjs.resultModal = cloneElement($('#mission-modals-result>.template'), 'mission-modal-result', 'mission', mission);
+			break;
+
+		case 'don':
+			mission.widgets.message = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
+			mission.domObjs.resultModal = cloneElement($('#mission-modals-result>.template'), 'mission-modal-result', 'mission', mission);
+			break;
 		// case n:
 		// 	mission.type = MISSION_TYPES.regular.cops;
 		// 	mission.widgets.displayWidget = cloneElement(messageTemplate, 'mission-message', 'mission', mission);
@@ -118,9 +127,13 @@ function generateMissionFlow(mission) {
 
 function checkQuestStartButtons(elem) {
 	const parent = $(elem).closest('.modal');
+	const isRegular = parent.attr('data-reqular');
 	// console.log(' into checkQuestStartButtons ', $(parent).find('.active-comrade'), parent.find('.active-comrade').length)
-
-	if(parent.find('.active-comrade').length) {
+	const requiredAmount = isRegular === "true" ? 1 : interfaceObjs.missions[parent.attr('data-mission')].requirements.cuntCount;
+	console.log(' isRegular ', isRegular);
+	console.log(' mission ', interfaceObjs.missions[parent.attr('data-mission')]);
+	console.log(' requiredAmount ', requiredAmount);
+	if(parent.find('.new-comrades-list .active-comrade').length >= requiredAmount) {
 		parent.find('.modal-empty-comrade-list-close-btn').addClass('notDisplay');
 		parent.find('.modal-mission-btns').removeClass('notDisplay');
 	} else {
@@ -136,7 +149,6 @@ function showModal(modal) {
 }
 
 function closeModal(modal) {
-	console.log('WHAT HAPPENED? ', modal);
 	modal.hide();
 	unPauseLoop();
 }
@@ -192,11 +204,16 @@ function cloneElement(template, type, entityType, eic) {
 
 	switch (type) {
 		case 'mission-flag':
+			let flagClass = 'flag-default';
+			if (eic.type === "citizen") 	flagClass = 'flag-citizen';
+			else if (eic.type === "don") 	flagClass = 'flag-don';
+			
 			newElement.find('.mission-flag-countdown').text(eic.countdown.startCounter);
 			newElement.css({
 				"top" : eic.position.top + 'vh',
 				"left" : eic.position.left + 'vw'
 			});
+			newElement.addClass(flagClass);
 			eic.domObjs.flag = newElement;
 			break;
 
@@ -206,6 +223,16 @@ function cloneElement(template, type, entityType, eic) {
 				"background-image" : `url(${eic.src.img})`
 			});
 			eic.domObjs.startModal = newElement;
+			const isRegular = ![MISSION_TYPES.citizen, MISSION_TYPES.cops, MISSION_TYPES.don].includes(eic.type);
+			newElement.attr('data-reqular', isRegular);
+
+			const missionComradeFields = newElement.find('.start-mission-comrade-field').slice(0, eic.maxComradesAmount);
+			for (let field of missionComradeFields) {
+				$(field).removeClass('mission-slot-disabled');
+				if (!isRegular) {
+					$(field).addClass('mission-slot-required');
+				}
+			}
 			break;
 
 		case 'mission-call' :
@@ -391,6 +418,7 @@ function cloneElement(template, type, entityType, eic) {
 			break;
 
 		case 'reinforcement-modal':
+			newElement.attr('data-reqular', true);
 			newElement.find('.reinforcement-modal-description').text(eic.content.arrivalDescription);
 			// newElement.attr('data-cop', eic.copId);
 			break;
@@ -411,19 +439,21 @@ function cloneElement(template, type, entityType, eic) {
 function createModalReinforcement(mission) {
 	const reinforcementModal = cloneElement($('#mission-modals-reinforcement>.template'), 'reinforcement-modal', 'mission', mission);
 	mission.widgets.reinforcementModal = reinforcementModal;
+	console.log(' mission.comrades ', mission.comrades)
 	for (let comradId of mission.comrades) {
-		engageComrad(reinforcementModal, interfaceObjs.comrades[comradId].domObjs.comrade, false);
+		engageComrade(reinforcementModal, interfaceObjs.comrades[comradId].domObjs.comrade, false);
 	}
 
 	// showModal(reinforcementModal);
 }
 
-function engageComrad(missionModal, comrade, isDefault = true) {
+// TODO check on unnecessary logic
+function engageComrade(missionModal, comrade, isDefault = true) {
 	const comradField = isDefault ? '.modal-common-comrade-field' : '.existed-comrade'
 	const comradImage = comrade.find('.comrade-image');
 	const sameComrades = missionModal.find(`${comradField}[data-comrade="${comrade.data('comrade')}"]`);
-	const freeSlot = missionModal.find(`${comradField}:not(.active-comrade)`).first();
-	if (!sameComrades.length && freeSlot) {
+	const freeSlot = missionModal.find(`${comradField}:not(.active-comrade,.mission-slot-disabled)`).first();
+	if (!sameComrades.length && freeSlot.length) {
 		const imagePath = comradImage.css('background-image');
 		const newSquadSlot = freeSlot;
 		newSquadSlot.css({'background-image': imagePath});
@@ -450,10 +480,16 @@ function prepareResultModal(mission, Result, display = false) {
 
 	// const resultModalObj = findModalResultByMissionId(mission.id);
 	const resultModalObj = $(mission.domObjs.resultModal);
+	const reward = Result.verdict === "success" ? JSON.stringify(mission.reward) : "sasai";
 	resultModalObj.find('.modal-result-mission-verdict').text(Result.verdict);
 	resultModalObj.find('.modal-result-mission-type').text(mission.type);
 	resultModalObj.find('.modal-result-client-info').text(Result.client);
 	resultModalObj.find('.modal-result-comrades-info').text(Result.comrades);
+	resultModalObj.find('.modal-result-reward').text(reward);
+	if (Result.extraText) {
+		resultModalObj.find('.modal-result-extra-text').text(Result.extraText);
+		resultModalObj.find('.comrade-extra-effect').text('LEAVE').removeClass('notDisplay');
+	}
 
 	if (display)  showModal(resultModalObj);
 }

@@ -64,8 +64,6 @@ function removeActiveComrade(elem) {
 
 function removeComradActivatedStatus(comradeId) {
 	if (!comradeId) console.error("removeComradActivatedStatus -> comradeId  -  REQUIRED");
-	console.log(' removeComradActivatedStatus ', comradeId);
-
 	findComradByComradeId(comradeId).find('.comrade-image').removeClass('comrade-image-used');
 }
 
@@ -141,4 +139,8 @@ function checkComradesSpecialRequirements(mission, requirement, shouldBe) {
 	}
 
 	return false
+}
+
+function arrayRemove(array, value) {
+    return array.filter(elem => elem !== value);
 }

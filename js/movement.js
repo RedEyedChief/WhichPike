@@ -215,6 +215,7 @@ function missionCarMovementCheck(car) {
 					if (mission.processInfo.stage && mission.processInfo.stage === RF_STAGE.waiting) {
 						mission.processInfo.stage = RF_STAGE.end;
 						car.domObj.hide();
+						car.status = CAR_STATUSES.hidden;
 					}
 				}
 
